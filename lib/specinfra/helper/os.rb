@@ -3,6 +3,7 @@ module SpecInfra
     [
      'AIX',
      'Darwin',
+     'FreeBSD',
      'RedHat',
     ].each do |os|
       eval <<-EOF
