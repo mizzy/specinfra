@@ -3,6 +3,7 @@ module SpecInfra
     [
      'AIX',
      'Darwin',
+     'Debian',
      'FreeBSD',
      'RedHat',
     ].each do |os|
