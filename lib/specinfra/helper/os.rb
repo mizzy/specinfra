@@ -6,6 +6,7 @@ module SpecInfra
      'Debian',
      'FreeBSD',
      'Gentoo',
+     'Plamo',
      'RedHat',
     ].each do |os|
       eval <<-EOF
