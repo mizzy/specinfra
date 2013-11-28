@@ -8,6 +8,7 @@ module SpecInfra
      'Gentoo',
      'Plamo',
      'RedHat',
+     'Solaris',
     ].each do |os|
       eval <<-EOF
         module #{os}
