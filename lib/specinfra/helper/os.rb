@@ -12,6 +12,7 @@ module SpecInfra
      'Solaris',
      'Solaris10',
      'Solaris11',
+     'Windows',
     ].each do |os|
       eval <<-EOF
         module #{os}
