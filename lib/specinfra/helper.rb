@@ -1,2 +1,2 @@
 # Command helpers
-require 'specinfra/helper/redhat'
+require 'specinfra/helper/os'
