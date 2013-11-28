@@ -10,6 +10,7 @@ module SpecInfra
      'RedHat',
      'Solaris',
      'Solaris10',
+     'Solaris11',
     ].each do |os|
       eval <<-EOF
         module #{os}
