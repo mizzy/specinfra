@@ -1,6 +1,9 @@
 module SpecInfra
   module Helper
-    ['RedHat'].each do |os|
+    [
+     'RedHat',
+     'Darwin',
+    ].each do |os|
       eval <<-EOF
         module #{os}
           def commands
