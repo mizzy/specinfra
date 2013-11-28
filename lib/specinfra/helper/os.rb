@@ -5,6 +5,7 @@ module SpecInfra
      'Darwin',
      'Debian',
      'FreeBSD',
+     'Gentoo',
      'RedHat',
     ].each do |os|
       eval <<-EOF
