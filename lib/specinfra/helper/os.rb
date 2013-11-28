@@ -1,8 +1,9 @@
 module SpecInfra
   module Helper
     [
-     'RedHat',
+     'AIX',
      'Darwin',
+     'RedHat',
     ].each do |os|
       eval <<-EOF
         module #{os}
