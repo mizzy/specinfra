@@ -1,6 +1,7 @@
 module SpecInfra
   module Helper
     [
+     'Base',
      'AIX',
      'Darwin',
      'Debian',
