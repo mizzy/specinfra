@@ -1,6 +1,6 @@
 module SpecInfra
   module Helper
-    ['Exec', 'Ssh', 'Cmd', 'WinRM'].each do |backend|
+    ['Exec', 'Ssh', 'Cmd', 'WinRM', 'ShellScript'].each do |backend|
       eval <<-EOF
         module #{backend}
           def backend(commands_object=nil)
