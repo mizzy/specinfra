@@ -5,7 +5,7 @@ module SpecInfra
 
       def run_command(cmd, opts={})
         script = create_script(cmd)
-        winrm = RSpec.configuration.winrm
+        winrm = SpecInfra.configuration.winrm
 
         result = winrm.powershell(script)
         stdout, stderr = [:stdout, :stderr].map do |s|

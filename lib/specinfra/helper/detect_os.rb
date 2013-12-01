@@ -3,7 +3,7 @@ module SpecInfra
     module DetectOS
       def commands
         property[:os_by_host] = {} if ! property[:os_by_host]
-        host = RSpec.configuration.ssh ? RSpec.configuration.ssh.host : 'localhost'
+        host = SpecInfra.configuration.ssh ? SpecInfra.configuration.ssh.host : 'localhost'
 
         if property[:os_by_host][host]
           os = property[:os_by_host][host]

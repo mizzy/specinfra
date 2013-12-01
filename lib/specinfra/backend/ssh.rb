@@ -20,7 +20,7 @@ module SpecInfra
 
       def build_command(cmd)
         cmd = super(cmd)
-        if RSpec.configuration.ssh.options[:user] != 'root'
+        if SpecInfra.configuration.ssh.options[:user] != 'root'
           cmd = "#{sudo} #{cmd}"
           cmd.gsub!(/(\&\&\s*!?\(?\s*)/, "\\1#{sudo} ")
           cmd.gsub!(/(\|\|\s*!?\(?\s*)/, "\\1#{sudo} ")
@@ -30,7 +30,7 @@ module SpecInfra
 
       def add_pre_command(cmd)
         cmd = super(cmd)
-        user = RSpec.configuration.ssh.options[:user]
+        user = SpecInfra.configuration.ssh.options[:user]
         pre_command = SpecInfra.configuration.pre_command
         if pre_command && user != 'root'
           cmd = "#{sudo} #{cmd}"
@@ -44,9 +44,9 @@ module SpecInfra
         stderr_data = ''
         exit_status = nil
         exit_signal = nil
-        pass_prompt = RSpec.configuration.pass_prompt || /^\[sudo\] password for/
+        pass_prompt = SpecInfra.configuration.pass_prompt || /^\[sudo\] password for/
 
-        ssh = RSpec.configuration.ssh
+        ssh = SpecInfra.configuration.ssh
         ssh.open_channel do |channel|
           channel.request_pty do |ch, success|
             abort "Could not obtain pty " if !success
@@ -55,8 +55,8 @@ module SpecInfra
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
               if data.match pass_prompt
-                abort "Please set sudo password by using SUDO_PASSWORD or ASK_SUDO_PASSWORD environment variable" if RSpec.configuration.sudo_password.nil?
-                channel.send_data "#{RSpec.configuration.sudo_password}\n"
+                abort "Please set sudo password by using SUDO_PASSWORD or ASK_SUDO_PASSWORD environment variable" if SpecInfra.configuration.sudo_password.nil?
+                channel.send_data "#{SpecInfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
               end
@@ -80,7 +80,7 @@ module SpecInfra
       end
 
       def sudo
-        sudo_path = SpecInfra.configuration.sudo_path || RSpec.configuration.sudo_path
+        sudo_path = SpecInfra.configuration.sudo_path
         if sudo_path
           "#{sudo_path}/sudo"
         else

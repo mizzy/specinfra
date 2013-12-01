@@ -33,7 +33,7 @@ module SpecInfra
       end
 
       def build_command(cmd)
-        path = SpecInfra.configuration.path || RSpec.configuration.path
+        path = SpecInfra.configuration.path
         if path
           cmd = "env PATH=#{path}:$PATH #{cmd}"
           cmd.gsub!(/(\&\&\s*!?\(?\s*)/, "\\1env PATH=#{path}:$PATH ")
@@ -43,7 +43,7 @@ module SpecInfra
       end
 
       def add_pre_command(cmd)
-        path = SpecInfra.configuration.path || RSpec.configuration.path
+        path = SpecInfra.configuration.path
         if SpecInfra.configuration.pre_command
           cmd = "#{SpecInfra.configuration.pre_command} && #{cmd}"
           cmd = "env PATH=#{path}:$PATH #{cmd}" if path
@@ -178,7 +178,7 @@ module SpecInfra
       end
 
       def check_os
-        return RSpec.configuration.os if RSpec.configuration.os
+        return SpecInfra.configuration.os if SpecInfra.configuration.os
         if run_command('ls /etc/redhat-release')[:exit_status] == 0
           line = run_command('cat /etc/redhat-release')[:stdout]
           if line =~ /release (\d[\d.]*)/
