@@ -5,7 +5,7 @@ module SpecInfra
     module PowerShell
       module ScriptHelper
         def build_command(cmd)
-          path = SpecInfra.configuration.path || RSpec.configuration.path
+          path = SpecInfra.configuration.path
           if path
             cmd.strip!
             cmd = 
@@ -18,7 +18,7 @@ EOF
         end
 
         def add_pre_command(cmd)
-          path = SpecInfra.configuration.path || RSpec.configuration.path
+          path = SpecInfra.configuration.path
           if SpecInfra.configuration.pre_command
             cmd.strip!
             cmd = 

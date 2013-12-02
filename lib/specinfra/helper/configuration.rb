@@ -27,9 +27,12 @@ module SpecInfra
       #   end
       def build_configurations
         SpecInfra::Configuration.defaults.keys.each do |c|
-          value = self.respond_to?(c.to_sym) ?
-          self.send(c) : RSpec.configuration.send(c)
-          SpecInfra::Configuration.send(:"#{c}=", value)
+          if self.respond_to?(c.to_sym)
+            value = self.send(c)
+          else
+            value = RSpec.configuration.send(c) if defined?(RSpec)
+          end
+          SpecInfra::Configuration.instance_variable_set("@#{c}", value)
         end
       end
     end
