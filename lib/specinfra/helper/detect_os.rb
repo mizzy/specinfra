@@ -11,7 +11,7 @@ module SpecInfra
           os = backend(SpecInfra::Command::Base).check_os
           property[:os_by_host][host] = os
         end
-        self.class.const_get('SpecInfra').const_get('Commands').const_get(os[:family]).new
+        self.class.const_get('SpecInfra').const_get('Command').const_get(os[:family]).new
       end
     end
   end
