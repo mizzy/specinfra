@@ -5,9 +5,9 @@ module SpecInfra
         module #{backend}
           def backend(commands_object=nil)
             if ! respond_to?(:commands)
-              commands_object = self.class.const_get(SPEC_TYPE).const_get('Commands').const_get('Base').new
+              commands_object = SpecInfra::Command::Base.new
             end
-            instance = self.class.const_get('SpecInfra').const_get('Backend').const_get('#{backend}').instance
+            instance = SpecInfra::Backend::#{backend}.instance
             instance.set_commands(commands_object || commands)
             instance
           end
@@ -18,9 +18,9 @@ module SpecInfra
     module Backend
       def backend_for(type)
         if ! respond_to?(:commands)
-          commands_object = self.class.const_get(SPEC_TYPE).const_get('Commands').const_get('Base').new
+          commands_object = SpecInfra::Command::Base.new
         end
-        instance = self.class.const_get('SpecInfra').const_get('Backend').const_get("#{type.to_s.capitalize}").instance
+        instance = self.class.const_get('SpecInfra').const_get('Backend').const_get(type.to_s.capitalize).instance
         instance.set_commands(commands_object || commands)
         instance
       end
