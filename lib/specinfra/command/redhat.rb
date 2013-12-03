@@ -27,6 +27,11 @@ module SpecInfra
       end
 
       alias :check_installed_by_rpm :check_installed
+
+      def install(package)
+        cmd = "yum -y install #{package}"
+      end
+
     end
   end
 end
