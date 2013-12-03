@@ -4,6 +4,7 @@ require "specinfra/command/base"
 require "specinfra/command/linux"
 require "specinfra/command/debian"
 require "specinfra/command/gentoo"
+require "specinfra/command/plamo"
 
 # Others
 require "specinfra/command/aix"
