@@ -7,3 +7,4 @@ require "specinfra/command/debian"
 # Others
 require "specinfra/command/aix"
 require "specinfra/command/darwin"
+require "specinfra/command/freebsd"
