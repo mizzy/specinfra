@@ -188,7 +188,8 @@ module SpecInfra
         elsif run_command('ls /etc/system-release')[:exit_status] == 0
           { :family => 'RedHat', :release => nil } # Amazon Linux
         elsif run_command('ls /etc/debian_version')[:exit_status] == 0
-          { :family => 'Debian', :release => nil }
+          distro = run_command("lsb_release -i | grep 'Distributor ID:' | awk '{print $3}'")[:stdout]
+          { :family => distro, :release => nil }
         elsif run_command('ls /etc/gentoo-release')[:exit_status] == 0
           { :family => 'Gentoo', :release => nil }
         elsif run_command('ls /usr/lib/setup/Plamo-*')[:exit_status] == 0
