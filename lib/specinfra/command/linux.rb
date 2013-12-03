@@ -1,5 +1,3 @@
-require 'shellwords'
-
 module SpecInfra
   module Command
     class Linux < Base
