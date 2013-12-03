@@ -35,6 +35,10 @@ module SpecInfra
       def check_access_by_user(file, user, access)
         "sudo -u #{user} -s /bin/test -#{access} #{file}"
       end
+
+      def install(package)
+        cmd = "brew install '#{package}'"
+      end
     end
   end
 end
