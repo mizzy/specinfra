@@ -1,6 +1,7 @@
 require "specinfra/version"
 require "specinfra/helper"
 require "specinfra/backend"
+require "specinfra/command"
 require "specinfra/configuration"
 
 include SpecInfra
@@ -23,7 +24,7 @@ if defined?(RSpec)
     c.add_setting :winrm,         :default => nil
     SpecInfra.configuration.defaults.each { |k, v| c.add_setting k, :default => v }
     c.before :each do
-      backend.set_example(example) if defined?(SPEC_TYPE)
+      backend.set_example(example)
     end
   end
 end

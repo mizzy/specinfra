@@ -18,7 +18,7 @@ module SpecInfra
       eval <<-EOF
         module #{os}
           def commands
-            self.class.const_get(SPEC_TYPE).const_get('Commands').const_get('#{os}').new
+            SpecInfra::Command::#{os}.new
           end
         end
       EOF
