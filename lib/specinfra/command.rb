@@ -1,4 +1,9 @@
 require "specinfra/command/base"
-require "specinfra/command/aix"
+
+# Linux
 require "specinfra/command/linux"
 require "specinfra/command/debian"
+
+# Others
+require "specinfra/command/aix"
+require "specinfra/command/darwin"
