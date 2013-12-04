@@ -14,11 +14,6 @@ module SpecInfra
         end
         cmd
       end
-
-      def check_running(service)
-        # This is compatible with Debian >Jaunty and Ubuntu derivatives
-        "service #{escape(service)} status | grep 'running'"
-      end
     end
   end
 end
