@@ -17,11 +17,9 @@ module SpecInfra
 
     module Backend
       def backend_for(type)
-        if ! respond_to?(:commands)
-          commands_object = SpecInfra::Command::Base.new
-        end
         instance = self.class.const_get('SpecInfra').const_get('Backend').const_get(type.to_s.capitalize).instance
-        instance.set_commands(commands_object || commands)
+        commands = self.class.const_get('SpecInfra').const_get('Command').const_get(instance.check_os[:family]).new
+        instance.set_commands(commands)
         instance
       end
     end
