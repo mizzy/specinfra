@@ -1,13 +1,15 @@
 module SpecInfra
   module Helper
-    ['Exec', 'Ssh', 'Cmd', 'WinRM', 'ShellScript'].each do |backend|
+    ['Exec', 'Ssh', 'Cmd', 'WinRM', 'ShellScript'].each do |type|
       eval <<-EOF
-        module #{backend}
+        module #{type}
           def backend(commands_object=nil)
-            if ! respond_to?(:commands)
+            called_by_detect_os = caller[0] =~ /detect_os\.rb/
+            if ! respond_to?(:commands) || called_by_detect_os
               commands_object = SpecInfra::Command::Base.new
             end
-            instance = SpecInfra::Backend::#{backend}.instance
+
+            instance = SpecInfra::Backend::#{type}.instance
             instance.set_commands(commands_object || commands)
             instance
           end
