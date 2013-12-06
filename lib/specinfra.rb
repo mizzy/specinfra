@@ -24,7 +24,9 @@ if defined?(RSpec)
     c.add_setting :winrm,         :default => nil
     SpecInfra.configuration.defaults.each { |k, v| c.add_setting k, :default => v }
     c.before :each do
-      backend.set_example(example)
+      if respond_to?(:backend) && backend.respond_to?(:set_example)
+        backend.set_example(example)
+      end
     end
   end
 end
