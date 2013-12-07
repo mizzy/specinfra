@@ -14,6 +14,10 @@ module SpecInfra
         end
         cmd
       end
+
+      def install(package)
+        "apt-get -y install #{package}"
+      end
     end
   end
 end
