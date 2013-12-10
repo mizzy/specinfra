@@ -290,7 +290,7 @@ module SpecInfra
       end
 
       def get_file_content(file)
-        "cat #{file} 2> || echo -n"
+        "cat #{file} 2> /dev/null || echo -n"
       end
 
       def check_container(container)
