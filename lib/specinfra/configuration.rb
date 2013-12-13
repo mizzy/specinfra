@@ -1,7 +1,7 @@
 module SpecInfra
   module Configuration
     class << self
-      VALID_OPTIONS_KEYS = [:path, :pre_command, :stdout, :stderr, :sudo_path, :pass_prompt].freeze
+      VALID_OPTIONS_KEYS = [:path, :pre_command, :stdout, :stderr, :sudo_path, :sudo_disable, :pass_prompt].freeze
 
       def defaults
         VALID_OPTIONS_KEYS.inject({}) { |o, k| o.merge!(k => send(k)) }
