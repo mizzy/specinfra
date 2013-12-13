@@ -4,11 +4,9 @@ module SpecInfra
       eval <<-EOF
         module #{type}
           def backend(commands_object=nil)
-            called_by_detect_os = caller[0] =~ /detect_os\.rb/
-            if ! respond_to?(:commands) || called_by_detect_os
+            if ! respond_to?(:commands)
               commands_object = SpecInfra::Command::Base.new
             end
-
             instance = SpecInfra::Backend::#{type}.instance
             instance.set_commands(commands_object || commands)
             instance
