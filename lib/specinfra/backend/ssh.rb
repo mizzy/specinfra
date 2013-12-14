@@ -21,8 +21,8 @@ module SpecInfra
       def build_command(cmd)
         cmd = super(cmd)
         user = SpecInfra.configuration.ssh.options[:user]
-        sudo_disable = SpecInfra.configuration.sudo_disable
-        if user != 'root' && !sudo_disable
+        disable_sudo = SpecInfra.configuration.disable_sudo
+        if user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
           cmd.gsub!(/(\&\&\s*!?\(?\s*)/, "\\1#{sudo} ")
           cmd.gsub!(/(\|\|\s*!?\(?\s*)/, "\\1#{sudo} ")
@@ -34,8 +34,8 @@ module SpecInfra
         cmd = super(cmd)
         user = SpecInfra.configuration.ssh.options[:user]
         pre_command = SpecInfra.configuration.pre_command
-        sudo_disable = SpecInfra.configuration.sudo_disable
-        if pre_command && user != 'root' && !sudo_disable
+        disable_sudo = SpecInfra.configuration.disable_sudo
+        if pre_command && user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
         end
         cmd

@@ -1,4 +1,5 @@
 require 'specinfra'
+require 'rspec/mocks/standalone'
 
 include SpecInfra::Helper::Exec
 
