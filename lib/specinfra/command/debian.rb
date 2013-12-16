@@ -21,6 +21,11 @@ module SpecInfra
       def install(package)
         "apt-get -y install #{package}"
       end
+
+      def get_package_version(package, opts=nil)
+        "dpkg-query -f '${Status} ${Version}' -W #{package} | sed -n 's/^install ok installed //p'"
+      end
+
     end
   end
 end
