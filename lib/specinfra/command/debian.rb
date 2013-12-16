@@ -8,9 +8,10 @@ module SpecInfra
 
       def check_installed(package, version=nil)
         escaped_package = escape(package)
-        cmd = "dpkg -s #{escaped_package} && ! dpkg -s #{escaped_package} | grep -E '^Status: .+ not-installed$'"
         if version
-          cmd = "#{cmd} && dpkg -s #{escaped_package} | grep -E '^Version: #{escape(version)}$'"
+          cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^install ok installed #{escape(version)}$'"
+        else
+          cmd = "dpkg-query -f '${Status}' -W #{escaped_package} | grep '^install ok installed$'"
         end
         cmd
       end
