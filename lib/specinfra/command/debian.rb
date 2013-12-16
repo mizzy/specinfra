@@ -15,6 +15,8 @@ module SpecInfra
         cmd
       end
 
+      alias :check_installed_by_apt :check_installed
+
       def install(package)
         "apt-get -y install #{package}"
       end
