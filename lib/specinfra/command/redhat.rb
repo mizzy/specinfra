@@ -32,6 +32,9 @@ module SpecInfra
         cmd = "yum -y install #{package}"
       end
 
+      def get_package_version(package, opts=nil)
+        "rpm -qi #{package} | grep Version | awk '{print $3}'"
+      end
     end
   end
 end

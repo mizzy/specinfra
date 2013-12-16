@@ -300,6 +300,10 @@ module SpecInfra
       def check_cotainer_running(container)
         raise NotImplementedError.new
       end
+
+      def get_package_version(package, opts=nil)
+        raise NotImplementedError.new
+      end
     end
   end
 end
