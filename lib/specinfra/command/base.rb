@@ -113,8 +113,8 @@ module SpecInfra
         "ps aux | grep -w -- #{escape(process)} | grep -qv grep"
       end
 
-      def get_process(process, param)
-        "ps -C #{escape(process)} -o #{escape(param)}= | head -1"
+      def get_process(process, opts)
+        "ps -C #{escape(process)} -o #{opts[:format]} | head -1"
       end
 
       def check_file_contain(file, expected_pattern)
