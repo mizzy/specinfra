@@ -164,7 +164,9 @@ module SpecInfra
         ret = run_command(commands.check_routing_table(expected_attr[:destination]))
         return false if ret[:exit_status] != 0
 
-        ret[:stdout] =~ /^(\S+)(?: via (\S+))? dev (\S+).+\r\n(?:default via (\S+))?/
+        ret[:stdout].gsub!(/\r\n/, "\n")
+
+        ret[:stdout] =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
         actual_attr = {
           :destination => $1,
           :gateway     => $2 ? $2 : $4,
