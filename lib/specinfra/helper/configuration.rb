@@ -2,6 +2,7 @@ module SpecInfra
   module Helper
     module Configuration
       def subject
+        example = RSpec.respond_to?(:current_example) ? RSpec.current_example : self.example
         example.metadata[:subject] = described_class
         build_configurations
         super
