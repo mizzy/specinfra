@@ -84,13 +84,16 @@ module SpecInfra
 
       def sudo
         sudo_path = SpecInfra.configuration.sudo_path
-        if sudo_path
-          "#{sudo_path}/sudo"
-        else
-          'sudo'
-        end
-      end
+        sudo_path += '/' if sudo_path
 
+        sudo_options = SpecInfra.configuration.sudo_options
+        if sudo_options
+          sudo_options = sudo_options.join(' ') if sudo_options.is_a?(Array)
+          sudo_options = ' ' + sudo_options
+        end
+
+        "#{sudo_path}sudo#{sudo_options}"
+      end
     end
   end
 end
