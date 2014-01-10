@@ -96,3 +96,38 @@ describe 'build command without sudo' do
     end
   end
 end
+
+sudo_options = ['-p', '"[sudo] password for"']
+sudo_options_string = ' -p "[sudo] password for"'
+
+describe 'build command with sudo on alternate path' do
+  before :each do
+    RSpec.configure do |c|
+      ssh.stub(:options) { { :user => 'foo' } }
+      c.ssh = ssh
+      c.sudo_options = sudo_options
+    end
+  end
+
+
+  context 'command pattern 1a' do
+    subject { backend.build_command('test -f /etc/passwd') }
+    it { should eq "sudo#{sudo_options_string} test -f /etc/passwd" }
+  end
+
+  context 'command pattern 2a' do
+    subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
+    it { should eq "sudo#{sudo_options_string} test ! -f /etc/selinux/config || (sudo#{sudo_options_string} getenforce | grep -i -- disabled && sudo#{sudo_options_string} grep -i -- ^SELINUX=disabled$ /etc/selinux/config)" }
+  end
+
+  context 'command pattern 3a' do
+    subject { backend.build_command("dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'") }
+    it { should eq "sudo#{sudo_options_string} dpkg -s apache2 && ! sudo#{sudo_options_string} dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
+  end
+
+  after :each do
+    RSpec.configure do |c|
+      c.sudo_options = nil
+    end
+  end
+end
