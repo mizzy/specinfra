@@ -42,7 +42,13 @@ module SpecInfra
       end
 
       def copy_file(from, to)
-        raise NotImplementedError.new
+        scp = SpecInfra.configuration.scp
+        begin
+          scp.upload!(from, to)
+        rescue => e
+          return false
+        end
+        true
       end
 
       private
