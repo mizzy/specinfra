@@ -1,4 +1,5 @@
 require 'singleton'
+require 'fileutils'
 
 module SpecInfra
   module Backend
@@ -215,6 +216,15 @@ module SpecInfra
         else
           { :family => 'Base', :release => nil }
         end
+      end
+
+      def copy(file, from)
+        begin
+          FileUtils.cp(from, file)
+        rescue => e
+          return false
+        end
+        true
       end
     end
   end

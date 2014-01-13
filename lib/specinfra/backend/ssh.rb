@@ -41,6 +41,10 @@ module SpecInfra
         cmd
       end
 
+      def copy(file, from)
+        raise NotImplementedError.new
+      end
+
       private
       def ssh_exec!(command)
         stdout_data = ''
