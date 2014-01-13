@@ -218,9 +218,9 @@ module SpecInfra
         end
       end
 
-      def copy(file, from)
+      def copy_file(from, to)
         begin
-          FileUtils.cp(from, file)
+          FileUtils.cp(from, to)
         rescue => e
           return false
         end

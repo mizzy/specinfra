@@ -41,7 +41,7 @@ module SpecInfra
         cmd
       end
 
-      def copy(file, from)
+      def copy_file(from, to)
         raise NotImplementedError.new
       end
 
