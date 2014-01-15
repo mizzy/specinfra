@@ -9,7 +9,8 @@ module SpecInfra
         :sudo_path,
         :disable_sudo,
         :pass_prompt,
-        :sudo_options
+        :sudo_options,
+        :docker_image
       ].freeze
 
       def defaults
