@@ -191,7 +191,18 @@ module SpecInfra
         elsif run_command('ls /etc/system-release')[:exit_status] == 0
           { :family => 'RedHat', :release => nil } # Amazon Linux
         elsif run_command('ls /etc/debian_version')[:exit_status] == 0
-          distro = run_command("lsb_release -i | grep 'Distributor ID:' | awk '{print $3}'")[:stdout]
+          lsb_release = run_command("lsb_release -i")
+          if lsb_release[:exit_status] == 0
+            distro = $' if lsb_release[:stdout] =~ /:/
+          else
+            lsb_release = run_command("cat /etc/lsb-release")
+            if lsb_release[:exit_status] == 0
+              lsb_release[:stdout].each_line do |line|
+                distro = $' if line =~ /^DISTRIB_ID=/
+              end
+            end
+          end
+          distro ||= 'Debian'
           { :family => distro.strip, :release => nil }
         elsif run_command('ls /etc/gentoo-release')[:exit_status] == 0
           { :family => 'Gentoo', :release => nil }
