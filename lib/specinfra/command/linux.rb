@@ -11,6 +11,9 @@ module SpecInfra
         cmd += " -S"
         cmd += " #{escape(chain)}" if chain
         cmd += " | grep -- #{escape(rule)}"
+        cmd += " || iptables-save"
+        cmd += " -t #{escape(table)}" if table
+        cmd += " | grep -- #{escape(rule)}"
         cmd
       end
 
