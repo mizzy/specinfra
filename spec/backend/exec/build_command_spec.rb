@@ -2,31 +2,75 @@ require 'spec_helper'
 
 include SpecInfra::Helper::Exec
 
-describe 'build command with path' do
-  before :each do
-    RSpec.configure do |c|
-      c.path = '/sbin:/usr/sbin'
+describe SpecInfra::Backend::Exec do
+  describe '#build_command' do
+    context 'with simple command' do
+      it 'should escape spaces' do
+        expect(backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -c test\ -f\ /etc/passwd'
+      end
     end
-  end
 
-  context 'command pattern 1' do
-    subject { backend.build_command('test -f /etc/passwd') }
-    it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test -f /etc/passwd' }
-  end
+    context 'with complex command' do
+      it 'should escape special chars' do
+        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
+      end
+    end
 
-  context 'command pattern 2' do
-    subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
-      it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test ! -f /etc/selinux/config || (env PATH=/sbin:/usr/sbin:$PATH getenforce | grep -i -- disabled && env PATH=/sbin:/usr/sbin:$PATH grep -i -- ^SELINUX=disabled$ /etc/selinux/config)' }
-  end
+    context 'with custom shell' do
+      before do
+        RSpec.configure {|c| c.shell = '/usr/local/bin/tcsh' }
+      end
 
-  context 'command pattern 3' do
-    subject { backend.build_command("dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'") }
-    it { should eq "env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 && ! env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
-  end
+      after do
+        RSpec.configure {|c| c.shell = nil }
+      end
 
-  after :each do
-    RSpec.configure do |c|
-      c.path = nil
+      it 'should use custom shell' do
+        expect(backend.build_command('test -f /etc/passwd')).to eq '/usr/local/bin/tcsh -c test\ -f\ /etc/passwd'
+      end
+    end
+
+    context 'with custom shell that needs escaping' do
+      before do
+        RSpec.configure {|c| c.shell = '/usr/test & spec/bin/sh' }
+      end
+
+      after do
+        RSpec.configure {|c| c.shell = nil }
+      end
+
+      it 'should use custom shell' do
+        expect(backend.build_command('test -f /etc/passwd')).to eq '/usr/test\ \&\ spec/bin/sh -c test\ -f\ /etc/passwd'
+      end
+    end
+
+    context 'with custom path' do
+      before do
+        RSpec.configure {|c| c.path = '/opt/bin:/opt/foo/bin' }
+      end
+
+      after do
+        RSpec.configure {|c| c.path = nil }
+      end
+
+      it 'should use custom path' do
+        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH=/opt/bin:/opt/foo/bin:"$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+      end
+    end
+
+    context 'with custom path that needs escaping' do
+      before do
+        RSpec.configure {|c| c.path = '/opt/bin:/opt/test & spec/bin' }
+      end
+
+      after do
+        RSpec.configure {|c| c.path = nil }
+      end
+
+      it 'should use custom path' do
+        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH=/opt/bin:/opt/test\ \&\ spec/bin:"$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+      end
     end
   end
 end
+
