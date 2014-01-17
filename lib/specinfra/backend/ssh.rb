@@ -24,19 +24,6 @@ module SpecInfra
         disable_sudo = SpecInfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
-          cmd.gsub!(/(\&\&\s*!?\(?\s*)/, "\\1#{sudo} ")
-          cmd.gsub!(/(\|\|\s*!?\(?\s*)/, "\\1#{sudo} ")
-        end
-        cmd
-      end
-
-      def add_pre_command(cmd)
-        cmd = super(cmd)
-        user = SpecInfra.configuration.ssh.options[:user]
-        pre_command = SpecInfra.configuration.pre_command
-        disable_sudo = SpecInfra.configuration.disable_sudo
-        if pre_command && user != 'root' && !disable_sudo
-          cmd = "#{sudo} #{cmd}"
         end
         cmd
       end
@@ -93,16 +80,19 @@ module SpecInfra
       end
 
       def sudo
-        sudo_path = SpecInfra.configuration.sudo_path
-        sudo_path += '/' if sudo_path
+        if sudo_path = SpecInfra.configuration.sudo_path
+          sudo_path += '/sudo'
+        else
+          sudo_path = 'sudo'
+        end
 
         sudo_options = SpecInfra.configuration.sudo_options
         if sudo_options
-          sudo_options = sudo_options.join(' ') if sudo_options.is_a?(Array)
+          sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
           sudo_options = ' ' + sudo_options
         end
 
-        "#{sudo_path}sudo#{sudo_options}"
+        "#{sudo_path.shellescape}#{sudo_options}"
       end
     end
   end
