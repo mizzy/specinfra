@@ -10,8 +10,7 @@ module SpecInfra
 
       def run_command(cmd, opts={})
         @lines << cmd
-        { :stdout => nil, :stderr => nil,
-          :exit_status => 0, :exit_signal => nil }
+        CommandResult.new
       end
 
       class Writer

@@ -54,8 +54,8 @@ module SpecInfra
           begin
             stdout, stderr = container.attach
             result = container.wait
-            return {:stdout => stdout.join, :stderr => stderr.join,
-              :exit_status => result['StatusCode'], :exit_signal => nil}
+            return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
+              :exit_status => result['StatusCode']
           rescue
             container.kill
           end

@@ -18,8 +18,8 @@ module SpecInfra
           @example.metadata[:stdout]  = stdout + stderr
         end
 
-        { :stdout => stdout, :stderr => stderr,
-          :exit_status => result[:exitcode], :exit_signal => nil }
+        CommandResult.new :stdout => stdout, :stderr => stderr,
+          :exit_status => result[:exitcode]
       end
     end
   end
