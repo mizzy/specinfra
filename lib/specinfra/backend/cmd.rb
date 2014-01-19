@@ -13,8 +13,8 @@ module SpecInfra
           @example.metadata[:command] = script
           @example.metadata[:stdout]  = result[:stdout] + result[:stderr]
         end
-        { :stdout => result[:stdout], :stderr => result[:stderr],
-          :exit_status => result[:status], :exit_signal => nil }
+        CommandResult.new :stdout => result[:stdout], :stderr => result[:stderr],
+          :exit_status => result[:status]
       end
 
       def execute_script script

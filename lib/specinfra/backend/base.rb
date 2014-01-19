@@ -1,4 +1,5 @@
 require 'singleton'
+require 'specinfra/command_result'
 
 module SpecInfra
   module Backend

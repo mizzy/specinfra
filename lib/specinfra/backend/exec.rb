@@ -19,8 +19,7 @@ module SpecInfra
           @example.metadata[:stdout]  = stdout
         end
 
-        { :stdout => stdout, :stderr => nil,
-          :exit_status => $?.exitstatus, :exit_signal => nil }
+        CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
       end
 
       def run_with_no_ruby_environment
