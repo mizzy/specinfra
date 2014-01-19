@@ -2,6 +2,7 @@ require "specinfra/version"
 require "specinfra/helper"
 require "specinfra/backend"
 require "specinfra/command"
+require "specinfra/command_result"
 require "specinfra/configuration"
 
 include SpecInfra
