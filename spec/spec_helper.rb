@@ -7,8 +7,7 @@ module SpecInfra
   module Backend
     class Ssh
       def run_command(cmd, opts={})
-        { :stdout => nil, :stderr => nil,
-          :exit_status => 0, :exit_signal => nil }
+        CommandResult.new :stdout => nil, :exit_status => 0
       end
     end
   end
