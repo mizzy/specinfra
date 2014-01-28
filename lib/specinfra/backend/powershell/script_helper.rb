@@ -73,11 +73,11 @@ exit $exitCode
           ret = run_command(commands.check_running(process))
 
           # If the service is not registered, check the process
-          if ret[:exit_status] == 1
+          if ret.exit_status == 1
             ret = run_command(commands.check_process(process))
           end
 
-          ret[:exit_status] == 0
+          ret.success?
         end
       end
     end

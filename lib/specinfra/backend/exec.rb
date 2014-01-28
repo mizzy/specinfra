@@ -57,21 +57,21 @@ module SpecInfra
         # In Ubuntu, some services are under upstart and "service foo status" returns
         # exit status 0 even though they are stopped.
         # So return false if stdout contains "stopped/waiting".
-        return false if ret[:stdout] =~ /stopped\/waiting/
+        return false if ret.stdout =~ /stopped\/waiting/
 
         # If the service is not registered, check by ps command
-        if ret[:exit_status] == 1
+        if ret.exit_status == 1
           ret = run_command(commands.check_process(process))
         end
 
-        ret[:exit_status] == 0
+        ret.success?
       end
 
       def check_monitored_by_monit(process)
         ret = run_command(commands.check_monitored_by_monit(process))
-        return false unless ret[:stdout] != nil && ret[:exit_status] == 0
+        return false unless ret.stdout != nil && ret.success?
 
-        retlines = ret[:stdout].split(/[\r\n]+/).map(&:strip)
+        retlines = ret.stdout.split(/[\r\n]+/).map(&:strip)
         proc_index = retlines.index("Process '#{process}'")
         return false unless proc_index
         
@@ -79,7 +79,7 @@ module SpecInfra
       end
 
       def check_readable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file))[:stdout].strip)
+        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -95,7 +95,7 @@ module SpecInfra
       end
 
       def check_writable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file))[:stdout].strip)
+        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -111,7 +111,7 @@ module SpecInfra
       end
 
       def check_executable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file))[:stdout].strip)
+        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -128,11 +128,11 @@ module SpecInfra
 
       def check_mounted(path, expected_attr, only_with)
         ret = run_command(commands.check_mounted(path))
-        if expected_attr.nil? || ret[:exit_status] != 0
-          return ret[:exit_status] == 0
+        if expected_attr.nil? || ret.failure?
+          return ret.success?
         end
 
-        mount = ret[:stdout].scan(/\S+/)
+        mount = ret.stdout.scan(/\S+/)
         actual_attr    = { :device => mount[0], :type => mount[4] }
         mount[5].gsub(/\(|\)/, '').split(',').each do |option|
           name, val = option.split('=')
@@ -162,11 +162,11 @@ module SpecInfra
       def check_routing_table(expected_attr)
         return false if ! expected_attr[:destination]
         ret = run_command(commands.check_routing_table(expected_attr[:destination]))
-        return false if ret[:exit_status] != 0
+        return false if ret.failure?
 
-        ret[:stdout].gsub!(/\r\n/, "\n")
+        ret.stdout.gsub!(/\r\n/, "\n")
 
-        ret[:stdout] =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
+        ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
         actual_attr = {
           :destination => $1,
           :gateway     => $2 ? $2 : $4,
@@ -181,47 +181,47 @@ module SpecInfra
 
       def check_os
         return SpecInfra.configuration.os if SpecInfra.configuration.os
-        if run_command('ls /etc/redhat-release')[:exit_status] == 0
-          line = run_command('cat /etc/redhat-release')[:stdout]
+        if run_command('ls /etc/redhat-release').success?
+          line = run_command('cat /etc/redhat-release').stdout
           if line =~ /release (\d[\d.]*)/
             release = $1
           end
           { :family => 'RedHat', :release => release }
-        elsif run_command('ls /etc/system-release')[:exit_status] == 0
+        elsif run_command('ls /etc/system-release').success?
           { :family => 'RedHat', :release => nil } # Amazon Linux
-        elsif run_command('ls /etc/debian_version')[:exit_status] == 0
+        elsif run_command('ls /etc/debian_version').success?
           lsb_release = run_command("lsb_release -i")
-          if lsb_release[:exit_status] == 0
-            distro = $' if lsb_release[:stdout] =~ /:/
+          if lsb_release.success?
+            distro = $' if lsb_release.stdout =~ /:/
           else
             lsb_release = run_command("cat /etc/lsb-release")
-            if lsb_release[:exit_status] == 0
-              lsb_release[:stdout].each_line do |line|
+            if lsb_release.success?
+              lsb_release.stdout.each_line do |line|
                 distro = $' if line =~ /^DISTRIB_ID=/
               end
             end
           end
           distro ||= 'Debian'
           { :family => distro.strip, :release => nil }
-        elsif run_command('ls /etc/gentoo-release')[:exit_status] == 0
+        elsif run_command('ls /etc/gentoo-release').success?
           { :family => 'Gentoo', :release => nil }
-        elsif run_command('ls /usr/lib/setup/Plamo-*')[:exit_status] == 0
+        elsif run_command('ls /usr/lib/setup/Plamo-*').success?
           { :family => 'Plamo', :release => nil }
-        elsif run_command('uname -s')[:stdout] =~ /AIX/i
+        elsif run_command('uname -s').stdout =~ /AIX/i
           { :family => 'AIX', :release => nil }
-        elsif (os = run_command('uname -sr')[:stdout]) && os =~ /SunOS/i
+        elsif (os = run_command('uname -sr').stdout) && os =~ /SunOS/i
           if os =~ /5.10/
             { :family => 'Solaris10', :release => nil }
-          elsif run_command('grep -q "Oracle Solaris 11" /etc/release')[:exit_status] == 0
+          elsif run_command('grep -q "Oracle Solaris 11" /etc/release').success?
             { :family => 'Solaris11', :release => nil }
-          elsif run_command('grep -q SmartOS /etc/release')[:exit_status] == 0
+          elsif run_command('grep -q SmartOS /etc/release').success?
             { :family => 'SmartOS', :release => nil }
           else
             { :family => 'Solaris', :release => nil }
           end
-        elsif run_command('uname -s')[:stdout] =~ /Darwin/i
+        elsif run_command('uname -s').stdout =~ /Darwin/i
           { :family => 'Darwin', :release => nil }
-        elsif run_command('uname -s')[:stdout] =~ /FreeBSD/i
+        elsif run_command('uname -s').stdout =~ /FreeBSD/i
           { :family => 'FreeBSD', :release => nil }
         else
           { :family => 'Base', :release => nil }

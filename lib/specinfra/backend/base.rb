@@ -19,8 +19,7 @@ module SpecInfra
       end
       
       def check_zero(cmd, *args)
-        ret = run_command(commands.send(cmd, *args))
-        ret[:exit_status] == 0
+        run_command(commands.send(cmd, *args)).success?
       end
 
       # Default action is to call check_zero with args

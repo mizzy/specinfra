@@ -18,7 +18,7 @@ module SpecInfra
     end
 
     def [](x)
-      warn "CommandResult#[] is obsolete. Use accessors instead."
+      warn "CommandResult#[] is obsolete. Use accessors instead. in #{caller[0]}"
       case x
       when :stdout, :stderr, :exit_status, :exit_signal
       self.send(x)
