@@ -12,10 +12,10 @@ function FindInstalledApplication
   }   
 
   if ($appVersion -eq $null) { 
-   $keys | Where-Object {$_.name -like $appName -or $_.PSChildName -like $appName}
+   $keys | Where-Object {$_.DisplayName -like $appName -or $_.PSChildName -like $appName}
   }
   else{
-   $keys | Where-Object {$_.name -like $appName -or $_.PSChildName -like $appName  } | Where-Object {$_.DisplayVersion -eq $appVersion}
+   $keys | Where-Object {$_.DisplayName -like $appName -or $_.PSChildName -like $appName  } | Where-Object {$_.DisplayVersion -eq $appVersion}
   }
 }
 
