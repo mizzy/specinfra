@@ -102,7 +102,7 @@ module SpecInfra
         version_selection = version.nil? ? "" : "-appVersion '#{version}'"
         Backend::PowerShell::Command.new do
           using 'find_installed_application.ps1'
-          exec "(FindInstalledApplication -appName '#{package}' #{version_selection}) -ne $null"
+          exec "(FindInstalledApplication -appName '#{package}' #{version_selection}) -eq $true"
         end
       end
 
