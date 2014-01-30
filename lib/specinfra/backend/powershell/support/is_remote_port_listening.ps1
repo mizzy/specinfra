@@ -12,11 +12,13 @@ function IsRemotePortListening{
 		$wait = $connect.AsyncWaitHandle.WaitOne($timeout * 1000,$false)   
 		#If timeout   
 		If(!$wait) {   
-			$tcpobject.Close()   
-			return $false
-			} Else {    
-				$tcpobject.Close()     
-				return $true
+				$tcpobject.Close()   
+				return $false
+			} 
+			else{    
+				$result = $tcpobject.Connected
+				$tcpobject.Close()
+				return $result
 			}      
 		}       
 		elseif ($proto -eq "udp") {                               
