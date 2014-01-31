@@ -102,7 +102,7 @@ module SpecInfra
         version_selection = version.nil? ? "" : "-appVersion '#{version}'"
         Backend::PowerShell::Command.new do
           using 'find_installed_application.ps1'
-          exec "(FindInstalledApplication -appName '#{package}' #{version_selection}) -eq $true"
+          exec "(FindInstalledApplication -appName '#{package}' #{version_selection}) -ne $null"
         end
       end
 
@@ -202,6 +202,15 @@ module SpecInfra
             end
           end
       end
+
+      def check_windows_feature_enabled(name)
+ 
+         Backend::PowerShell::Command.new do
+           using 'list_windows_features.ps1'
+           exec "@(ListWindowsFeatures | Where-Object {($_.name -eq '#{name}')  -and ($_.State -eq 'enabled')}).count -gt 0"
+         end
+ 
+       end
 
       private
 
