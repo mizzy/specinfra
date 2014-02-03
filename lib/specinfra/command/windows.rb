@@ -203,6 +203,15 @@ module SpecInfra
           end
       end
 
+      def check_windows_feature_enabled(name)
+ 
+         Backend::PowerShell::Command.new do
+           using 'list_windows_features.ps1'
+           exec "@(ListWindowsFeatures | Where-Object {($_.name -eq '#{name}')  -and ($_.State -eq 'enabled')}).count -gt 0"
+         end
+ 
+       end
+
       private
 
       def item_has_attribute item, attribute
