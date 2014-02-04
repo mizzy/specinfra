@@ -60,6 +60,7 @@ function features_dism{
 }
 
 function features_powershell{
+    $ProgressPreference = "SilentlyContinue"
      import-module servermanager
      $features = Get-WindowsFeature
      $features | Export-Clixml $cachepath
