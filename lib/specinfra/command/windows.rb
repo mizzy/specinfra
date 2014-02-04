@@ -203,13 +203,18 @@ module SpecInfra
           end
       end
 
-      def check_windows_feature_enabled(name)
+      def check_windows_feature_enabled(name,provider)
  
-         Backend::PowerShell::Command.new do
-           using 'list_windows_features.ps1'
-           exec "@(ListWindowsFeatures | Where-Object {($_.name -eq '#{name}')  -and ($_.State -eq 'enabled')}).count -gt 0"
-         end
- 
+        if provider.nil?
+          cmd =  "@(ListWindowsFeatures -feature #{name}).count -gt 0"
+        else
+          cmd =  "@(ListWindowsFeatures -feature #{name} -provider #{provider}).count -gt 0"
+        end
+
+        Backend::PowerShell::Command.new do
+          using 'list_windows_features.ps1'
+          exec cmd
+        end
        end
 
       private
