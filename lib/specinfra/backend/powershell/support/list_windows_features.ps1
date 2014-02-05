@@ -1,5 +1,14 @@
 function ListWindowsFeatures
 {    
+    $cachepath =  "${env:temp}/ListWindowsFeatures.xml"
+    $maxAge = 2
+
+    $cache =  Get-Item $cachepath -erroraction SilentlyContinue
+
+    if($cache -ne $null -and ((get-date) - $cache.LastWriteTime).minutes -lt $maxage){
+        return Import-Clixml $cachepath
+    }
+    else{
         try
         {
             $dism = DISM /Online /Get-Features /Format:List | Where-Object {$_}     
@@ -21,6 +30,8 @@ function ListWindowsFeatures
                 }
             }
 
+            $feature | Export-Clixml $cachepath
+
             return $feature
         }
         catch
@@ -28,4 +39,5 @@ function ListWindowsFeatures
             Throw
         }
 
+    }
 }
