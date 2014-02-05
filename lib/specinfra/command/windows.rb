@@ -212,6 +212,11 @@ module SpecInfra
  
        end
 
+       def check_file_version(name,version)
+          cmd = "((Get-Command '#{name}').FileVersionInfo.ProductVersion -eq '#{version}') -or ((Get-Command '#{name}').FileVersionInfo.FileVersion -eq '#{version}')"
+          Backend::PowerShell::Command.new { exec cmd }
+       end
+
       private
 
       def item_has_attribute item, attribute
