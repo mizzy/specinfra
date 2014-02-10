@@ -1,6 +1,6 @@
 module SpecInfra
   module Helper
-    module LXC
+    module Lxc
       def self.included(klass)
         require 'lxc/extra' unless defined?(::LXC::Extra)
       rescue LoadError

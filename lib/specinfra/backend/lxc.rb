@@ -2,7 +2,7 @@ require 'lxc/extra'
 
 module SpecInfra
   module Backend
-    class LXC < Exec
+    class Lxc < Exec
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
