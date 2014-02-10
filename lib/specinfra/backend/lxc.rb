@@ -6,9 +6,14 @@ module SpecInfra
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        ct.execute do
-          `/bin/bash -c #{cmd}`
+        out = ct.execute do
+                `/bin/bash -c #{cmd}`
+              end
+        if @example
+          @example.metadata[:command] = cmd
+          @example.metadata[:stdout]  = out
         end
+        CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
       end
       def build_command(cmd)
         cmd
