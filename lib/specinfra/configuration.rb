@@ -10,7 +10,8 @@ module SpecInfra
         :disable_sudo,
         :pass_prompt,
         :sudo_options,
-        :docker_image
+        :docker_image,
+        :lxc
       ].freeze
 
       def defaults
