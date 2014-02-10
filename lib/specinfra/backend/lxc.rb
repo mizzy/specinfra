@@ -6,14 +6,15 @@ module SpecInfra
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        out = ct.execute do
-                `/bin/bash -c #{cmd}`
-              end
+        [ out, ret] = ct.execute do
+                        out = `/bin/bash -c #{cmd}`
+                        [out, $?.dup]
+                      end
         if @example
           @example.metadata[:command] = cmd
           @example.metadata[:stdout]  = out
         end
-        CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
+        CommandResult.new :stdout => out, :exit_status => ret.exitstatus
       end
       def build_command(cmd)
         cmd
@@ -33,7 +34,7 @@ module SpecInfra
       end
 
       def ct
-        @ct ||= ::LXC::Container.new(SpecInfra.configuration.lxc)
+        @ct ||= ::LXC::Container.new(RSpec.configuration.lxc)
       end
     end
   end
