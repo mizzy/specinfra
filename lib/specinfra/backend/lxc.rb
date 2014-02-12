@@ -7,7 +7,7 @@ module SpecInfra
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
         out, ret = ct.execute do
-                     out = `/bin/bash -c #{cmd}`
+                     out = `#{cmd}`
                      [out, $?.dup]
                    end
         if @example
