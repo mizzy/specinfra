@@ -30,6 +30,10 @@ module SpecInfra
       def install(package)
         "pkg install -y #{escape(package)}"
       end
+
+      def get_package_version(package)
+          "pkg query %v #{escape(package)}"
+      end
     end
   end
 end
