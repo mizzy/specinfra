@@ -26,6 +26,10 @@ module SpecInfra
       def get_mode(file)
         "stat -f%Lp #{escape(file)}"
       end
+
+      def install(package)
+        "pkg install -y #{escape(package)}"
+      end
     end
   end
 end
