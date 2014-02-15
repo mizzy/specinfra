@@ -6,7 +6,11 @@ module SpecInfra
       end
 
       def check_installed(package, version=nil)
-        "pkg_info -Ix #{escape(package)}"
+        if version
+          "pkg_info -I #{escape(package)}-#{escape(version)}"
+        else
+          "pkg_info -Ix #{escape(package)}"
+        end
       end
 
       def check_listening(port)
