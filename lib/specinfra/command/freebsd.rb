@@ -30,6 +30,10 @@ module SpecInfra
       def install(package)
         "pkg_add -r install #{package}"
       end
+
+      def get_package_version(package, opts=nil)
+        "pkg_info -Ix #{escape(package)} | cut -f 1 -w | sed -n 's/^#{escape(package)}-//p'"
+      end
     end
   end
 end
