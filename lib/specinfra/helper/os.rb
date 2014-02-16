@@ -6,6 +6,7 @@ module SpecInfra
      'Darwin',
      'Debian',
      'FreeBSD',
+     'FreeBSD10',
      'Gentoo',
      'Plamo',
      'RedHat',

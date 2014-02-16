@@ -53,7 +53,7 @@ module SpecInfra
 
       def check_running(process)
         ret = run_command(commands.check_running(process))
-        
+
         # In Ubuntu, some services are under upstart and "service foo status" returns
         # exit status 0 even though they are stopped.
         # So return false if stdout contains "stopped/waiting".
@@ -74,7 +74,7 @@ module SpecInfra
         retlines = ret.stdout.split(/[\r\n]+/).map(&:strip)
         proc_index = retlines.index("Process '#{process}'")
         return false unless proc_index
-        
+
         retlines[proc_index+2].match(/\Amonitoring status\s+monitored\Z/i) != nil
       end
 
@@ -221,8 +221,12 @@ module SpecInfra
           end
         elsif run_command('uname -s').stdout =~ /Darwin/i
           { :family => 'Darwin', :release => nil }
-        elsif run_command('uname -s').stdout =~ /FreeBSD/i
-          { :family => 'FreeBSD', :release => nil }
+        elsif (os = run_command('uname -sr').stdout) && os =~ /FreeBSD/i
+          if os =~ /10./
+            { :family => 'FreeBSD10', :release => nil }
+          else
+            { :family => 'FreeBSD', :release => nil }
+          end
         else
           { :family => 'Base', :release => nil }
         end
