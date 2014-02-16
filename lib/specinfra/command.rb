@@ -18,5 +18,5 @@ require "specinfra/command/smartos"
 require "specinfra/command/aix"
 require "specinfra/command/darwin"
 require "specinfra/command/freebsd"
+require "specinfra/command/freebsd10"
 require "specinfra/command/windows"
-
