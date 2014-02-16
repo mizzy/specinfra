@@ -173,7 +173,7 @@ module SpecInfra
       end
 
       def check_link(link, target)
-        "stat -c %N #{escape(link)} | grep -- #{escape(target)}"
+        "stat -c %N #{escape(link)} | grep -- \"-> \\`#{escape(target)}'\""
       end
 
       def check_installed_by_gem(name, version=nil)
