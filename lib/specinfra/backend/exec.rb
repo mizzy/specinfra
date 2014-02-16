@@ -12,7 +12,7 @@ module SpecInfra
           `#{build_command(cmd)} 2>&1`
         end
         # In ruby 1.9, it is possible to use Open3.capture3, but not in 1.8
-        #stdout, stderr, status = Open3.capture3(cmd)
+        # stdout, stderr, status = Open3.capture3(cmd)
 
         if @example
           @example.metadata[:command] = cmd
