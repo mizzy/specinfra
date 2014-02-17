@@ -17,7 +17,7 @@ module SpecInfra
       def commands
         @commands
       end
-      
+
       def check_zero(cmd, *args)
         run_command(commands.send(cmd, *args)).success?
       end
