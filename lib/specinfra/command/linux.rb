@@ -44,7 +44,7 @@ module SpecInfra
         ip_address.gsub!(".", "\\.")
         "ip addr show #{interface} | grep 'inet #{ip_address}'"
       end
-      
+
       def check_zfs(zfs, property=nil)
         if property.nil?
           "zfs list -H #{escape(zfs)}"

@@ -43,7 +43,7 @@ module SpecInfra
           exec cmd
         end
       end
-      
+
       def check_directory(dir)
         cmd = item_has_attribute dir, 'Directory'
         Backend::PowerShell::Command.new do
@@ -195,7 +195,7 @@ module SpecInfra
              Backend::PowerShell::Command.new do
               exec "(New-Object System.Net.NetworkInformation.Ping).send('#{host}').Status -eq 'Success'"
              end
-          else  
+          else
             Backend::PowerShell::Command.new do
              using 'is_remote_port_listening.ps1'
              exec"(IsRemotePortListening -hostname #{host} -port #{port} -timeout #{timeout} -proto #{proto}) -eq $true"
@@ -204,7 +204,7 @@ module SpecInfra
       end
 
       def check_windows_feature_enabled(name,provider)
- 
+
         if provider.nil?
           cmd =  "@(ListWindowsFeatures -feature #{name}).count -gt 0"
         else
