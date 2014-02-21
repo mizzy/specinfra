@@ -1,4 +1,3 @@
-require 'lxc/extra'
 
 module SpecInfra
   module Backend
