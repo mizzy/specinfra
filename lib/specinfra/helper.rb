@@ -5,6 +5,7 @@ require 'specinfra/helper/backend'
 include SpecInfra::Helper::Backend
 
 require 'specinfra/helper/docker'
+require 'specinfra/helper/lxc'
 
 require 'specinfra/helper/configuration'
 
