@@ -189,6 +189,12 @@ module SpecInfra
           { :family => 'RedHat', :release => release }
         elsif run_command('ls /etc/system-release').success?
           { :family => 'RedHat', :release => nil } # Amazon Linux
+        elsif run_command('ls /etc/SuSE-release').success?
+          line = run_command('cat /etc/SuSE-release').stdout
+          if line =~ /SUSE Linux Enterprise Server (\d+)/
+            release = $1
+          end
+          { :family => 'SuSE', :release => release }
         elsif run_command('ls /etc/debian_version').success?
           lsb_release = run_command("lsb_release -i")
           if lsb_release.success?

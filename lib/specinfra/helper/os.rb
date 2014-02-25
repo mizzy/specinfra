@@ -10,6 +10,7 @@ module SpecInfra
      'Gentoo',
      'Plamo',
      'RedHat',
+     'SuSE',
      'SmartOS',
      'Solaris',
      'Solaris10',
