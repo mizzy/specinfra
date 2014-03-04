@@ -129,6 +129,11 @@ module SpecInfra
         "grep -qF -- #{escape(expected_pattern)} #{escape(file)}"
       end
 
+      def check_file_checksum(file, expected)
+        regexp = "^#{expected}"
+        "cksum #{escape(file)} | grep -iw -- #{escape(regexp)}"
+      end
+
       def check_file_md5checksum(file, expected)
         regexp = "^#{expected}"
         "md5sum #{escape(file)} | grep -iw -- #{escape(regexp)}"
