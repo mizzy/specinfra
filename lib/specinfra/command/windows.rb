@@ -250,6 +250,13 @@ module SpecInfra
             end
         end
 
+        def check_iis_website_path(name, path)
+            Backend::PowerShell::Command.new do
+              using 'find_iis_website.ps1'
+              exec "[System.Environment]::ExpandEnvironmentVariables( ( FindIISWebsite -name '#{name}' ).physicalPath ).replace('\\', '/' ) -eq ('#{path}'.trimEnd('/').replace('\\', '/'))"
+            end
+        end
+
       private
 
       def item_has_attribute item, attribute
