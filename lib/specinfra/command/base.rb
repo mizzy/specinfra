@@ -79,6 +79,14 @@ module SpecInfra
         raise NotImplementedError.new
       end
 
+      def check_service_installed(service)
+        raise NotImplementedError.new
+      end
+
+      def check_service_start_mode(service, mode)
+        raise NotImplementedError.new
+      end
+
       def check_listening(port)
         regexp = ":#{port} "
         "netstat -tunl | grep -- #{escape(regexp)}"
