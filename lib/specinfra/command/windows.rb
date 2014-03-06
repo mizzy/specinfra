@@ -222,6 +222,34 @@ module SpecInfra
           Backend::PowerShell::Command.new { exec cmd }
        end
 
+       def check_iis_website_enabled(name)
+          Backend::PowerShell::Command.new do
+            using 'find_iis_website.ps1'
+            exec "(FindIISWebsite -name '#{name}').serverAutoStart -eq $true"
+          end
+       end
+
+       def check_iis_website_installed(name)
+          Backend::PowerShell::Command.new do
+            using 'find_iis_website.ps1'
+            exec "@(FindIISWebsite -name '#{name}').count -gt 0"
+          end
+       end
+
+       def check_iis_website_running(name)
+          Backend::PowerShell::Command.new do
+            using 'find_iis_website.ps1'
+            exec "(FindIISWebsite -name '#{name}').state -eq 'Started'"
+          end
+       end
+
+       def check_iis_app_pool(name, app_pool)
+        Backend::PowerShell::Command.new do
+              using 'find_iis_website.ps1'
+              exec "(FindIISWebsite -name '#{name}').applicationPool -match '#{app_pool}'"
+            end
+        end
+
       private
 
       def item_has_attribute item, attribute
