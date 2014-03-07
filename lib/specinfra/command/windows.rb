@@ -224,36 +224,50 @@ module SpecInfra
 
        def check_iis_website_enabled(name)
           Backend::PowerShell::Command.new do
-            using 'find_iis_website.ps1'
+            using 'find_iis_component.ps1'
             exec "(FindIISWebsite -name '#{name}').serverAutoStart -eq $true"
           end
        end
 
        def check_iis_website_installed(name)
           Backend::PowerShell::Command.new do
-            using 'find_iis_website.ps1'
+            using 'find_iis_component.ps1'
             exec "@(FindIISWebsite -name '#{name}').count -gt 0"
           end
        end
 
        def check_iis_website_running(name)
           Backend::PowerShell::Command.new do
-            using 'find_iis_website.ps1'
+            using 'find_iis_component.ps1'
             exec "(FindIISWebsite -name '#{name}').state -eq 'Started'"
           end
        end
 
-       def check_iis_app_pool(name, app_pool)
+       def check_iis_website_app_pool(name, app_pool)
         Backend::PowerShell::Command.new do
-              using 'find_iis_website.ps1'
+              using 'find_iis_component.ps1'
               exec "(FindIISWebsite -name '#{name}').applicationPool -match '#{app_pool}'"
             end
         end
 
         def check_iis_website_path(name, path)
             Backend::PowerShell::Command.new do
-              using 'find_iis_website.ps1'
+              using 'find_iis_component.ps1'
               exec "[System.Environment]::ExpandEnvironmentVariables( ( FindIISWebsite -name '#{name}' ).physicalPath ).replace('\\', '/' ) -eq ('#{path}'.trimEnd('/').replace('\\', '/'))"
+            end
+        end
+
+        def check_iis_app_pool(name)
+            Backend::PowerShell::Command.new do
+              using 'find_iis_component.ps1'
+              exec "@(FindIISAppPool -name '#{name}').count -gt 0"
+            end
+        end
+
+        def check_iis_app_pool_dotnet(name, dotnet)
+            Backend::PowerShell::Command.new do
+              using 'find_iis_component.ps1'
+              exec "(FindIISAppPool -name '#{name}').managedRuntimeVersion -match 'v#{dotnet}'"
             end
         end
 
