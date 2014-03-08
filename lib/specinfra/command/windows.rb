@@ -106,6 +106,20 @@ module SpecInfra
         end
       end
 
+      def check_service_installed(service)
+        Backend::PowerShell::Command.new do
+          using 'find_service.ps1'
+          exec "@(FindService -name '#{service}').count -gt 0"
+        end
+      end
+
+      def check_service_start_mode(service, mode)
+        Backend::PowerShell::Command.new do
+          using 'find_service.ps1'
+          exec  "'#{mode}' -match (FindService -name '#{service}').StartMode -and (FindService -name '#{service}') -ne $null"
+        end
+      end
+
       def check_enabled(service, level=nil)
         Backend::PowerShell::Command.new do
           using 'find_service.ps1'
