@@ -5,7 +5,7 @@ require 'specinfra/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "specinfra"
-  spec.version       = Specinfra::VERSION
+  spec.version       = SpecInfra::VERSION
   spec.authors       = ["Gosuke Miyashita"]
   spec.email         = ["gosukenator@gmail.com"]
   spec.description   = %q{Common layer for serverspec and configspec}
