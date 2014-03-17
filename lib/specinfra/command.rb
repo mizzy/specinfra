@@ -8,6 +8,7 @@ require "specinfra/command/gentoo"
 require "specinfra/command/plamo"
 require "specinfra/command/redhat"
 require "specinfra/command/suse"
+require "specinfra/command/fedora"
 
 # Solaris
 require "specinfra/command/solaris"

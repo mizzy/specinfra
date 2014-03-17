@@ -5,6 +5,7 @@ module SpecInfra
      'AIX',
      'Darwin',
      'Debian',
+     'Fedora',
      'FreeBSD',
      'FreeBSD10',
      'Gentoo',
