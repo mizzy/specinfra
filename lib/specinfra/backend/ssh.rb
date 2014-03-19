@@ -61,14 +61,16 @@ module SpecInfra
 
         ssh = SpecInfra.configuration.ssh
         ssh.open_channel do |channel|
-          channel.request_pty do |ch, success|
-            abort "Could not obtain pty " if !success
+          if not SpecInfra.configuration.sudo_password.nil?
+            # We don't need a PTY because we don't have a sudo password
+            channel.request_pty do |ch, success|
+              abort "Could not obtain pty " if !success
+            end
           end
           channel.exec("#{command}") do |ch, success|
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
               if data.match pass_prompt
-                abort "Please set sudo password by using SUDO_PASSWORD or ASK_SUDO_PASSWORD environment variable" if SpecInfra.configuration.sudo_password.nil?
                 channel.send_data "#{SpecInfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
@@ -76,7 +78,11 @@ module SpecInfra
             end
 
             channel.on_extended_data do |ch, type, data|
-              stderr_data += data
+              if data.match /^sudo: no tty present and no askpass program specified/
+                abort "Please set sudo password by using SUDO_PASSWORD or ASK_SUDO_PASSWORD environment variable"
+              else
+                stderr_data += data
+              end
             end
 
             channel.on_request("exit-status") do |ch, data|
