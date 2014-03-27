@@ -24,7 +24,11 @@ module SpecInfra
 
       # Default action is to call check_zero with args
       def method_missing(meth, *args, &block)
-        check_zero(meth, *args)
+        if meth =~ /^check/
+          check_zero(meth, *args)
+        else
+          run_command(commands.send(meth, *args))
+        end
       end
     end
   end
