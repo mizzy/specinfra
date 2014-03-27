@@ -321,6 +321,10 @@ module SpecInfra
       def get_package_version(package, opts=nil)
         raise NotImplementedError.new
       end
+
+      def get_ipaddress_of_host(name)
+        "getent hosts #{escape(name)} | awk '{print $1}'"
+      end
     end
   end
 end
