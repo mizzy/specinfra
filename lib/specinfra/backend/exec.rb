@@ -181,7 +181,15 @@ module SpecInfra
 
       def check_os
         return SpecInfra.configuration.os if SpecInfra.configuration.os
-        if run_command('ls /etc/redhat-release').success?
+        # Fedora also has an /etc/redhat-release so the Fedora check must
+        # come before the RedHat check
+        if run_command('ls /etc/fedora-release').success?
+          line = run_command('cat /etc/redhat-release').stdout
+          if line =~ /release (\d[\d]*)/
+            release = $1
+          end
+          { :family => 'Fedora', :release => release }
+        elsif run_command('ls /etc/redhat-release').success?
           line = run_command('cat /etc/redhat-release').stdout
           if line =~ /release (\d[\d.]*)/
             release = $1
