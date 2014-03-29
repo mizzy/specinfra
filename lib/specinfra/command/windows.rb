@@ -66,6 +66,10 @@ module SpecInfra
         end
       end
 
+      def get_file_content(file)
+        "[Io.File]::ReadAllText('#{file}')"
+      end
+
       def check_access_by_user(file, user, access)
         case access
         when 'r'
