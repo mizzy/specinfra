@@ -7,7 +7,7 @@ module SpecInfra
 
       def run_command(cmd, opts={})
         script = create_script(cmd)
-        result = execute_script %Q{powershell -encodedCommand #{encode_script(script)}}
+        result = execute_script %Q{#{powershell} -encodedCommand #{encode_script(script)}}
 
         if @example
           @example.metadata[:command] = script
@@ -34,6 +34,32 @@ module SpecInfra
         # Dirty hack for specs
         'Windows'
       end
+
+      private
+
+      def powershell
+         architecture = @example.metadata[:architecture] || SpecInfra.configuration.architecture
+
+         case architecture
+         when :i386 then x86_powershell
+         when :x86_64 then x64_powershell
+         else raise ArgumentError, "invalid architecture [#{architecture}]"
+         end
+      end
+
+      def x64_powershell
+        find_powershell(%w(sysnative system32))
+      end
+
+      def x86_powershell
+        find_powershell(%w(syswow64 system32))
+      end
+
+      def find_powershell(dirs)
+        dirs.map { |dir| "#{ENV['WINDIR']}\\#{dir}\\WindowsPowerShell\\v1.0\\powershell.exe" }
+          .find { |exe| File.exists?(exe) } || 'powershell'
+      end
+
     end
   end
 end

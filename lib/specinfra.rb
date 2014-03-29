@@ -24,6 +24,7 @@ if defined?(RSpec)
     c.add_setting :scp,           :default => nil
     c.add_setting :sudo_password, :default => nil
     c.add_setting :winrm,         :default => nil
+    c.add_setting :architecture,  :default => :x86_64
     SpecInfra.configuration.defaults.each { |k, v| c.add_setting k, :default => v }
     c.before :each do
       if respond_to?(:backend) && backend.respond_to?(:set_example)
