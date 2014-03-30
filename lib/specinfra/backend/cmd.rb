@@ -38,13 +38,13 @@ module SpecInfra
       private
 
       def powershell
-         architecture = @example.metadata[:architecture] || SpecInfra.configuration.architecture
+        architecture = @example.metadata[:architecture] || SpecInfra.configuration.architecture
 
-         case architecture
-         when :i386 then x86_powershell
-         when :x86_64 then x64_powershell
-         else raise ArgumentError, "invalid architecture [#{architecture}]"
-         end
+        case architecture
+        when :i386 then x86_powershell
+        when :x86_64 then x64_powershell
+        else raise ArgumentError, "invalid architecture [#{architecture}]"
+        end
       end
 
       def x64_powershell
