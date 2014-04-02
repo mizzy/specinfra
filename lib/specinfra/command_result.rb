@@ -21,7 +21,7 @@ module SpecInfra
       warn "CommandResult#[] is obsolete. Use accessors instead. in #{caller[0]}"
       case x
       when :stdout, :stderr, :exit_status, :exit_signal
-      self.send(x)
+        self.send(x)
       end
     end
   end
