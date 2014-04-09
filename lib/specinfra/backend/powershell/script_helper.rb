@@ -53,6 +53,7 @@ EOF
             script = add_pre_command(script)
             <<-EOF
 $exitCode = 1
+$ProgressPreference = "SilentlyContinue"
 try {
   #{ps_functions.join("\n")}
   $success = (#{script})
