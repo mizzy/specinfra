@@ -2,6 +2,7 @@ require "specinfra/command/base"
 
 # Linux
 require "specinfra/command/linux"
+require "specinfra/command/arch"
 require "specinfra/command/debian"
 require "specinfra/command/ubuntu"
 require "specinfra/command/gentoo"

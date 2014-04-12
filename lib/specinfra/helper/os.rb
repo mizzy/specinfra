@@ -3,6 +3,7 @@ module SpecInfra
     [
       'Base',
       'AIX',
+      'Arch',
       'Darwin',
       'Debian',
       'FreeBSD',
