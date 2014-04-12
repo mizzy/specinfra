@@ -233,6 +233,8 @@ module SpecInfra
           else
             { :family => 'FreeBSD', :release => nil }
           end
+        elsif run_command('uname -sr').stdout =~ /Arch/i
+          { :family => 'Arch', :release => nil }
         else
           { :family => 'Base', :release => nil }
         end
