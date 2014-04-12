@@ -5,8 +5,9 @@ module SpecInfra
         "runuser -s /bin/sh -c \"test -#{access} #{file}\" #{user}"
       end
 
-      def check_enabled(service, target="multi-user.target")
-        "systemctl --plain list-dependencies #{target} | grep '^#{escape(service)}.service$'"
+      def check_enabled(service, level)
+        level = "multi-user.target" if level == 3
+        "systemctl --plain list-dependencies #{level} | grep '^#{escape(service)}.service$'"
       end
 
       def check_running(service)
