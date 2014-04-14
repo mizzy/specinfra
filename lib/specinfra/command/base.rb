@@ -161,6 +161,17 @@ module SpecInfra
         "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
       end
 
+      def check_file_contain_lines(file, expected_lines, from=nil, to=nil)
+        require 'digest/md5'
+        from ||= '1'
+        to ||= '$'
+        sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
+        head_line = expected_lines.first.chomp
+        lines_checksum = Digest::MD5.hexdigest(expected_lines.map(&:chomp).join("\n") + "\n")
+        afterwards_length = expected_lines.length - 1
+        "#{sed} | grep -A #{escape(afterwards_length)} -F -- #{escape(head_line)} | md5sum | grep -qiw -- #{escape(lines_checksum)}"
+      end
+
       def check_mode(file, mode)
         regexp = "^#{mode}$"
         "stat -c %a #{escape(file)} | grep -- #{escape(regexp)}"
