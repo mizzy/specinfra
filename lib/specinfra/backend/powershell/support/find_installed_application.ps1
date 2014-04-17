@@ -2,7 +2,7 @@ function FindInstalledApplication
 {
   param($appName, $appVersion)
     
-  if ((Get-WmiObject win32_operatingsystem).OSArchitecture -notlike '64-bit')  
+  if ((Get-WmiObject win32_operatingsystem).OSArchitecture -notmatch '64')  
   { 
       $keys= (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*') 
   }  
