@@ -11,7 +11,8 @@ module SpecInfra
         :pass_prompt,
         :sudo_options,
         :docker_image,
-        :lxc
+        :lxc,
+        :request_pty,
       ].freeze
 
       def defaults

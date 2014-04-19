@@ -61,8 +61,7 @@ module SpecInfra
 
         ssh = SpecInfra.configuration.ssh
         ssh.open_channel do |channel|
-          if not SpecInfra.configuration.sudo_password.nil?
-            # We don't need a PTY because we don't have a sudo password
+          if SpecInfra.configuration.sudo_password or SpecInfra.configuration.request_pty
             channel.request_pty do |ch, success|
               abort "Could not obtain pty " if !success
             end
@@ -78,6 +77,11 @@ module SpecInfra
             end
 
             channel.on_extended_data do |ch, type, data|
+              if data.match /you must have a tty to run sudo/
+                puts data
+                abort 'Please set "SpecInfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropreate file.'
+              end
+
               if data.match /^sudo: no tty present and no askpass program specified/
                 abort "Please set sudo password by using SUDO_PASSWORD or ASK_SUDO_PASSWORD environment variable"
               else
