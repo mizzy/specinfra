@@ -78,7 +78,6 @@ module SpecInfra
 
             channel.on_extended_data do |ch, type, data|
               if data.match /you must have a tty to run sudo/
-                puts data
                 abort 'Please set "SpecInfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropreate file.'
               end
 
