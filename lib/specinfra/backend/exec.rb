@@ -235,6 +235,8 @@ module SpecInfra
           end
         elsif run_command('uname -sr').stdout =~ /Arch/i
           { :family => 'Arch', :release => nil }
+        elsif run_command('uname -s').stdout =~ /OpenBSD/i
+          { :family => 'OpenBSD', :release => nil }
         else
           { :family => 'Base', :release => nil }
         end

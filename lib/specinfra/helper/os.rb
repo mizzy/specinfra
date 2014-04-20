@@ -9,6 +9,7 @@ module SpecInfra
       'FreeBSD',
       'FreeBSD10',
       'Gentoo',
+      'OpenBSD',
       'Plamo',
       'RedHat',
       'SuSE',
