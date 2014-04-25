@@ -16,6 +16,10 @@ module SpecInfra
       def check_running(service)
         "svcs -l #{escape(service)} status 2> /dev/null |grep -wx '^state.*online$'"
       end
+
+      def get_package_version(package, opts=nil)
+        "pkgin list | cut -f 1 -d ' ' | grep -E '^#{escape(package)}-([^-])+$' | grep -Eo '(\\.|\\w)+$'"
+      end
     end
   end
 end
