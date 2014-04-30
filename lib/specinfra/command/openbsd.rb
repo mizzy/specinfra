@@ -47,9 +47,23 @@ module SpecInfra
         "egrep '^#{escape(recipient)}:.*#{escape(target)}' /etc/mail/aliases"
       end
 
+      def check_link(link, target)
+        "stat -f %Y #{escape(link)} | grep -- #{escape(target)}"
+      end
+
       def check_mode(file, mode)
         regexp = "^#{mode}$"
         "stat -f%Lp #{escape(file)} | grep #{escape(regexp)}"
+      end
+
+      def check_owner(file, owner)
+        regexp = "^#{owner}$"
+        "stat -f %Su #{escape(file)} | grep -- #{escape(regexp)}"
+      end
+
+      def check_grouped(file, group)
+        regexp = "^#{group}$"
+        "stat -f %Sg #{escape(file)} | grep -- #{escape(regexp)}"
       end
 
       def check_mounted(path)
