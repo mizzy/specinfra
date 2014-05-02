@@ -196,19 +196,24 @@ module SpecInfra
           end
           { :family => 'SuSE', :release => release }
         elsif run_command('ls /etc/debian_version').success?
-          lsb_release = run_command("lsb_release -i")
+          lsb_release = run_command("lsb_release -ir")
           if lsb_release.success?
-            distro = $' if lsb_release.stdout =~ /:/
+            if lsb_release.stdout =~ /:/
+              distro = lsb_release.stdout.split("\n").first.split(':').last
+              release = lsb_release.stdout.split("\n").last.split(':').last.strip
+            end
           else
             lsb_release = run_command("cat /etc/lsb-release")
             if lsb_release.success?
               lsb_release.stdout.each_line do |line|
-                distro = $' if line =~ /^DISTRIB_ID=/
+                distro = line.split('=').last if line =~ /^DISTRIB_ID=/
+                release = line.split('=').last.strip if line =~ /^DISTRIB_RELEASE=/
               end
             end
           end
           distro ||= 'Debian'
-          { :family => distro.strip, :release => nil }
+          release ||= nil
+          { :family => distro.strip, :release => release }
         elsif run_command('ls /etc/gentoo-release').success?
           { :family => 'Gentoo', :release => nil }
         elsif run_command('ls /usr/lib/setup/Plamo-*').success?
