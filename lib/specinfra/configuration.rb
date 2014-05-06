@@ -3,6 +3,7 @@ module SpecInfra
     class << self
       VALID_OPTIONS_KEYS = [
         :path,
+        :shell,
         :pre_command,
         :stdout,
         :stderr,
