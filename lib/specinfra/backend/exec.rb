@@ -186,7 +186,11 @@ module SpecInfra
           if line =~ /release (\d[\d.]*)/
             release = $1
           end
-          { :family => 'RedHat', :release => release }
+          if release =~ /7./
+            { :family => 'RedHat7', :release => release }
+          else
+            { :family => 'RedHat', :release => release }
+          end
         elsif run_command('ls /etc/system-release').success?
           { :family => 'RedHat', :release => nil } # Amazon Linux
         elsif run_command('ls /etc/SuSE-release').success?
