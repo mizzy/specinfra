@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class Solaris < Base
       def check_enabled(service, level=3)

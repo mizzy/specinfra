@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Backend
     class Docker < Exec
       def initialize
@@ -31,7 +31,7 @@ module SpecInfra
       private
 
       def base_image
-        @base_image ||= ::Docker::Image.get(SpecInfra.configuration.docker_image)
+        @base_image ||= ::Docker::Image.get(Specinfra.configuration.docker_image)
       end
 
       def current_image
@@ -44,7 +44,7 @@ module SpecInfra
           'Cmd' => %W{/bin/sh -c #{cmd}},
         }.merge(opts)
 
-        if path = SpecInfra::configuration::path
+        if path = Specinfra::configuration::path
           (opts['Env'] ||= {})['PATH'] = path
         end
 

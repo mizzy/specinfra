@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class RedHat < Linux
       def check_access_by_user(file, user, access)

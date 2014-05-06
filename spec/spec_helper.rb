@@ -1,9 +1,9 @@
 require 'specinfra'
 require 'rspec/mocks/standalone'
 
-include SpecInfra::Helper::Exec
+include Specinfra::Helper::Exec
 
-module SpecInfra
+module Specinfra
   module Backend
     class Ssh
       def run_command(cmd, opts={})

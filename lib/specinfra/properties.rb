@@ -1,6 +1,6 @@
 require 'singleton'
 
-module SpecInfra
+module Specinfra
   class Properties
     include Singleton
     def initialize

@@ -2,7 +2,7 @@ require 'singleton'
 require 'fileutils'
 require 'shellwords'
 
-module SpecInfra
+module Specinfra
   module Backend
     class Exec < Base
 
@@ -34,11 +34,11 @@ module SpecInfra
       end
 
       def build_command(cmd)
-        shell = SpecInfra.configuration.shell || '/bin/sh'
+        shell = Specinfra.configuration.shell || '/bin/sh'
         cmd = cmd.shelljoin if cmd.is_a?(Array)
         cmd = "#{shell.shellescape} -c #{cmd.shellescape}"
 
-        path = SpecInfra.configuration.path
+        path = Specinfra.configuration.path
         if path
           cmd = "env PATH=#{path.shellescape}:\"$PATH\" #{cmd}"
         end
@@ -47,8 +47,8 @@ module SpecInfra
       end
 
       def add_pre_command(cmd)
-        if SpecInfra.configuration.pre_command
-          pre_cmd = build_command(SpecInfra.configuration.pre_command)
+        if Specinfra.configuration.pre_command
+          pre_cmd = build_command(Specinfra.configuration.pre_command)
           "#{pre_cmd} && #{cmd}"
         else
           cmd
@@ -184,7 +184,7 @@ module SpecInfra
       end
 
       def check_os
-        return SpecInfra.configuration.os if SpecInfra.configuration.os
+        return Specinfra.configuration.os if Specinfra.configuration.os
         if run_command('ls /etc/redhat-release').success?
           line = run_command('cat /etc/redhat-release').stdout
           if line =~ /release (\d[\d.]*)/

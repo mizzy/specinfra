@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class AIX < Base
       class NotImplementedError < Exception; end

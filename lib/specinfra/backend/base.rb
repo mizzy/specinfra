@@ -1,7 +1,7 @@
 require 'singleton'
 require 'specinfra/command_result'
 
-module SpecInfra
+module Specinfra
   module Backend
     class Base
       include Singleton

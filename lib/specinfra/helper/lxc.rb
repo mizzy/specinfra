@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Helper
     module Lxc
       def self.included(klass)

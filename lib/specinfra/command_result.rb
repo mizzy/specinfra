@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   class CommandResult
     attr_reader :stdout, :stderr, :exit_status, :exit_signal
 

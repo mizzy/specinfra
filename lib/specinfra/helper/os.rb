@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Helper
     [
       'Base',
@@ -23,7 +23,7 @@ module SpecInfra
       eval <<-EOF
         module #{os}
           def commands
-            SpecInfra::Command::#{os}.new
+            Specinfra::Command::#{os}.new
           end
         end
       EOF

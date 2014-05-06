@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class Darwin < Base
       def check_file_md5checksum(file, expected)

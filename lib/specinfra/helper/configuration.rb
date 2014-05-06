@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Helper
     module Configuration
       def subject
@@ -27,13 +27,13 @@ module SpecInfra
       #     end
       #   end
       def build_configurations
-        SpecInfra::Configuration.defaults.keys.each do |c|
+        Specinfra::Configuration.defaults.keys.each do |c|
           if self.respond_to?(c.to_sym)
             value = self.send(c)
           else
             value = RSpec.configuration.send(c) if defined?(RSpec)
           end
-          SpecInfra::Configuration.instance_variable_set("@#{c}", value)
+          Specinfra::Configuration.instance_variable_set("@#{c}", value)
         end
       end
     end

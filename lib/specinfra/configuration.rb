@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Configuration
     class << self
       VALID_OPTIONS_KEYS = [
