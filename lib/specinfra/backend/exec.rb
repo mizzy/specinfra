@@ -34,9 +34,13 @@ module SpecInfra
       end
 
       def build_command(cmd)
-        path = SpecInfra.configuration.path
-        if path
-          cmd = "export PATH=#{Shellwords.escape path}:\"$PATH\" ; #{cmd}"
+        prepend_path = SpecInfra.configuration.prepend_path
+        append_path = SpecInfra.configuration.append_path
+        if prepend_path || append_path
+          paths = ['"$PATH"']
+          paths.insert 0, Shellwords.escape(prepend_path) if prepend_path
+          paths << Shellwords.escape(append_path) if append_path
+          cmd = "export PATH=#{paths.join ':'} ; #{cmd}"
         end
         cmd
       end

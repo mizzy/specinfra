@@ -2,31 +2,34 @@ require 'spec_helper'
 
 include SpecInfra::Helper::Exec
 
-describe 'build command with path' do
-  before :each do
-    RSpec.configure do |c|
-      c.path = '/sbin:/path with spaces/'
+describe 'build_command' do
+  context 'with c.prepend_path set' do
+    let(:path) { '/sbin:/path with spaces' }
+
+    before :each do
+      RSpec.configure { |c| c.prepend_path = path }
+    end
+
+    subject { backend.build_command('test -f /etc/passwd') }
+    it { should eq 'export PATH=/sbin:/path\ with\ spaces:"$PATH" ; test -f /etc/passwd' }
+
+    after :each do
+      RSpec.configure { |c| c.prepend_path = nil }
     end
   end
 
-  context 'command pattern 1' do
+  context 'with c.append_path set' do
+    let(:path) { '/sbin:/path with spaces' }
+
+    before :each do
+      RSpec.configure { |c| c.append_path = path }
+    end
+
     subject { backend.build_command('test -f /etc/passwd') }
-    it { should eq 'export PATH=/sbin:/path\ with\ spaces/:"$PATH" ; test -f /etc/passwd' }
-  end
+    it { should eq 'export PATH="$PATH":/sbin:/path\ with\ spaces ; test -f /etc/passwd' }
 
-  context 'command pattern 2' do
-    subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
-    it { should eq 'export PATH=/sbin:/path\ with\ spaces/:"$PATH" ; test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)' }
-  end
-
-  context 'command pattern 3' do
-    subject { backend.build_command("dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'") }
-    it { should eq "export PATH=/sbin:/path\\ with\\ spaces/:\"$PATH\" ; dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
-  end
-
-  after :each do
-    RSpec.configure do |c|
-      c.path = nil
+    after :each do
+      RSpec.configure { |c| c.append_path = nil }
     end
   end
 end
