@@ -5,5 +5,5 @@ RSpec.configure do |c|
 end
 
 describe RSpec.configuration.path do
-  it { should eq SpecInfra.configuration.path }
+  it { should eq Specinfra.configuration.path }
 end

@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class Windows
       class NotSupportedError < Exception; end

@@ -1,5 +1,5 @@
 
-module SpecInfra
+module Specinfra
   module Backend
     class Lxc < Exec
       def run_command(cmd, opts={})

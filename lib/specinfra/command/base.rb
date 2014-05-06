@@ -1,6 +1,6 @@
 require 'shellwords'
 
-module SpecInfra
+module Specinfra
   module Command
     class Base
       class NotImplementedError < Exception; end

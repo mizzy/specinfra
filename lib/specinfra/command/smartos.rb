@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class SmartOS < Solaris
       def check_installed(package, version=nil)

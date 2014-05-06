@@ -1,6 +1,6 @@
 require 'singleton'
 
-module SpecInfra
+module Specinfra
   module Backend
     class ShellScript < Base
       def initialize

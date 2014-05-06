@@ -1,6 +1,6 @@
-module SpecInfra
+module Specinfra
   module Backend
-    class Dockerfile < SpecInfra::Backend::Base
+    class Dockerfile < Specinfra::Backend::Base
       def initialize
         @lines = []
         ObjectSpace.define_finalizer(self) {

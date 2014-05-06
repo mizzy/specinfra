@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-include SpecInfra::Helper::Properties
+include Specinfra::Helper::Properties
 
 describe 'Properties Helper' do
   before :all do

@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class FreeBSD10 < FreeBSD
       def check_installed(package, version=nil)

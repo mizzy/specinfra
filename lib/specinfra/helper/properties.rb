@@ -1,13 +1,13 @@
 require 'specinfra/properties'
 
-module SpecInfra
+module Specinfra
   module Helper
     module Properties
       def property
-        SpecInfra::Properties.instance.properties
+        Specinfra::Properties.instance.properties
       end
       def set_property(prop)
-        SpecInfra::Properties.instance.properties(prop)
+        Specinfra::Properties.instance.properties(prop)
       end
     end
   end

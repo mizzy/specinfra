@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class Ubuntu < Debian
       def check_running(service)

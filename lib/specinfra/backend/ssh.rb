@@ -1,6 +1,6 @@
 require 'specinfra/backend/exec'
 
-module SpecInfra
+module Specinfra
   module Backend
     class Ssh < Exec
       def run_command(cmd, opt={})
@@ -20,8 +20,8 @@ module SpecInfra
 
       def build_command(cmd)
         cmd = super(cmd)
-        user = SpecInfra.configuration.ssh.options[:user]
-        disable_sudo = SpecInfra.configuration.disable_sudo
+        user = Specinfra.configuration.ssh.options[:user]
+        disable_sudo = Specinfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
         end
@@ -29,7 +29,7 @@ module SpecInfra
       end
 
       def copy_file(from, to)
-        scp = SpecInfra.configuration.scp
+        scp = Specinfra.configuration.scp
         begin
           scp.upload!(from, to)
         rescue => e
@@ -44,11 +44,11 @@ module SpecInfra
         stderr_data = ''
         exit_status = nil
         exit_signal = nil
-        pass_prompt = SpecInfra.configuration.pass_prompt || /^\[sudo\] password for/
+        pass_prompt = Specinfra.configuration.pass_prompt || /^\[sudo\] password for/
 
-        ssh = SpecInfra.configuration.ssh
+        ssh = Specinfra.configuration.ssh
         ssh.open_channel do |channel|
-          if SpecInfra.configuration.sudo_password or SpecInfra.configuration.request_pty
+          if Specinfra.configuration.sudo_password or Specinfra.configuration.request_pty
             channel.request_pty do |ch, success|
               abort "Could not obtain pty " if !success
             end
@@ -57,7 +57,7 @@ module SpecInfra
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
               if data.match pass_prompt
-                channel.send_data "#{SpecInfra.configuration.sudo_password}\n"
+                channel.send_data "#{Specinfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
               end
@@ -65,7 +65,7 @@ module SpecInfra
 
             channel.on_extended_data do |ch, type, data|
               if data.match /you must have a tty to run sudo/
-                abort 'Please set "SpecInfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropreate file.'
+                abort 'Please set "Specinfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropreate file.'
               end
 
               if data.match /^sudo: no tty present and no askpass program specified/
@@ -89,13 +89,13 @@ module SpecInfra
       end
 
       def sudo
-        if sudo_path = SpecInfra.configuration.sudo_path
+        if sudo_path = Specinfra.configuration.sudo_path
           sudo_path += '/sudo'
         else
           sudo_path = 'sudo'
         end
 
-        sudo_options = SpecInfra.configuration.sudo_options
+        sudo_options = Specinfra.configuration.sudo_options
         if sudo_options
           sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
           sudo_options = ' ' + sudo_options

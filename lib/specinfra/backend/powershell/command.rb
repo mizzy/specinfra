@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Backend
     module PowerShell
       class Command

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-include SpecInfra::Helper::Ssh
+include Specinfra::Helper::Ssh
 
-describe SpecInfra::Backend::Ssh do
+describe Specinfra::Backend::Ssh do
   describe '#build_command' do
     context 'with root user' do 
       before do

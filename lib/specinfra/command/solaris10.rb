@@ -1,4 +1,4 @@
-module SpecInfra
+module Specinfra
   module Command
     class Solaris10 < Solaris
       # Please implement Solaris 10 specific commands

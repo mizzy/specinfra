@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-include SpecInfra::Helper::Exec
+include Specinfra::Helper::Exec
 
-describe SpecInfra::Backend::Exec do
+describe Specinfra::Backend::Exec do
   describe '#build_command' do
     context 'with simple command' do
       it 'should escape spaces' do
