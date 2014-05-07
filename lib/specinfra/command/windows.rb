@@ -305,6 +305,13 @@ module Specinfra
         end
       end
 
+      def check_scheduled_task(name)
+        Backend::PowerShell::Command.new do
+          using 'find_scheduled_task.ps1'
+          exec "(FindScheduledTask -name '#{name}').TaskName -eq '\\#{name}'"
+        end
+      end
+
       private
 
       def item_has_attribute item, attribute
