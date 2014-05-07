@@ -13,6 +13,7 @@ module SpecInfra
       'OpenBSD',
       'Plamo',
       'RedHat',
+      'RedHat7',
       'SuSE',
       'SmartOS',
       'Solaris',
