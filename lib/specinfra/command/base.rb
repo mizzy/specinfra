@@ -122,7 +122,7 @@ module SpecInfra
       end
 
       def get_process(process, opts)
-        "ps -C #{escape(process)} -o #{opts[:format]} | head -1"
+        "ps -C #{escape(process)} -o #{opts[:format]}"
       end
 
       def check_file_contain(file, expected_pattern)
