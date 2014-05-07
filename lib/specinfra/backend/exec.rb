@@ -1,5 +1,6 @@
 require 'singleton'
 require 'fileutils'
+require 'shellwords'
 
 module SpecInfra
   module Backend
@@ -33,11 +34,13 @@ module SpecInfra
       end
 
       def build_command(cmd)
-        path = SpecInfra.configuration.path
-        if path
-          cmd = "env PATH=#{path}:$PATH #{cmd}"
-          cmd.gsub!(/(\&\&\s*!?\(?\s*)/, "\\1env PATH=#{path}:$PATH ")
-          cmd.gsub!(/(\|\|\s*!?\(?\s*)/, "\\1env PATH=#{path}:$PATH ")
+        prepend_path = SpecInfra.configuration.prepend_path
+        append_path = SpecInfra.configuration.append_path
+        if prepend_path || append_path
+          paths = ['"$PATH"']
+          paths.insert 0, Shellwords.escape(prepend_path) if prepend_path
+          paths << Shellwords.escape(append_path) if append_path
+          cmd = "export PATH=#{paths.join ':'} ; #{cmd}"
         end
         cmd
       end
@@ -45,8 +48,7 @@ module SpecInfra
       def add_pre_command(cmd)
         path = SpecInfra.configuration.path
         if SpecInfra.configuration.pre_command
-          cmd = "#{SpecInfra.configuration.pre_command} && #{cmd}"
-          cmd = "env PATH=#{path}:$PATH #{cmd}" if path
+          cmd = "#{build_command SpecInfra.configuration.pre_command} && #{cmd}"
         end
         cmd
       end

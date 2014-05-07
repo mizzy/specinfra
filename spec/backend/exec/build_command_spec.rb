@@ -2,34 +2,58 @@ require 'spec_helper'
 
 include SpecInfra::Helper::Exec
 
-describe 'build command with path' do
-  before :each do
-    RSpec.configure do |c|
-      c.path = '/sbin:/usr/sbin'
+describe 'build_command' do
+  context 'with c.prepend_path set' do
+    let(:path) { '/sbin:/path with spaces' }
+
+    before :each do
+      RSpec.configure { |c| c.prepend_path = path }
+    end
+
+    subject { backend.build_command('test -f /etc/passwd') }
+    it { should eq 'export PATH=/sbin:/path\ with\ spaces:"$PATH" ; test -f /etc/passwd' }
+
+    after :each do
+      RSpec.configure { |c| c.prepend_path = nil }
     end
   end
 
-  context 'command pattern 1' do
+  context 'with c.append_path set' do
+    let(:path) { '/sbin:/path with spaces' }
+
+    before :each do
+      RSpec.configure { |c| c.append_path = path }
+    end
+
     subject { backend.build_command('test -f /etc/passwd') }
-    it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test -f /etc/passwd' }
+    it { should eq 'export PATH="$PATH":/sbin:/path\ with\ spaces ; test -f /etc/passwd' }
+
+    after :each do
+      RSpec.configure { |c| c.append_path = nil }
+    end
+  end
+end
+
+describe 'add_pre_command' do
+  before :each do
+    RSpec.configure do |c|
+      c.pre_command  = 'source ~/.bashrc'
+    end
   end
 
-  context 'command pattern 2' do
-    subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
-      it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test ! -f /etc/selinux/config || (env PATH=/sbin:/usr/sbin:$PATH getenforce | grep -i -- disabled && env PATH=/sbin:/usr/sbin:$PATH grep -i -- ^SELINUX=disabled$ /etc/selinux/config)' }
-  end
+  it 'calls build_command on the pre_command' do
+    expect(backend).to receive(:build_command).with('source ~/.bashrc')
 
-  context 'command pattern 3' do
-    subject { backend.build_command("dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'") }
-    it { should eq "env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 && ! env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
+    backend.add_pre_command('test -f /etc/passwd')
   end
 
   after :each do
     RSpec.configure do |c|
-      c.path = nil
+      c.pre_command = nil
     end
   end
 end
+
 
 describe 'check_os' do
   context 'test ubuntu with lsb_release command' do

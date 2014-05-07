@@ -2,7 +2,8 @@ module SpecInfra
   module Configuration
     class << self
       VALID_OPTIONS_KEYS = [
-        :path,
+        :prepend_path,
+        :append_path,
         :pre_command,
         :stdout,
         :stderr,
@@ -22,6 +23,7 @@ module SpecInfra
       def method_missing(meth, val=nil)
         key = meth.to_s
         key.gsub!(/=$/, '')
+
         if val
           instance_variable_set("@#{key}", val)
           RSpec.configuration.send(:"#{key}=", val) if defined?(RSpec)
