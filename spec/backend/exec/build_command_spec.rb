@@ -5,23 +5,23 @@ include SpecInfra::Helper::Exec
 describe 'build command with path' do
   before :each do
     RSpec.configure do |c|
-      c.path = '/sbin:/usr/sbin'
+      c.path = '/sbin:/path with spaces/'
     end
   end
 
   context 'command pattern 1' do
     subject { backend.build_command('test -f /etc/passwd') }
-    it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test -f /etc/passwd' }
+    it { should eq 'export PATH=/sbin:/path\ with\ spaces/:"$PATH" ; test -f /etc/passwd' }
   end
 
   context 'command pattern 2' do
     subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
-      it { should eq 'env PATH=/sbin:/usr/sbin:$PATH test ! -f /etc/selinux/config || (env PATH=/sbin:/usr/sbin:$PATH getenforce | grep -i -- disabled && env PATH=/sbin:/usr/sbin:$PATH grep -i -- ^SELINUX=disabled$ /etc/selinux/config)' }
+    it { should eq 'export PATH=/sbin:/path\ with\ spaces/:"$PATH" ; test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)' }
   end
 
   context 'command pattern 3' do
     subject { backend.build_command("dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'") }
-    it { should eq "env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 && ! env PATH=/sbin:/usr/sbin:$PATH dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
+    it { should eq "export PATH=/sbin:/path\\ with\\ spaces/:\"$PATH\" ; dpkg -s apache2 && ! dpkg -s apache2 | grep -E '^Status: .+ not-installed$'" }
   end
 
   after :each do
@@ -30,6 +30,27 @@ describe 'build command with path' do
     end
   end
 end
+
+describe 'add_pre_command' do
+  before :each do
+    RSpec.configure do |c|
+      c.pre_command  = 'source ~/.bashrc'
+    end
+  end
+
+  it 'calls build_command on the pre_command' do
+    expect(backend).to receive(:build_command).with('source ~/.bashrc')
+
+    backend.add_pre_command('test -f /etc/passwd')
+  end
+
+  after :each do
+    RSpec.configure do |c|
+      c.pre_command = nil
+    end
+  end
+end
+
 
 describe 'check_os' do
   context 'test ubuntu with lsb_release command' do
