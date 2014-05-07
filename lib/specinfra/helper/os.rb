@@ -6,6 +6,7 @@ module SpecInfra
       'Arch',
       'Darwin',
       'Debian',
+      'Fedora',
       'FreeBSD',
       'FreeBSD10',
       'Gentoo',
