@@ -13,9 +13,7 @@ module SpecInfra
           os_by_host = property[:os_by_host][host]
         else
           # Set command object explicitly to avoid `stack too deep`
-          raise "crash me" if caller.length > 500
           os_by_host = backend(SpecInfra::Command::Base.new).check_os
-
           property[:os_by_host][host] = os_by_host
         end
 
