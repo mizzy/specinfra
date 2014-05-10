@@ -184,7 +184,7 @@ module Specinfra
       end
 
       def check_os
-        return SpecInfra.configuration.os if SpecInfra.configuration.os
+        return Specinfra.configuration.os if Specinfra.configuration.os
         arch = run_command('uname -m').stdout.strip
         # Fedora also has an /etc/redhat-release so the Fedora check must
         # come before the RedHat check

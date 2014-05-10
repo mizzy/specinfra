@@ -2,7 +2,7 @@ module Specinfra
   module Helper
     module DetectOS
       def commands
-        self.class.const_get('SpecInfra').const_get('Command').const_get(os[:family]).new
+        self.class.const_get('Specinfra').const_get('Command').const_get(os[:family]).new
       end
 
       def os
@@ -13,7 +13,7 @@ module Specinfra
           os_by_host = property[:os_by_host][host]
         else
           # Set command object explicitly to avoid `stack too deep`
-          os_by_host = backend(SpecInfra::Command::Base.new).check_os
+          os_by_host = backend(Specinfra::Command::Base.new).check_os
           property[:os_by_host][host] = os_by_host
         end
         os_by_host

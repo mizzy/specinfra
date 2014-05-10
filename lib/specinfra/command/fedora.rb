@@ -1,8 +1,8 @@
-module SpecInfra
+module Specinfra
   module Command
     class Fedora < RedHat
       def check_enabled(service, target="multi-user.target")
-        host = SpecInfra.configuration.ssh ? SpecInfra.configuration.ssh.host : 'localhost'
+        host = Specinfra.configuration.ssh ? Specinfra.configuration.ssh.host : 'localhost'
         if property.has_key?(:os_by_host) && property[:os_by_host][host][:release].to_i < 15
           super
         else
@@ -17,7 +17,7 @@ module SpecInfra
       end
 
       def check_running(service)
-        host = SpecInfra.configuration.ssh ? SpecInfra.configuration.ssh.host : 'localhost'
+        host = Specinfra.configuration.ssh ? Specinfra.configuration.ssh.host : 'localhost'
         if property.has_key?(:os_by_host) && property[:os_by_host][host][:release].to_i < 15
           super
         else
