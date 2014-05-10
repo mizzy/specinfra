@@ -20,6 +20,15 @@ module Specinfra
         VALID_OPTIONS_KEYS.inject({}) { |o, k| o.merge!(k => send(k)) }
       end
 
+      # Define os method explicitly to avoid stack level
+      # too deep caused by Helpet::DetectOS#os
+      def os
+        if @os.nil? && defined?(RSpec) && RSpec.configuration.respond_to?(:os)
+          @os = RSpec.configuration.os
+        end
+        @os
+      end
+
       def method_missing(meth, val=nil)
         key = meth.to_s
         key.gsub!(/=$/, '')

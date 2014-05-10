@@ -185,6 +185,7 @@ module Specinfra
 
       def check_os
         return SpecInfra.configuration.os if SpecInfra.configuration.os
+        arch = run_command('uname -m').stdout.strip
         # Fedora also has an /etc/redhat-release so the Fedora check must
         # come before the RedHat check
         if run_command('ls /etc/fedora-release').success?
@@ -198,19 +199,20 @@ module Specinfra
           if line =~ /release (\d[\d.]*)/
             release = $1
           end
+
           if release =~ /7./
-            { :family => 'RedHat7', :release => release }
+            { :family => 'RedHat7', :release => release, :arch => arch }
           else
-            { :family => 'RedHat', :release => release }
+            { :family => 'RedHat', :release => release, :arch => arch }
           end
         elsif run_command('ls /etc/system-release').success?
-          { :family => 'RedHat', :release => nil } # Amazon Linux
+          { :family => 'RedHat', :release => nil, :arch => arch } # Amazon Linux
         elsif run_command('ls /etc/SuSE-release').success?
           line = run_command('cat /etc/SuSE-release').stdout
           if line =~ /SUSE Linux Enterprise Server (\d+)/
             release = $1
           end
-          { :family => 'SuSE', :release => release }
+          { :family => 'SuSE', :release => release, :arch => arch }
         elsif run_command('ls /etc/debian_version').success?
           lsb_release = run_command("lsb_release -ir")
           if lsb_release.success?
@@ -229,37 +231,37 @@ module Specinfra
           end
           distro ||= 'Debian'
           release ||= nil
-          { :family => distro.strip, :release => release }
+          { :family => distro.strip, :release => release, :arch => arch }
         elsif run_command('ls /etc/gentoo-release').success?
-          { :family => 'Gentoo', :release => nil }
+          { :family => 'Gentoo', :release => nil, :arch => arch }
         elsif run_command('ls /usr/lib/setup/Plamo-*').success?
-          { :family => 'Plamo', :release => nil }
+          { :family => 'Plamo', :release => nil, :arch => arch }
         elsif run_command('uname -s').stdout =~ /AIX/i
-          { :family => 'AIX', :release => nil }
-        elsif (os = run_command('uname -sr').stdout) && os =~ /SunOS/i
-          if os =~ /5.10/
-            { :family => 'Solaris10', :release => nil }
+          { :family => 'AIX', :release => nil, :arch => arch }
+        elsif ( uname = run_command('uname -sr').stdout) && uname =~ /SunOS/i
+          if uname =~ /5.10/
+            { :family => 'Solaris10', :release => nil, :arch => arch }
           elsif run_command('grep -q "Oracle Solaris 11" /etc/release').success?
-            { :family => 'Solaris11', :release => nil }
+            { :family => 'Solaris11', :release => nil, :arch => arch }
           elsif run_command('grep -q SmartOS /etc/release').success?
-            { :family => 'SmartOS', :release => nil }
+            { :family => 'SmartOS', :release => nil, :arch => arch }
           else
-            { :family => 'Solaris', :release => nil }
+            { :family => 'Solaris', :release => nil, :arch => arch }
           end
         elsif run_command('uname -s').stdout =~ /Darwin/i
           { :family => 'Darwin', :release => nil }
-        elsif (os = run_command('uname -sr').stdout) && os =~ /FreeBSD/i
-          if os =~ /10./
-            { :family => 'FreeBSD10', :release => nil }
+        elsif ( uname = run_command('uname -sr').stdout ) && uname =~ /FreeBSD/i
+          if uname =~ /10./
+            { :family => 'FreeBSD10', :release => nil, :arch => arch }
           else
-            { :family => 'FreeBSD', :release => nil }
+            { :family => 'FreeBSD', :release => nil, :arch => arch }
           end
         elsif run_command('uname -sr').stdout =~ /Arch/i
-          { :family => 'Arch', :release => nil }
+          { :family => 'Arch', :release => nil, :arch => arch }
         elsif run_command('uname -s').stdout =~ /OpenBSD/i
-          { :family => 'OpenBSD', :release => nil }
+          { :family => 'OpenBSD', :release => nil, :arch => arch }
         else
-          { :family => 'Base', :release => nil }
+          { :family => 'Base', :release => nil, :arch => arch }
         end
       end
 
