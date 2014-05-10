@@ -7,3 +7,8 @@ end
 describe RSpec.configuration.path do
   it { should eq SpecInfra.configuration.path }
 end
+
+SpecInfra.configuration.os = 'foo'
+describe SpecInfra.configuration.os do
+  it { should eq 'foo' }
+end

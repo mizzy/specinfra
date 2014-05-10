@@ -232,8 +232,8 @@ module SpecInfra
           { :family => 'Plamo', :release => nil }
         elsif run_command('uname -s').stdout =~ /AIX/i
           { :family => 'AIX', :release => nil }
-        elsif (os = run_command('uname -sr').stdout) && os =~ /SunOS/i
-          if os =~ /5.10/
+        elsif ( uname = run_command('uname -sr').stdout) && uname =~ /SunOS/i
+          if uname =~ /5.10/
             { :family => 'Solaris10', :release => nil }
           elsif run_command('grep -q "Oracle Solaris 11" /etc/release').success?
             { :family => 'Solaris11', :release => nil }
@@ -244,8 +244,8 @@ module SpecInfra
           end
         elsif run_command('uname -s').stdout =~ /Darwin/i
           { :family => 'Darwin', :release => nil }
-        elsif (os = run_command('uname -sr').stdout) && os =~ /FreeBSD/i
-          if os =~ /10./
+        elsif ( uname = run_command('uname -sr').stdout ) && uname =~ /FreeBSD/i
+          if uname =~ /10./
             { :family => 'FreeBSD10', :release => nil }
           else
             { :family => 'FreeBSD', :release => nil }
