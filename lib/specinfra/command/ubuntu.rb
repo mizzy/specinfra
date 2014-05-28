@@ -6,19 +6,17 @@ module SpecInfra
       end
 
       def check_ppa(package)
-        repo_name = to_apt_line_uri(package)
-        "find /etc/apt/ -name \*.list | xargs grep -o \"deb http://ppa.launchpad.net/#{escape(repo_name)}\""
+        %Q{find /etc/apt/ -name \*.list | xargs grep -o "deb http://ppa.launchpad.net/#{to_apt_line_uri(package)}"}
       end
 
       def check_ppa_enabled(package)
-        repo_name = to_apt_line_uri(package)
-        "find /etc/apt/ -name \*.list | xargs grep -o \"^deb http://ppa.launchpad.net/#{escape(repo_name)}\""
+        %Q{find /etc/apt/ -name \*.list | xargs grep -o "^deb http://ppa.launchpad.net/#{to_apt_line_uri(package)}"}
       end
 
       private
 
       def to_apt_line_uri(repo)
-        repo.gsub(/^ppa:/,'')
+        escape(repo.gsub(/^ppa:/,''))
       end
     end
   end
