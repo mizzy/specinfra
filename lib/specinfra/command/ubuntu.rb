@@ -18,9 +18,7 @@ module SpecInfra
       private
 
       def to_apt_line_uri(repo)
-        regexp = /^ppa:/
-        return repo.gsub("ppa:","") if repo =~ regexp
-        repo
+        repo.gsub(/^ppa:/,'')
       end
     end
   end
