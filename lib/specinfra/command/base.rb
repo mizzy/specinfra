@@ -121,6 +121,10 @@ module Specinfra
         "ps aux | grep -w -- #{escape(process)} | grep -qv grep"
       end
 
+      def check_process_count(process,count)
+        "test $(ps aux | grep -w -- #{escape(process)} | grep -v grep | wc -l) -eq #{escape(count)}"
+      end
+
       def get_process(process, opts)
         "ps -C #{escape(process)} -o #{opts[:format]} | head -1"
       end
