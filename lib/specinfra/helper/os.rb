@@ -15,6 +15,7 @@ module Specinfra
       'RedHat',
       'RedHat7',
       'SuSE',
+      'OpenSUSE',
       'SmartOS',
       'Solaris',
       'Solaris10',

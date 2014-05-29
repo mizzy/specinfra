@@ -211,8 +211,12 @@ module Specinfra
           line = run_command('cat /etc/SuSE-release').stdout
           if line =~ /SUSE Linux Enterprise Server (\d+)/
             release = $1
+            family = 'SuSE'
+          elsif line =~ /openSUSE (\d+\.\d+|\d+)/
+            release = $1
+            family = 'OpenSUSE'
           end
-          { :family => 'SuSE', :release => release, :arch => arch }
+          { :family => family, :release => release, :arch => arch }
         elsif run_command('ls /etc/debian_version').success?
           lsb_release = run_command("lsb_release -ir")
           if lsb_release.success?
