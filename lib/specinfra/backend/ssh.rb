@@ -1,8 +1,19 @@
 require 'specinfra/backend/exec'
+require 'net/ssh'
 
 module Specinfra
   module Backend
     class Ssh < Exec
+      def initialize
+        if Specinfra.configuration.ssh.nil?
+          Specinfra.configuration.ssh = Net::SSH.start(
+            Specinfra.configuration.host,
+            Specinfra.configuration.ssh_options.delete(:user),
+            Specinfra.configuration.ssh_options,
+          )
+        end
+      end
+
       def run_command(cmd, opt={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
