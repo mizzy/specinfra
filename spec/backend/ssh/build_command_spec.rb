@@ -5,7 +5,7 @@ include Specinfra::Helper::Ssh
 describe Specinfra::Backend::Ssh do
   describe '#build_command' do
     context 'with root user' do 
-      before do
+      before :each do
         RSpec.configure do |c|
           c.ssh = double(:ssh, :options => { :user => 'root' })
         end
