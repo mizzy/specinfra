@@ -9,7 +9,7 @@ module Specinfra
           Specinfra.configuration.ssh = Net::SSH.start(
             Specinfra.configuration.host,
             Specinfra.configuration.ssh_options.delete(:user),
-            Specinfra.configuration.ssh_options,
+            Specinfra.configuration.ssh_options
           )
         end
       end
