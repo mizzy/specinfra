@@ -14,6 +14,7 @@ module Specinfra
         :docker_image,
         :lxc,
         :request_pty,
+        :ssh_options,
       ].freeze
 
       def defaults
