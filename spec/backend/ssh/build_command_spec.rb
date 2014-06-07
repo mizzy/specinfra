@@ -7,7 +7,8 @@ describe Specinfra::Backend::Ssh do
     context 'with root user' do 
       before do
         RSpec.configure do |c|
-          c.ssh = double(:ssh, :options => { :user => 'root' })
+          set :ssh_options, :user => 'root'
+          c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
         end
       end
 
@@ -23,7 +24,8 @@ describe Specinfra::Backend::Ssh do
     context 'with non-root user' do
       before do
         RSpec.configure do |c|
-          c.ssh = double(:ssh, :options => { :user => 'foo' })
+          set :ssh_options, :user => 'foo'
+          c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
         end
       end
 
@@ -39,7 +41,8 @@ describe Specinfra::Backend::Ssh do
     context 'with custom sudo path' do
       before do
         RSpec.configure do |c|
-          c.ssh = double(:ssh, :options => { :user => 'foo' })
+          set :ssh_options, :user => 'foo'
+          c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
           c.sudo_path = '/usr/local/bin'
         end
       end
@@ -62,7 +65,8 @@ describe Specinfra::Backend::Ssh do
     context 'without sudo' do
       before do
         RSpec.configure do |c|
-          c.ssh = double(:ssh, :options => { :user => 'foo' })
+          set :ssh_options, :user => 'foo'
+          c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
           c.disable_sudo = true
         end
       end
@@ -87,7 +91,8 @@ describe Specinfra::Backend::Ssh do
     context 'with sudo on alternative path' do
       before do
         RSpec.configure do |c|
-          c.ssh = double(:ssh, :options => { :user => 'foo' })
+          set :ssh_options, :user => 'foo'
+          c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
           c.sudo_options = ['-p', '[sudo] password for']
           c.sudo_path = nil
         end

@@ -1,4 +1,5 @@
 require 'specinfra/backend/exec'
+require 'net/ssh'
 
 module Specinfra
   module Backend
@@ -20,7 +21,7 @@ module Specinfra
 
       def build_command(cmd)
         cmd = super(cmd)
-        user = Specinfra.configuration.ssh.options[:user]
+        user = Specinfra.configuration.ssh_options[:user]
         disable_sudo = Specinfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
@@ -45,6 +46,14 @@ module Specinfra
         exit_status = nil
         exit_signal = nil
         pass_prompt = Specinfra.configuration.pass_prompt || /^\[sudo\] password for/
+
+        if Specinfra.configuration.ssh.nil?
+          Specinfra.configuration.ssh = Net::SSH.start(
+            Specinfra.configuration.host,
+            Specinfra.configuration.ssh_options[:user],
+            Specinfra.configuration.ssh_options
+          )
+        end
 
         ssh = Specinfra.configuration.ssh
         ssh.open_channel do |channel|
