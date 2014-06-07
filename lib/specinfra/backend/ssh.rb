@@ -31,7 +31,7 @@ module Specinfra
 
       def build_command(cmd)
         cmd = super(cmd)
-        user = Specinfra.configuration.ssh.options[:user]
+        user = Specinfra.configuration.ssh_options[:user]
         disable_sudo = Specinfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
           cmd = "#{sudo} #{cmd}"
