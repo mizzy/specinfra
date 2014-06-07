@@ -16,7 +16,7 @@ module Specinfra
 
       def check_installed(package,version=nil)
         if version
-          "pacman -Q | grep #{escape(package)} #{espace(version)}"
+          "pacman -Q | grep #{escape(package)} #{escape(version)}"
         else
           "pacman -Q | grep #{escape(package)}"
         end
