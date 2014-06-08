@@ -1,6 +1,14 @@
 module SpecInfra
   module Command
     class Darwin < Base
+      def check_enabled(service, level=nil)
+        "launchctl list | grep #{escape(service)}"
+      end
+
+      def check_running(service)
+        "launchctl list | grep #{escape(service)} | grep -E '^[0-9]+'"
+      end
+
       def check_file_md5checksum(file, expected)
         "openssl md5 #{escape(file)} | cut -d'=' -f2 | cut -c 2- | grep -E ^#{escape(expected)}$"
       end
