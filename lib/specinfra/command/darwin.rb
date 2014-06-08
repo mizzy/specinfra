@@ -9,6 +9,11 @@ module SpecInfra
         "launchctl list | grep #{escape(service)} | grep -E '^[0-9]+'"
       end
 
+      def check_listening(port)
+        regexp = ":#{port} "
+        "lsof -nP -iTCP -sTCP:LISTEN | grep -- #{escape(regexp)}"
+      end
+
       def check_file_md5checksum(file, expected)
         "openssl md5 #{escape(file)} | cut -d'=' -f2 | cut -c 2- | grep -E ^#{escape(expected)}$"
       end
