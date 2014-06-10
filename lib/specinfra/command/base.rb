@@ -59,6 +59,10 @@ module SpecInfra
         "test -f #{escape(file)}"
       end
 
+      def get_file_mtime(file)
+        "stat -c %Y #{escape(file)}"
+      end
+
       def check_socket(file)
         "test -S #{escape(file)}"
       end
