@@ -10,6 +10,7 @@ module Specinfra
       'FreeBSD',
       'FreeBSD10',
       'Gentoo',
+      'NixOS',
       'OpenBSD',
       'Plamo',
       'RedHat',

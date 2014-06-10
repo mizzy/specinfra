@@ -240,6 +240,8 @@ module Specinfra
           { :family => 'Gentoo', :release => nil, :arch => arch }
         elsif run_command('ls /usr/lib/setup/Plamo-*').success?
           { :family => 'Plamo', :release => nil, :arch => arch }
+        elsif run_command('ls /var/run/current-system/sw').success?
+          { :family => 'NixOS', :release => nil, :arch => arch }
         elsif run_command('uname -s').stdout =~ /AIX/i
           { :family => 'AIX', :release => nil, :arch => arch }
         elsif ( uname = run_command('uname -sr').stdout) && uname =~ /SunOS/i

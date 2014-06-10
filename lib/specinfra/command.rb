@@ -12,6 +12,7 @@ require "specinfra/command/redhat7"
 require "specinfra/command/suse"
 require "specinfra/command/opensuse"
 require "specinfra/command/fedora"
+require "specinfra/command/nixos"
 
 # Solaris
 require "specinfra/command/solaris"
