@@ -4,6 +4,10 @@ require 'net/ssh'
 module Specinfra
   module Backend
     class Ssh < Exec
+      def prompt
+        'Password: '
+      end
+
       def run_command(cmd, opt={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
@@ -24,7 +28,7 @@ module Specinfra
         user = Specinfra.configuration.ssh_options[:user]
         disable_sudo = Specinfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
-          cmd = "#{sudo} #{cmd}"
+          cmd = "#{sudo} -p '#{prompt}' #{cmd}"
         end
         cmd
       end
@@ -45,7 +49,6 @@ module Specinfra
         stderr_data = ''
         exit_status = nil
         exit_signal = nil
-        pass_prompt = Specinfra.configuration.pass_prompt || /^\[sudo\] password for/
 
         if Specinfra.configuration.ssh.nil?
           Specinfra.configuration.ssh = Net::SSH.start(
@@ -65,7 +68,7 @@ module Specinfra
           channel.exec("#{command}") do |ch, success|
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
-              if data.match pass_prompt
+              if data.match /^#{prompt}/
                 channel.send_data "#{Specinfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
