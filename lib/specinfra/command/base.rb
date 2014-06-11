@@ -63,6 +63,10 @@ module Specinfra
         "stat -c %Y #{escape(file)}"
       end
 
+      def get_file_size(file)
+        "stat -c %s #{escape(file)}"
+      end
+
       def check_socket(file)
         "test -S #{escape(file)}"
       end
