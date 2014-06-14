@@ -30,11 +30,11 @@ describe Specinfra::Backend::Ssh do
       end
 
       it 'should prepend sudo' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq 'sudo /bin/sh -c test\ -f\ /etc/passwd'
+        expect(backend.build_command('test -f /etc/passwd')).to eq %q{sudo -p 'Password: ' /bin/sh -c test\ -f\ /etc/passwd}
       end
 
       it 'should escape special characters' do
-        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq 'sudo /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
+        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq %q{sudo -p 'Password: ' /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)}
       end
     end
 
@@ -54,11 +54,11 @@ describe Specinfra::Backend::Ssh do
       end
 
       it 'command pattern 1a' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq '/usr/local/bin/sudo /bin/sh -c test\ -f\ /etc/passwd'
+        expect(backend.build_command('test -f /etc/passwd')).to eq %q{/usr/local/bin/sudo -p 'Password: ' /bin/sh -c test\ -f\ /etc/passwd}
       end
 
       it 'command pattern 2a' do
-        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/usr/local/bin/sudo /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
+        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq %q{/usr/local/bin/sudo -p 'Password: ' /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)}
       end
     end
 
@@ -93,7 +93,6 @@ describe Specinfra::Backend::Ssh do
         RSpec.configure do |c|
           set :ssh_options, :user => 'foo'
           c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
-          c.sudo_options = ['-p', '[sudo] password for']
           c.sudo_path = nil
         end
       end
@@ -106,12 +105,12 @@ describe Specinfra::Backend::Ssh do
 
       context 'command pattern 1a' do
         subject { backend.build_command('test -f /etc/passwd') }
-        it { should eq 'sudo -p \[sudo\]\ password\ for /bin/sh -c test\ -f\ /etc/passwd' }
+        it { should eq %q{sudo -p 'Password: ' /bin/sh -c test\ -f\ /etc/passwd} }
       end
 
       context 'command pattern 2a' do
         subject { backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)') }
-        it { should eq 'sudo -p \[sudo\]\ password\ for /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)' }
+        it { should eq %q{sudo -p 'Password: ' /bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)} }
       end
     end
   end
