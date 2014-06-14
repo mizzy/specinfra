@@ -6,9 +6,9 @@ module Specinfra
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
         out, ret = ct.execute do
-                     out = `#{cmd}`
-                     [out, $?.dup]
-                   end
+          out = `#{cmd}  2>&1`
+          [out, $?.dup]
+        end
         if @example
           @example.metadata[:command] = cmd
           @example.metadata[:stdout]  = out
