@@ -9,7 +9,6 @@ module Specinfra
         :stderr,
         :sudo_path,
         :disable_sudo,
-        :pass_prompt,
         :sudo_options,
         :docker_image,
         :lxc,
