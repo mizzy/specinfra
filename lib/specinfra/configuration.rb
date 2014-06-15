@@ -11,6 +11,7 @@ module Specinfra
         :disable_sudo,
         :sudo_options,
         :docker_image,
+        :docker_url,
         :lxc,
         :request_pty,
         :ssh_options,
