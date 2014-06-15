@@ -3,6 +3,7 @@ module Specinfra
     class Docker < Exec
       def initialize
         @images = []
+        ::Docker.url = Specinfra.configuration.docker_url
       end
 
       def run_command(cmd, opts={})
