@@ -200,7 +200,7 @@ module SpecInfra
       end
 
       def check_cron_entry(user, entry)
-        entry_escaped = entry.gsub(/\*/, '\\*')
+        entry_escaped = entry.gsub(/\*/, '\\*').gsub(/\[/, '\\[').gsub(/\]/, '\\]')
         if user.nil?
           "crontab -l | grep -v \"#\" -- | grep -- #{escape(entry_escaped)}"
         else
