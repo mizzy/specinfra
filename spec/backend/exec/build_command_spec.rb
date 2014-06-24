@@ -78,7 +78,7 @@ describe 'check_os' do
   context 'test ubuntu with lsb_release command' do
     subject { backend.check_os }
     it do
-      backend.should_receive(:run_command).at_least(1).times do |args|
+      expect(backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'lsb_release -ir'].include? args
           double(
             :run_command_response,
@@ -98,7 +98,7 @@ describe 'check_os' do
   context 'test ubuntu with /etc/lsb-release' do
     subject { backend.check_os }
     it do
-      backend.should_receive(:run_command).at_least(1).times do |args|
+      expect(backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'cat /etc/lsb-release'].include? args
           double(
             :run_command_response,
@@ -123,7 +123,7 @@ EOF
   context 'test debian (no lsb_release or lsb-release)' do
     subject { backend.check_os }
     it do
-      backend.should_receive(:run_command).at_least(1).times do |args|
+      expect(backend).to receive(:run_command).at_least(1).times do |args|
         if args == 'ls /etc/debian_version'
           double :run_command_response, :success? => true
         elsif args == 'uname -m'
