@@ -1,6 +1,6 @@
 module Specinfra
   module Helper
-    ['Exec', 'Ssh', 'Cmd', 'Docker', 'WinRM', 'ShellScript', 'Dockerfile', 'Lxc'].each do |type|
+    %w(Exec Ssh Cmd Docker WinRM ShellScript Dockerfile Lxc).each do |type|
       eval <<-EOF
         module #{type}
           def backend(commands_object=nil)
