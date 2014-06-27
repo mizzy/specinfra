@@ -14,7 +14,7 @@ module Specinfra
         :docker_url,
         :lxc,
         :request_pty,
-        :ssh_options,
+        :ssh_options
       ].freeze
 
       def defaults
@@ -30,7 +30,7 @@ module Specinfra
         @os
       end
 
-      def method_missing(meth, val=nil)
+      def method_missing(meth, val = nil)
         key = meth.to_s
         key.gsub!(/=$/, '')
         if val

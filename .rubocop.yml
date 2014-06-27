@@ -1,0 +1,5 @@
+Style/LineLength:
+  Max: 366
+
+Style/Documentation:
+  Enabled: false
