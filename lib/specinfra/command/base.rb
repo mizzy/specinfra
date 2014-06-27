@@ -80,7 +80,7 @@ module Specinfra
       end
 
       def check_group(group)
-        "getent group | grep -wq -- #{escape(group)}"
+        "getent group #{escape(group)}"
       end
 
       def check_installed(package, version=nil)
