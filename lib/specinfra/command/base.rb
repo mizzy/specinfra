@@ -95,14 +95,15 @@ module Specinfra
         raise NotImplementedError.new
       end
 
-      def check_listening(port)
-        regexp = ":#{port} "
-        "netstat -tunl | grep -- #{escape(regexp)}"
+      def check_listening(port, options = {})
+        pattern = ":#{port}"
+        pattern = " #{options[:local_address]}#{pattern}" if options[:local_address]
+        pattern = "^#{options[:protocol]} .*#{pattern}" if options[:protocol]
+        "netstat -tunl | grep -- #{escape(pattern)}"
       end
 
       def check_listening_with_protocol(port, protocol)
-        regexp = "^#{protocol} .*:#{port} "
-        "netstat -tunl | grep -- #{escape(regexp)}"
+        check_listening port, {:protocol => protocol}
       end
 
       def check_running(service)

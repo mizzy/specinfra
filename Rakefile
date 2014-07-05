@@ -31,5 +31,9 @@ if defined?(RSpec)
     RSpec::Core::RakeTask.new(:configuration) do |t|
       t.pattern = "spec/configuration_spec.rb"
     end
+
+    RSpec::Core::RakeTask.new(:command) do |t|
+      t.pattern = "spec/command/*.rb"
+    end
   end
 end
