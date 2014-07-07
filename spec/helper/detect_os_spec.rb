@@ -6,9 +6,10 @@ describe SpecInfra::Helper::DetectOS do
       SpecInfra.stub_chain(:configuration, :ssh).and_return(nil)
     end
   end
-  shared_context 'existing ssh connection' do |hostname|
+  shared_context 'existing ssh connection' do |hostname, port|
     before do
       ssh_session.stub(:host).and_return(hostname)
+      ssh_session.stub(:options).and_return({:port => port})
       SpecInfra.stub_chain(:configuration, :ssh).and_return(ssh_session)
     end
   end
@@ -45,16 +46,16 @@ describe SpecInfra::Helper::DetectOS do
         context 'with localhost' do
           include_context 'no ssh connection'
           after do
-            expect(subject.property[:os_by_host]).to eq({'localhost' => 'test os'})
+            expect(subject.property[:os_by_host]).to eq({['localhost', nil] => 'test os'})
           end
 
           include_examples 'derive os from backend', 'test os'
         end
     
         context 'with ssh' do
-          include_context 'existing ssh connection', 'test.host'
+          include_context 'existing ssh connection', 'test.host', 123
           after do
-            expect(subject.property[:os_by_host]).to eq({'test.host' => 'test os'})
+            expect(subject.property[:os_by_host]).to eq({['test.host', 123] => 'test os'})
           end
 
           include_examples 'derive os from backend', 'test os'
@@ -63,22 +64,32 @@ describe SpecInfra::Helper::DetectOS do
 
       context 'existing cached values' do
         before do
-          subject.property[:os_by_host] = {'test.host' => 'cached os'}
+          subject.property[:os_by_host] = {['test.host', 123] => 'cached os'}
         end
 
         context 'with localhost' do
           include_context 'no ssh connection'
           after do
-            expect(property[:os_by_host]).to eq({'test.host' => 'cached os', 'localhost' => 'test os'})
+            expect(property[:os_by_host]).to eq({['test.host', 123] => 'cached os', ['localhost', nil] => 'test os'})
           end
 
           include_examples 'derive os from backend', 'test os'
         end
 
         context 'with ssh' do
-          include_context 'existing ssh connection', 'test.another.host'
+          include_context 'existing ssh connection', 'test.another.host', 456
           after do
-            expect(property[:os_by_host]).to eq({'test.host' => 'cached os', 'test.another.host' => 'test os'})
+            expect(property[:os_by_host]).to eq({['test.host', 123] => 'cached os', ['test.another.host', 456] => 'test os'})
+          end
+
+          include_examples 'derive os from backend', 'test os'
+        end
+
+        context 'same host with different ports' do
+          include_context 'existing ssh connection', 'test.host', 456
+          
+          after do
+            subject.property[:os_by_host] = {['test.host', 123] => 'cached os', ['test.host', 456] => 'test os'}
           end
 
           include_examples 'derive os from backend', 'test os'
@@ -88,7 +99,7 @@ describe SpecInfra::Helper::DetectOS do
 
     context 'using cached values to retrieve the os' do
       before do
-        subject.property[:os_by_host] = {'test.host' => 'test os', 'localhost' => 'local os'}
+        subject.property[:os_by_host] = {['test.host', 123] => 'test os', ['localhost', nil] => 'local os'}
       end
       context 'with localhost' do
         include_context 'no ssh connection'
@@ -97,7 +108,7 @@ describe SpecInfra::Helper::DetectOS do
       end
 
       context 'with ssh' do
-        include_context 'existing ssh connection', 'test.host'
+        include_context 'existing ssh connection', 'test.host', 123
 
         include_examples 'derive os from cached property', 'test os'
       end
