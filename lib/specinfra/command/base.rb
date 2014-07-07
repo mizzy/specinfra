@@ -349,6 +349,14 @@ module Specinfra
       def get_ipaddress_of_host(name)
         "getent hosts #{escape(name)} | awk '{print $1}'"
       end
+
+      def check_mysql(host, user, password, database)
+        cmd = "mysql -e 'SHOW DATABASES;' -h #{escape(host)}"
+        cmd = "#{cmd} -u #{escape(user)}" if user
+        cmd = "#{cmd} --password=#{escape(password)}" if password
+        cmd = "#{cmd} #{escape(database)}" if database
+        cmd
+      end
     end
   end
 end
