@@ -77,7 +77,7 @@ module Specinfra
 
             channel.on_extended_data do |ch, type, data|
               if data.match /you must have a tty to run sudo/
-                abort 'Please set "SpecInfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropriate file.'
+                abort 'Please set "Specinfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropriate file.'
               end
 
               if data.match /^sudo: no tty present and no askpass program specified/

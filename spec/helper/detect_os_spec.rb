@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe SpecInfra::Helper::DetectOS do
+describe Specinfra::Helper::DetectOS do
   shared_context 'no ssh connection' do
     before do
-      SpecInfra.stub_chain(:configuration, :ssh).and_return(nil)
+      Specinfra.stub_chain(:configuration, :ssh).and_return(nil)
     end
   end
   shared_context 'existing ssh connection' do |hostname, port|
     before do
       ssh_session.stub(:host).and_return(hostname)
       ssh_session.stub(:options).and_return({:port => port})
-      SpecInfra.stub_chain(:configuration, :ssh).and_return(ssh_session)
+      Specinfra.stub_chain(:configuration, :ssh).and_return(ssh_session)
     end
   end
   shared_examples 'derive os from backend' do |os|
@@ -28,7 +28,7 @@ describe SpecInfra::Helper::DetectOS do
     end
   end
 
-  let(:subject) { Object.new.extend SpecInfra::Helper::DetectOS }
+  let(:subject) { Object.new.extend Specinfra::Helper::DetectOS }
   let(:backend) { double('backend') }
   let(:ssh_session) { double('ssh') }
 
