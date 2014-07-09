@@ -341,6 +341,10 @@ module SpecInfra
         raise NotImplementedError.new
       end
 
+      def check_immutable(file)
+        raise NotImplementedError.new
+      end
+
       def get_package_version(package, opts=nil)
         raise NotImplementedError.new
       end
