@@ -66,6 +66,14 @@ module Specinfra
         "lxc-info -n #{escape(container)} -t RUNNING"
       end
 
+      def check_attribute(file, attribute)
+        "lsattr -d #{escape(file)} 2>&1 | awk '$1~/^-*#{escape(attribute)}-*$/ {exit 0} {exit 1}'"
+      end
+
+      def check_immutable(file)
+        check_attribute(file, 'i')
+      end
+
     end
   end
 end
