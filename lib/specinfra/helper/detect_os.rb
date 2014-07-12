@@ -2,7 +2,7 @@ module Specinfra
   module Helper
     module DetectOS
       def commands
-        self.class.const_get('Specinfra').const_get('Command').const_get(os[:family]).new
+        self.class.const_get('Specinfra').const_get('Command').const_get(os[:family].capitalize).new
       end
 
       def os
