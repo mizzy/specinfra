@@ -193,20 +193,16 @@ module Specinfra
           if line =~ /release (\d[\d]*)/
             release = $1
           end
-          { :family => 'Fedora', :release => release }
+          { :family => 'fedora', :release => release }
         elsif run_command('ls /etc/redhat-release').success?
           line = run_command('cat /etc/redhat-release').stdout
           if line =~ /release (\d[\d.]*)/
             release = $1
           end
 
-          if release =~ /7./
-            { :family => 'RedHat7', :release => release, :arch => arch }
-          else
-            { :family => 'RedHat', :release => release, :arch => arch }
-          end
+          { :family => 'redhat', :release => release, :arch => arch }
         elsif run_command('ls /etc/system-release').success?
-          { :family => 'RedHat', :release => nil, :arch => arch } # Amazon Linux
+          { :family => 'redhat', :release => nil, :arch => arch } # Amazon Linux
         elsif run_command('ls /etc/SuSE-release').success?
           line = run_command('cat /etc/SuSE-release').stdout
           if line =~ /SUSE Linux Enterprise Server (\d+)/
