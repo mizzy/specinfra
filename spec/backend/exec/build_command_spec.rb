@@ -74,9 +74,14 @@ describe Specinfra::Backend::Exec do
   end
 end
 
-describe 'check_os' do
+describe 'os' do
+  before do
+    # clear os information cache
+    property[:os_by_host] = {}
+  end
+
   context 'test ubuntu with lsb_release command' do
-    subject { backend.check_os }
+    subject { os }
     it do
       expect(backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'lsb_release -ir'].include? args
@@ -88,15 +93,15 @@ describe 'check_os' do
         elsif args == 'uname -m'
           double :run_command_response, :success? => true, :stdout => "x86_64\n"
         else
-          double :run_command_response, :success? => false
+          double :run_command_response, :success? => false, :stdout => nil
         end
       end
-      should eq({:family => 'Ubuntu', :release => '12.04', :arch => 'x86_64' })
+      should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
     end
   end
 
   context 'test ubuntu with /etc/lsb-release' do
-    subject { backend.check_os }
+    subject { os }
     it do
       expect(backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'cat /etc/lsb-release'].include? args
@@ -113,26 +118,26 @@ EOF
         elsif args == 'uname -m'
           double :run_command_response, :success? => true, :stdout => "x86_64\n"
         else
-          double :run_command_response, :success? => false
+          double :run_command_response, :success? => false, :stdout => nil
         end
       end
-      should eq({:family => 'Ubuntu', :release => '12.04', :arch => 'x86_64' })
+      should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
     end
   end
 
   context 'test debian (no lsb_release or lsb-release)' do
-    subject { backend.check_os }
+    subject { os }
     it do
       expect(backend).to receive(:run_command).at_least(1).times do |args|
         if args == 'ls /etc/debian_version'
-          double :run_command_response, :success? => true
+          double :run_command_response, :success? => true, :stdout => nil
         elsif args == 'uname -m'
           double :run_command_response, :success? => true, :stdout => "x86_64\n"
         else
-          double :run_command_response, :success? => false
+          double :run_command_response, :success? => false, :stdout => nil
         end
       end
-      should eq({:family => 'Debian', :release => nil, :arch => 'x86_64' })
+      should eq({:family => 'debian', :release => nil, :arch => 'x86_64' })
     end
   end
 end
