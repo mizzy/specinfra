@@ -1,5 +1,5 @@
 require 'specinfra/helper/os'
-include Specinfra::Helper::OS
+include Specinfra::Helper::Os
 
 require 'specinfra/helper/backend'
 include Specinfra::Helper::Backend
