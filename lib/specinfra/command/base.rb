@@ -19,17 +19,17 @@ class Specinfra::Command::Base
   def method_missing(meth, *args)
     action, target, subaction = breakdown(meth)
 
-    family  = os[:family].capitalize
+    family  = os[:family]
     version = "V#{os[:release].to_i}"
 
     common_class = self.class.const_get('Specinfra').const_get('Command')
     base_class   = common_class.const_get('Base')
-    os_class     = common_class.const_get(family)
+    os_class     = family.nil? ? base_class : common_class.const_get(family.capitalize)
 
     begin
       version_class = os_class.const_get(version)
     rescue
-      version_class = os_class.const_get('Base')
+      version_class = family.nil? ? os_class : os_class.const_get('Base')
     end
 
     begin
@@ -40,7 +40,6 @@ class Specinfra::Command::Base
 
     method =  action
     method += "_#{subaction}" if subaction
-
     command_class.new.send(method, *args)
   end
 
