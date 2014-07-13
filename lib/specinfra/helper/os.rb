@@ -27,8 +27,11 @@ module Specinfra
       def current_host_and_port
         if Specinfra.configuration.ssh
           [Specinfra.configuration.ssh.host, Specinfra.configuration.ssh.options[:port]]
-        else
+        elsif Specinfra.configuration.ssh_options
+          
           [Specinfra.configuration.host, Specinfra.configuration.ssh_options[:port]]
+        else
+          [Specinfra.configuration.host, nil]
         end
       end
 
