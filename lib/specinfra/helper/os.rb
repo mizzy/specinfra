@@ -28,7 +28,7 @@ module Specinfra
         if Specinfra.configuration.ssh
           [Specinfra.configuration.ssh.host, Specinfra.configuration.ssh.options[:port]]
         else
-          ['localhost', nil]
+          [Specinfra.configuration.host, Specinfra.configuration.ssh_options[:port]]
         end
       end
 
