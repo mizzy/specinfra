@@ -3,5 +3,3 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     "test -d #{escape(directory)}"
   end
 end
-
-
