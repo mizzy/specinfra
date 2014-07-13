@@ -64,6 +64,7 @@ class Specinfra::Command::Base
 end
 
 require 'specinfra/command/base/file'
+require 'specinfra/command/base/package'
 
 
 class Class
