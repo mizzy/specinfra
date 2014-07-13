@@ -22,14 +22,21 @@ class Specinfra::Command::Base
     family  = os[:family].capitalize
     version = "V#{os[:release].to_i}"
 
-    os_class      = self.class.const_get('Specinfra').const_get('Command').const_get(family)
+    common_class = self.class.const_get('Specinfra').const_get('Command')
+    base_class   = common_class.const_get('Base')
+    os_class     = common_class.const_get(family)
+
     begin
       version_class = os_class.const_get(version)
     rescue
       version_class = os_class.const_get('Base')
     end
 
-    command_class = version_class.const_get(target.capitalize)
+    begin
+      command_class = version_class.const_get(target.capitalize)
+    rescue
+      command_class = base_class.const_get(target.capitalize)
+    end
 
     method =  action
     method += "_#{subaction}" if subaction
