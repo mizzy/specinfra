@@ -83,7 +83,7 @@ module Specinfra
       end
 
       def check_readable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
+        mode = sprintf('%04s',run_command(commands.get_file_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -99,7 +99,7 @@ module Specinfra
       end
 
       def check_writable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
+        mode = sprintf('%04s',run_command(commands.get_file_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -115,7 +115,7 @@ module Specinfra
       end
 
       def check_executable(file, by_whom)
-        mode = sprintf('%04s',run_command(commands.get_mode(file)).stdout.strip)
+        mode = sprintf('%04s',run_command(commands.get_file_mode(file)).stdout.strip)
         mode = mode.split('')
         mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
         case by_whom
@@ -131,7 +131,7 @@ module Specinfra
       end
 
       def check_mounted(path, expected_attr, only_with)
-        ret = run_command(commands.check_mounted(path))
+        ret = run_command(commands.check_file_is_mounted(path))
         if expected_attr.nil? || ret.failure?
           return ret.success?
         end
