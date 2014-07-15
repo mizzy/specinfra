@@ -33,9 +33,9 @@ class Specinfra::Command::Base
     end
 
     begin
-      command_class = version_class.const_get(target.capitalize)
+      command_class = version_class.const_get(target.to_camel_case)
     rescue
-      command_class = base_class.const_get(target.capitalize)
+      command_class = base_class.const_get(target.to_camel_case)
     end
 
     method =  action
@@ -45,7 +45,7 @@ class Specinfra::Command::Base
 
   private
   def breakdown(meth)
-    types = resource_types.map {|t| t.downcase }.join('|')
+    types = resource_types.map {|t| t.to_snake_case }.join('|')
     md = meth.to_s.match(/^([^_]+)_(#{types})_(.+)$/)
     return md[1], md[2], md[3]
   end
@@ -61,6 +61,3 @@ class Specinfra::Command::Base
     @types
   end
 end
-
-require 'specinfra/command/base/file'
-require 'specinfra/command/base/package'
