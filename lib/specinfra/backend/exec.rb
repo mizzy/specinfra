@@ -163,9 +163,9 @@ module Specinfra
         end
       end
 
-      def check_routing_table(expected_attr)
+      def check_routing_table_has_entry(expected_attr)
         return false if ! expected_attr[:destination]
-        ret = run_command(commands.check_routing_table(expected_attr[:destination]))
+        ret = run_command(commands.check_routing_table_has_entry(expected_attr[:destination]))
         return false if ret.failure?
 
         ret.stdout.gsub!(/\r\n/, "\n")
