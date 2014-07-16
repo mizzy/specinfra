@@ -33,7 +33,7 @@ if defined?(RSpec)
     end
 
     RSpec::Core::RakeTask.new(:command) do |t|
-      t.pattern = "spec/command/*/*.rb"
+      t.pattern = "spec/command/**/*.rb"
     end
   end
 end
