@@ -20,16 +20,16 @@ class Specinfra::Command::Base
     action, target, subaction = breakdown(meth)
 
     family  = os[:family]
-    version = "V#{os[:release].to_i}"
+    version = os[:release] ? "V#{os[:release].to_i}" : nil
 
     common_class = self.class.const_get('Specinfra').const_get('Command')
     base_class   = common_class.const_get('Base')
     os_class     = family.nil? ? base_class : common_class.const_get(family.capitalize)
 
-    begin
+    if family && version
       version_class = os_class.const_get(version)
-    rescue
-      version_class = family.nil? ? os_class : os_class.const_get('Base')
+    elsif family != 'base' && version.nil?
+      version_class = os_class.const_get('Base')
     end
 
     begin
