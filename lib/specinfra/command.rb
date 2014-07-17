@@ -11,6 +11,7 @@ require 'specinfra/command/base/kernel_module'
 require 'specinfra/command/base/lxc_container'
 require 'specinfra/command/base/mail_alias'
 require 'specinfra/command/base/package'
+require 'specinfra/command/base/process'
 require 'specinfra/command/base/routing_table'
 
 # Linux

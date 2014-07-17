@@ -55,7 +55,7 @@ class Specinfra::Command::Base
   private
   def breakdown(meth)
     types = resource_types.map {|t| t.to_snake_case }.join('|')
-    md = meth.to_s.match(/^([^_]+)_(#{types})_(.+)$/)
+    md = meth.to_s.match(/^([^_]+)_(#{types})_?(.+)?$/)
     return md[1], md[2], md[3]
   end
 
