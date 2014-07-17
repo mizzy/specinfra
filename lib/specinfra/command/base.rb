@@ -20,7 +20,12 @@ class Specinfra::Command::Base
     action, resource_type, subaction = breakdown(meth)
     method =  action
     method += "_#{subaction}" if subaction
-    command_class(resource_type).new.send(method, *args)
+    command_object = command_class(resource_type).new
+    if command_object.respond_to?(method)
+      command_object.send(method, *args)
+    else
+      raise NotImplementedError.new
+    end
   end
 
   def command_class(resource_type)
