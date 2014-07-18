@@ -16,6 +16,7 @@ require 'specinfra/command/base/process'
 require 'specinfra/command/base/routing_table'
 require 'specinfra/command/base/selinux'
 require 'specinfra/command/base/service'
+require 'specinfra/command/base/user'
 
 # Linux
 require 'specinfra/command/linux'
