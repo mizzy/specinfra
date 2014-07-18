@@ -71,8 +71,8 @@ module Specinfra
         ret.success?
       end
 
-      def check_monitored_by_monit(process)
-        ret = run_command(commands.check_monitored_by_monit(process))
+      def check_service_is_monitored_by_monit(process)
+        ret = run_command(commands.check_service_is_monitored_by_monit(process))
         return false unless ret.stdout != nil && ret.success?
 
         retlines = ret.stdout.split(/[\r\n]+/).map(&:strip)
