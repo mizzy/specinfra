@@ -42,6 +42,15 @@ require 'specinfra/command/linux/base/zfs'
 require 'specinfra/command/redhat'
 require 'specinfra/command/redhat/base'
 require 'specinfra/command/redhat/base/file'
+require 'specinfra/command/redhat/base/iptables'
 require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/service'
 require 'specinfra/command/redhat/base/yumrepo'
+
+# RedHat V5
+require 'specinfra/command/redhat/v5'
+require 'specinfra/command/redhat/v5/iptables'
+
+# RedHat V7
+require 'specinfra/command/redhat/v7'
+require 'specinfra/command/redhat/v7/service'

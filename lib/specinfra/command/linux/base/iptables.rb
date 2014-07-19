@@ -5,9 +5,6 @@ class Specinfra::Command::Linux::Base::Iptables < Specinfra::Command::Base::Ipta
     cmd += " -S"
     cmd += " #{escape(chain)}" if chain
     cmd += " | grep -- #{escape(rule)}"
-    cmd += " || iptables-save"
-    cmd += " -t #{escape(table)}" if table
-    cmd += " | grep -- #{escape(rule)}"
     cmd
   end
 end
