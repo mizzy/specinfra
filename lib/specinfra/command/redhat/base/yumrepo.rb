@@ -1,4 +1,4 @@
-class Specinfra::Command::Redhat::Base::Yumrepo < Specinfra::Command::Base::Yumrepo
+class Specinfra::Command::Redhat::Base::Yumrepo < Specinfra::Command::Linux::Base::Yumrepo
   def check_exists(repository)
     "yum repolist all -C | grep ^#{escape(repository)}"
   end
@@ -7,3 +7,5 @@ class Specinfra::Command::Redhat::Base::Yumrepo < Specinfra::Command::Base::Yumr
     "yum repolist all -C | grep ^#{escape(repository)} | grep enabled"
   end
 end
+
+

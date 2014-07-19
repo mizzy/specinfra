@@ -39,10 +39,5 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
     cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
     cmd
   end
-
-  def get_version(package, opts=nil)
-    raise NotImplementedError.new
-  end
-
 end
 

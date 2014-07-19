@@ -1,5 +1,4 @@
 require 'shellwords'
-
 class Specinfra::Command::Base
   attr_accessor :types
 
