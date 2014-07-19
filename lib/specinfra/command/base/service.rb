@@ -1,8 +1,4 @@
 class Specinfra::Command::Base::Service < Specinfra::Command::Base
-  def check_is_enabled(service, level=3)
-    raise NotImplementedError.new
-  end
-
   def check_is_running(service)
     "service #{escape(service)} status"
   end

@@ -1,5 +1,6 @@
 module Specinfra::Command; end
 
+# Base
 require 'specinfra/command/base'
 require 'specinfra/command/base/cron'
 require 'specinfra/command/base/file'
@@ -17,7 +18,21 @@ require 'specinfra/command/base/routing_table'
 require 'specinfra/command/base/selinux'
 require 'specinfra/command/base/service'
 require 'specinfra/command/base/user'
+require 'specinfra/command/base/yumrepo'
+require 'specinfra/command/base/zfs'
 
 # Linux
 require 'specinfra/command/linux'
+require 'specinfra/command/linux/base'
+require 'specinfra/command/linux/base/file'
+require 'specinfra/command/linux/base/interface'
+require 'specinfra/command/linux/base/iptables'
+require 'specinfra/command/linux/base/kernel_module'
+require 'specinfra/command/linux/base/lxc_container'
+require 'specinfra/command/linux/base/selinux'
+require 'specinfra/command/linux/base/service'
+require 'specinfra/command/linux/base/yumrepo'
+require 'specinfra/command/linux/base/zfs'
+
+# RedHat
 require 'specinfra/command/redhat'

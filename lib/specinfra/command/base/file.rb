@@ -77,10 +77,6 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     "mount | grep -w -- #{escape(regexp)}"
   end
 
-  def check_access_by_user(file, user, access)
-    raise NotImplementedError.new
-  end
-
   def get_mode(file)
     "stat -c %a #{escape(file)}"
   end
