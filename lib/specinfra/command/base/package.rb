@@ -1,12 +1,4 @@
 class Specinfra::Command::Base::Package < Specinfra::Command::Base
-  def check_is_installed(name, version=nil)
-    raise NotImplementedError.new
-  end
-
-  def check_is_installed_by_rpm(name, version=nil)
-    raise NotImplementedError.new
-  end
-
   def check_is_installed_by_gem(name, version=nil)
     regexp = "^#{name}"
     cmd = "gem list --local | grep -w -- #{escape(regexp)}"
