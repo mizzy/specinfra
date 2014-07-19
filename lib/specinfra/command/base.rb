@@ -24,7 +24,7 @@ class Specinfra::Command::Base
     if command_object.respond_to?(method)
       command_object.send(method, *args)
     else
-      raise NotImplementedError.new
+      raise NotImplementedError.new("#{method} is not implemented in #{command_class(resource_type)}")
     end
   end
 
