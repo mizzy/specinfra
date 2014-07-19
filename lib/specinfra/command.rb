@@ -39,3 +39,6 @@ require 'specinfra/command/linux/base/zfs'
 
 # RedHat
 require 'specinfra/command/redhat'
+require 'specinfra/command/redhat/base'
+require 'specinfra/command/redhat/base/package'
+require 'specinfra/command/redhat/base/yumrepo'
