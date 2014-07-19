@@ -1,5 +1,8 @@
 module Specinfra::Command; end
 
+# Module
+require 'specinfra/command/module'
+
 # Base
 require 'specinfra/command/base'
 require 'specinfra/command/base/cron'
