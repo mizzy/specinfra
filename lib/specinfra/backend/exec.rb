@@ -55,8 +55,8 @@ module Specinfra
         end
       end
 
-      def check_running(process)
-        ret = run_command(commands.check_running(process))
+      def check_service_is_running(service)
+        ret = run_command(commands.check_service_is_running(service))
 
         # In Ubuntu, some services are under upstart and "service foo status" returns
         # exit status 0 even though they are stopped.
@@ -65,7 +65,7 @@ module Specinfra
 
         # If the service is not registered, check by ps command
         if ret.exit_status == 1
-          ret = run_command(commands.check_process(process))
+          ret = run_command(commands.check_process_is_running(service))
         end
 
         ret.success?
