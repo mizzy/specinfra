@@ -44,8 +44,11 @@ class Specinfra::Command::Base
       version_class = os_class.const_get('Base')
     end
 
-    command_class = version_class.const_get(resource_type.to_camel_case)
-    if (command_class < Specinfra::Command::Base).nil?
+    begin
+      command_class = version_class.const_get(resource_type.to_camel_case)
+    rescue
+    end
+    if command_class.nil? || (command_class < Specinfra::Command::Base).nil?
       command_class = base_class.const_get(resource_type.to_camel_case)
     end
     command_class
