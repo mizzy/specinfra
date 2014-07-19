@@ -88,4 +88,12 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
   def check_is_linked_to(link, target)
     "stat -c %N #{escape(link)} | egrep -e \"-> .#{escape(target)}.\""
   end
+
+  def get_mtime(file)
+    "stat -c %Y #{escape(file)}"
+  end
+
+  def get_size(file)
+    "stat -c %s #{escape(file)}"
+  end
 end
