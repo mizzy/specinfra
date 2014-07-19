@@ -6,7 +6,6 @@ module Specinfra::Helper::Os
   end
 
   def os
-    return detect_os
     property[:os_by_host] = {} if ! property[:os_by_host]
     host_port = current_host_and_port
 
