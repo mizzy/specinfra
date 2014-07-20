@@ -112,3 +112,8 @@ require 'specinfra/command/gentoo/base'
 require 'specinfra/command/gentoo/base/package'
 require 'specinfra/command/gentoo/base/service'
 
+# Plamo (inheri Linux)
+require 'specinfra/command/plamo'
+require 'specinfra/command/plamo/base'
+require 'specinfra/command/plamo/base/package'
+require 'specinfra/command/plamo/base/service'
