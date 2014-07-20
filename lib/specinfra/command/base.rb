@@ -4,6 +4,10 @@ class Specinfra::Command::Base
 
   class NotImplementedError < Exception; end
 
+  def self.create
+    self.new
+  end
+
   def escape(target)
     str = case target
           when Regexp
@@ -19,7 +23,7 @@ class Specinfra::Command::Base
     action, resource_type, subaction = breakdown(meth)
     method =  action
     method += "_#{subaction}" if subaction
-    command_object = command_class(resource_type).new
+    command_object = command_class(resource_type).create
     if command_object.respond_to?(method)
       command_object.send(method, *args)
     else
@@ -36,7 +40,11 @@ class Specinfra::Command::Base
     os_class     = family.nil? ? base_class : common_class.const_get(family.capitalize)
 
     if family && version
-      version_class = os_class.const_get(version)
+      begin
+        version_class = os_class.const_get(version)
+      rescue
+        version_class = os_class.const_get('Base')
+      end
     elsif family.nil?
       version_class = os_class
     elsif family != 'base' && version.nil?
@@ -47,9 +55,11 @@ class Specinfra::Command::Base
       command_class = version_class.const_get(resource_type.to_camel_case)
     rescue
     end
+
     if command_class.nil? || (command_class < Specinfra::Command::Base).nil?
       command_class = base_class.const_get(resource_type.to_camel_case)
     end
+
     command_class
   end
 

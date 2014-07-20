@@ -38,7 +38,7 @@ require 'specinfra/command/linux/base/service'
 require 'specinfra/command/linux/base/yumrepo'
 require 'specinfra/command/linux/base/zfs'
 
-# RedHat
+# RedHat (inherit Linux)
 require 'specinfra/command/redhat'
 require 'specinfra/command/redhat/base'
 require 'specinfra/command/redhat/base/file'
@@ -47,10 +47,19 @@ require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/service'
 require 'specinfra/command/redhat/base/yumrepo'
 
-# RedHat V5
+# RedHat V5 (inherit RedHat)
 require 'specinfra/command/redhat/v5'
 require 'specinfra/command/redhat/v5/iptables'
 
-# RedHat V7
+# RedHat V7 (inherit RedHat)
 require 'specinfra/command/redhat/v7'
 require 'specinfra/command/redhat/v7/service'
+
+# Fedora (inherit RedhHat)
+require 'specinfra/command/fedora'
+require 'specinfra/command/fedora/base'
+require 'specinfra/command/fedora/base/service'
+
+# Fedora >= V15 (inherit Fedora)
+require 'specinfra/command/fedora/v15'
+require 'specinfra/command/fedora/v15/service'
