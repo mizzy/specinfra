@@ -124,5 +124,7 @@ require 'specinfra/command/suse/base'
 require 'specinfra/command/suse/base/package'
 require 'specinfra/command/suse/base/service'
 
-
-#OpenSuSE (inherit SuSE)
+# OpenSuSE (inherit SuSE)
+require 'specinfra/command/opensuse'
+require 'specinfra/command/opensuse/base'
+require 'specinfra/command/opensuse/base/service'
