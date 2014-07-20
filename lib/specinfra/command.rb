@@ -82,3 +82,12 @@ require 'specinfra/command/arch/base'
 require 'specinfra/command/arch/base/file'
 require 'specinfra/command/arch/base/service'
 require 'specinfra/command/arch/base/package'
+
+# Darwin (inherit Base)
+require 'specinfra/command/darwin'
+require 'specinfra/command/darwin/base'
+require 'specinfra/command/darwin/base/file'
+#require 'specinfra/command/darwin/base/service'
+#require 'specinfra/command/darwin/base/package'
+#require 'specinfra/command/darwin/base/port'
+
