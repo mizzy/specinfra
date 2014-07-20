@@ -7,7 +7,7 @@ module SpecInfra
       end
 
       def check_belonging_primary_group(user, group)
-        "id -gn #{escape(user)}|grep #{escape(group)}"
+        "id -gn #{escape(user)}| grep ^#{escape(group)}$"
       end
 
       def check_enabled(service, level=3)
