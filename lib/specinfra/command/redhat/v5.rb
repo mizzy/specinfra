@@ -1,2 +1,2 @@
-class Specinfra::Command::Redhat::V5; end
+module Specinfra::Command::Redhat::V5; end
 

@@ -1,2 +1,2 @@
-class Specinfra::Command::Redhat::V7; end
+module Specinfra::Command::Redhat::V7; end
 

@@ -137,3 +137,7 @@ require 'specinfra/command/freebsd/base/package'
 require 'specinfra/command/freebsd/base/port'
 require 'specinfra/command/freebsd/base/service'
 
+# FreeBSD V10 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v10'
+require 'specinfra/command/freebsd/v10/package'
+
