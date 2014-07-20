@@ -128,3 +128,12 @@ require 'specinfra/command/suse/base/service'
 require 'specinfra/command/opensuse'
 require 'specinfra/command/opensuse/base'
 require 'specinfra/command/opensuse/base/service'
+
+# FreeBSD (inherit Base)
+require 'specinfra/command/freebsd'
+require 'specinfra/command/freebsd/base'
+require 'specinfra/command/freebsd/base/file'
+require 'specinfra/command/freebsd/base/package'
+require 'specinfra/command/freebsd/base/port'
+require 'specinfra/command/freebsd/base/service'
+
