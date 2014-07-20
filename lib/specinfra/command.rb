@@ -75,3 +75,10 @@ require 'specinfra/command/aix/base/package'
 require 'specinfra/command/aix/base/port'
 require 'specinfra/command/aix/base/service'
 require 'specinfra/command/aix/base/user'
+
+# Arch (inherit Linux)
+require 'specinfra/command/arch'
+require 'specinfra/command/arch/base'
+require 'specinfra/command/arch/base/file'
+require 'specinfra/command/arch/base/service'
+require 'specinfra/command/arch/base/package'
