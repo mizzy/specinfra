@@ -91,3 +91,9 @@ require 'specinfra/command/darwin/base/service'
 require 'specinfra/command/darwin/base/package'
 require 'specinfra/command/darwin/base/port'
 
+# Debian (inherit Linux)
+require 'specinfra/command/debian'
+require 'specinfra/command/debian/base'
+require 'specinfra/command/debian/base/package'
+require 'specinfra/command/debian/base/service'
+
