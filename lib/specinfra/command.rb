@@ -105,3 +105,10 @@ require 'specinfra/command/ubuntu'
 require 'specinfra/command/ubuntu/base'
 require 'specinfra/command/ubuntu/base/ppa'
 require 'specinfra/command/ubuntu/base/service'
+
+# Gentoo (inherit Linux)
+require 'specinfra/command/gentoo'
+require 'specinfra/command/gentoo/base'
+require 'specinfra/command/gentoo/base/package'
+require 'specinfra/command/gentoo/base/service'
+
