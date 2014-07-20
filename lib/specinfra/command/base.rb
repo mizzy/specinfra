@@ -257,6 +257,10 @@ module SpecInfra
         "id #{escape(user)} | awk '{print $3}' | grep -- #{escape(group)}"
       end
 
+      def check_primary_group(group)
+        raise NotImplementedError.new
+      end
+
       def check_gid(group, gid)
         regexp = "^#{group}"
         "getent group | grep -w -- #{escape(regexp)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
