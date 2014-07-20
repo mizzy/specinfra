@@ -112,8 +112,17 @@ require 'specinfra/command/gentoo/base'
 require 'specinfra/command/gentoo/base/package'
 require 'specinfra/command/gentoo/base/service'
 
-# Plamo (inheri Linux)
+# Plamo (inherit Linux)
 require 'specinfra/command/plamo'
 require 'specinfra/command/plamo/base'
 require 'specinfra/command/plamo/base/package'
 require 'specinfra/command/plamo/base/service'
+
+# SuSE (inherit Linux)
+require 'specinfra/command/suse'
+require 'specinfra/command/suse/base'
+require 'specinfra/command/suse/base/package'
+require 'specinfra/command/suse/base/service'
+
+
+#OpenSuSE (inherit SuSE)
