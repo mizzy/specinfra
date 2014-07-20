@@ -1,4 +1,4 @@
-class Specinfra::Command::Openbsd::Base::File < Specinfra::Command::Base::File
+class Specinfra::Command::Openbsd::Base::Interface < Specinfra::Command::Base::Interface 
   def get_speed_of(name)
     "ifconfig #{name} | grep 'media\:' | perl -pe 's|.*media\:.*\\((.*?)\\)|\\1|'"
   end

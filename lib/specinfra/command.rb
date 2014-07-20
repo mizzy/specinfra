@@ -118,6 +118,12 @@ require 'specinfra/command/plamo/base'
 require 'specinfra/command/plamo/base/package'
 require 'specinfra/command/plamo/base/service'
 
+# NixOS (inherit Linux)
+require 'specinfra/command/nixos'
+require 'specinfra/command/nixos/base'
+require 'specinfra/command/nixos/base/package'
+require 'specinfra/command/nixos/base/service'
+
 # SuSE (inherit Linux)
 require 'specinfra/command/suse'
 require 'specinfra/command/suse/base'
