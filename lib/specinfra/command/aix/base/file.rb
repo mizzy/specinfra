@@ -1,0 +1,19 @@
+class Specinfra::Command::Aix::Base::File < Specinfra::Command::Base::File
+  def check_access_by_user(file, user, access)
+    "su -s sh -c \"test -#{access} #{file}\" #{user}"
+  end
+
+  def check_mode(file, mode)
+    raise NotImplementedError.new('check_mode is not implemented in Specinfra::Command::AIX::Base::File')
+  end
+
+  def check_is_owned_by(file, owner)
+    regexp = "^#{owner}$"
+    "ls -al #{escape(file)} | awk '{print $3}' | grep -- #{escape(regexp)}"
+  end
+
+  def check_is_grouped(file, group)
+    regexp = "^#{group}$"
+    "ls -al #{escape(file)} | awk '{print $4}' | grep -- #{escape(regexp)}"
+  end
+end

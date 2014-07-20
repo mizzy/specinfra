@@ -2,6 +2,8 @@ module Specinfra::Command; end
 
 # Module
 require 'specinfra/command/module'
+require 'specinfra/command/module/systemd'
+require 'specinfra/command/module/zfs'
 
 # Base
 require 'specinfra/command/base'
@@ -24,7 +26,7 @@ require 'specinfra/command/base/user'
 require 'specinfra/command/base/yumrepo'
 require 'specinfra/command/base/zfs'
 
-# Linux
+# Linux (inhefit Base)
 require 'specinfra/command/linux'
 require 'specinfra/command/linux/base'
 require 'specinfra/command/linux/base/file'
@@ -63,3 +65,13 @@ require 'specinfra/command/fedora/base/service'
 # Fedora >= V15 (inherit Fedora)
 require 'specinfra/command/fedora/v15'
 require 'specinfra/command/fedora/v15/service'
+
+# AIX (inherit Base)
+require 'specinfra/command/aix'
+require 'specinfra/command/aix/base'
+require 'specinfra/command/aix/base/file'
+require 'specinfra/command/aix/base/group'
+#require 'specinfra/command/aix/base/package'
+#require 'specinfra/command/aix/base/port'
+#require 'specinfra/command/aix/base/service'
+#require 'specinfra/command/aix/base/user'
