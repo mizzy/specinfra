@@ -67,6 +67,11 @@ class Specinfra::Command::Base
   def breakdown(meth)
     types = resource_types.map {|t| t.to_snake_case }.join('|')
     md = meth.to_s.match(/^([^_]+)_(#{types})_?(.+)?$/)
+    if md.nil?
+      message =  "Could not break down `#{meth}' to appropriate type and method.\n"
+      message += "The method name shoud be in the form of `action_type_subaction'."
+      raise message
+    end
     return md[1], md[2], md[3]
   end
 
