@@ -175,3 +175,11 @@ require 'specinfra/command/solaris/base/service'
 require 'specinfra/command/solaris/base/user'
 require 'specinfra/command/solaris/base/zfs'
 
+# Solaris 10 (inherit Solaris)
+require 'specinfra/command/solaris/v10'
+require 'specinfra/command/solaris/v10/file'
+require 'specinfra/command/solaris/v10/group'
+require 'specinfra/command/solaris/v10/host'
+require 'specinfra/command/solaris/v10/package'
+require 'specinfra/command/solaris/v10/user'
+

@@ -11,10 +11,3 @@ class Specinfra::Command::Solaris::Base::User < Specinfra::Command::Base::User
     "getent passwd #{escape(user)} | cut -f 7 -d ':' | grep -w -- #{escape(path_to_shell)}"
   end
 end
-
-
-
-
-
-
-
