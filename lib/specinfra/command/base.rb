@@ -56,7 +56,7 @@ class Specinfra::Command::Base
     rescue
     end
 
-    if command_class.nil? || (command_class < Specinfra::Command::Base).nil?
+    if command_class.nil? ||( (command_class < Specinfra::Command::Base).nil? && (command_class < Specinfra::Command::Windows::Base).nil? )
       command_class = base_class.const_get(resource_type.to_camel_case)
     end
 
@@ -81,8 +81,14 @@ class Specinfra::Command::Base
       Specinfra::Command::Base.subclasses.each do |s|
         @types << s.to_s.split(':')[-1]
       end
+      Specinfra::Command::Windows::Base.subclasses.each do |s|
+        @types << s.to_s.split(':')[-1]
+      end
       @types.uniq!
     end
     @types
   end
 end
+
+
+
