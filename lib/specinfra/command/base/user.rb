@@ -7,6 +7,10 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     "id #{escape(user)} | awk '{print $3}' | grep -- #{escape(group)}"
   end
 
+  def check_is_belonging_to_primary_group(user, group)
+    "id -gn #{escape(user)}| grep ^#{escape(group)}$"
+  end
+
   def check_has_uid(user, uid)
     regexp = "^uid=#{uid}("
     "id #{escape(user)} | grep -- #{escape(regexp)}"
