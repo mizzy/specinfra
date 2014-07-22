@@ -6,6 +6,10 @@ module SpecInfra
         "runuser -s /bin/sh -c \"test -#{access} #{file}\" #{user}"
       end
 
+      def check_belonging_primary_group(user, group)
+        "id -gn #{escape(user)}| grep ^#{escape(group)}$"
+      end
+
       def check_enabled(service, level=3)
         "chkconfig --list #{escape(service)} | grep #{level}:on"
       end
