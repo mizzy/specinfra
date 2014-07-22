@@ -1,34 +1,17 @@
-module Specinfra
-  module Helper
-    module DetectOS
-      def commands
-        self.class.const_get('Specinfra').const_get('Command').const_get(os[:family]).new
-      end
-
-      def os
-        property[:os_by_host] = {} if ! property[:os_by_host]
-        host_port = current_host_and_port
-
-        if property[:os_by_host][host_port]
-          os_by_host = property[:os_by_host][host_port]
-        else
-          # Set command object explicitly to avoid `stack too deep`
-          os_by_host = backend(Specinfra::Command::Base.new).check_os
-          property[:os_by_host][host_port] = os_by_host
-        end
-        os_by_host
-      end
-
-      private
-
-      # put this in a module for better reuse
-      def current_host_and_port
-        if Specinfra.configuration.ssh
-          [Specinfra.configuration.ssh.host, Specinfra.configuration.ssh.options[:port]]
-        else
-          ['localhost', nil]
-        end
-      end
-    end
+module Specinfra::Helper
+  class DetectOs
   end
 end
+
+require 'specinfra/helper/detect_os/aix'
+require 'specinfra/helper/detect_os/arch'
+require 'specinfra/helper/detect_os/darwin'
+require 'specinfra/helper/detect_os/debian'
+require 'specinfra/helper/detect_os/freebsd'
+require 'specinfra/helper/detect_os/gentoo'
+require 'specinfra/helper/detect_os/nixos'
+require 'specinfra/helper/detect_os/openbsd'
+require 'specinfra/helper/detect_os/plamo'
+require 'specinfra/helper/detect_os/redhat'
+require 'specinfra/helper/detect_os/solaris'
+require 'specinfra/helper/detect_os/suse'

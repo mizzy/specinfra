@@ -23,7 +23,8 @@ module Specinfra
 
       # Define os method explicitly to avoid stack level
       # too deep caused by Helpet::DetectOS#os
-      def os
+      def os(value=nil)
+        @os = value if value
         if @os.nil? && defined?(RSpec) && RSpec.configuration.respond_to?(:os)
           @os = RSpec.configuration.os
         end

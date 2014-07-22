@@ -9,7 +9,7 @@ if defined?(RSpec)
   task :spec => 'spec:all'
 
   namespace :spec do
-    task :all => [ :helper, :backend, :configuration ]
+    task :all => [ :helper, :backend, :configuration, :command ]
 
     RSpec::Core::RakeTask.new(:helper) do |t|
       t.pattern = "spec/helper/*_spec.rb"
@@ -33,7 +33,7 @@ if defined?(RSpec)
     end
 
     RSpec::Core::RakeTask.new(:command) do |t|
-      t.pattern = "spec/command/*.rb"
+      t.pattern = "spec/command/**/*.rb"
     end
   end
 end

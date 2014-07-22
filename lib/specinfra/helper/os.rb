@@ -1,36 +1,50 @@
-module Specinfra
-  module Helper
-    [
-      'Base',
-      'AIX',
-      'Arch',
-      'Darwin',
-      'Debian',
-      'Fedora',
-      'FreeBSD',
-      'FreeBSD10',
-      'Gentoo',
-      'NixOS',
-      'OpenBSD',
-      'Plamo',
-      'RedHat',
-      'RedHat7',
-      'SuSE',
-      'OpenSUSE',
-      'SmartOS',
-      'Solaris',
-      'Solaris10',
-      'Solaris11',
-      'Ubuntu',
-      'Windows',
-    ].each do |os|
-      eval <<-EOF
-        module #{os}
-          def commands
-            Specinfra::Command::#{os}.new
-          end
-        end
-      EOF
+require 'specinfra/helper/detect_os'
+
+module Specinfra::Helper::Os
+  def commands
+    Specinfra::Command::Base.new
+  end
+
+  def os
+    property[:os_by_host] = {} if ! property[:os_by_host]
+    host_port = current_host_and_port
+
+    if property[:os_by_host][host_port]
+      os_by_host = property[:os_by_host][host_port]
+    else
+      # Set command object explicitly to avoid `stack too deep`
+      os_by_host = detect_os
+      property[:os_by_host][host_port] = os_by_host
+    end
+    os_by_host
+  end
+
+  private
+
+  # put this in a module for better reuse
+  def current_host_and_port
+    if Specinfra.configuration.ssh
+      "#{Specinfra.configuration.ssh.host}:#{Specinfra.configuration.ssh.options[:port]}"
+    elsif Specinfra.configuration.ssh_options
+          
+      "#{Specinfra.configuration.host}:#{Specinfra.configuration.ssh_options[:port]}"
+    else
+      "#{Specinfra.configuration.host}:0"
+    end
+  end
+
+  def run_command(cmd)
+    backend.run_command(cmd)
+  end
+
+  def detect_os
+    return Specinfra.configuration.os if Specinfra.configuration.os
+    Specinfra::Helper::DetectOs.subclasses.each do |c|
+      res = c.detect
+      if res
+        res[:arch] ||= run_command('uname -m').stdout.strip
+        return res
+      end
     end
   end
 end
