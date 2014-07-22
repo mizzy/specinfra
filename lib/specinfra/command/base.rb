@@ -52,15 +52,15 @@ class Specinfra::Command::Base
     end
 
     begin
-      command_class = version_class.const_get(resource_type.to_camel_case)
+      command_klass = version_class.const_get(resource_type.to_camel_case)
     rescue
     end
 
-    if command_class.nil? ||( (command_class < Specinfra::Command::Base).nil? && (command_class < Specinfra::Command::Windows::Base).nil? )
-      command_class = base_class.const_get(resource_type.to_camel_case)
+    if command_klass.nil? ||( (command_klass < Specinfra::Command::Base).nil? && (command_klass < Specinfra::Command::Windows::Base).nil? )
+      command_klass = base_class.const_get(resource_type.to_camel_case)
     end
 
-    command_class
+    command_klass
   end
 
   private

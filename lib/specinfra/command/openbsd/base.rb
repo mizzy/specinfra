@@ -1,2 +1,4 @@
-module Specinfra::Command::Openbsd::Base; end
+class Specinfra::Command::Openbsd::Base < Specinfra::Command::Base
+end
+
 

@@ -1,1 +1,3 @@
-module Specinfra::Command::Smartos::Base; end
+class Specinfra::Command::Smartos::Base < Specinfra::Command::Solaris::Base
+end
+

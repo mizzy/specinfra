@@ -1,1 +1,1 @@
-module Specinfra::Command::Arch;end
+module Specinfra::Command::Arch; end

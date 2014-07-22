@@ -1,1 +1,1 @@
-module Specinfra::Command::Gentoo;end
+module Specinfra::Command::Gentoo; end

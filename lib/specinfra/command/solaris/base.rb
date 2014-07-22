@@ -1,2 +1,2 @@
-module Specinfra::Command::Solaris::Base; end
-
+class Specinfra::Command::Solaris::Base < Specinfra::Command::Base
+end

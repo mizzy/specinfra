@@ -1,1 +1,2 @@
-module Specinfra::Command::Ubuntu::Base; end
+class Specinfra::Command::Ubuntu::Base < Specinfra::Command::Debian::Base
+end

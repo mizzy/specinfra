@@ -1,1 +1,2 @@
-module Specinfra::Command::Gentoo::Base; end
+class Specinfra::Command::Gentoo::Base < Specinfra::Command::Linux::Base
+end

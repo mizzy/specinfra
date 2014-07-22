@@ -1,1 +1,1 @@
-module Specinfra::Command::Aix;end
+module Specinfra::Command::Aix; end

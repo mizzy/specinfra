@@ -1,11 +1,2 @@
-module Specinfra::Command::Darwin::Base; end
-
-
-
-
-
-
-
-
-
-
+class Specinfra::Command::Darwin::Base < Specinfra::Command::Base
+end

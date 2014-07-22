@@ -1,1 +1,3 @@
-module Specinfra::Command::Plamo::Base;end
+class Specinfra::Command::Plamo::Base < Specinfra::Command::Linux::Base
+end
+

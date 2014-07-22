@@ -1,1 +1,1 @@
-module Specinfra::Command::Fedora;end
+module Specinfra::Command::Fedora; end

@@ -1,1 +1,2 @@
-module Specinfra::Command::Nixos::Base; end
+class Specinfra::Command::Nixos::Base < Specinfra::Command::Linux::Base
+end

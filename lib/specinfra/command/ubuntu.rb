@@ -1,4 +1,4 @@
-module Specinfra::Command::Ubuntu;end
+module Specinfra::Command::Ubuntu; end
 
 
 
