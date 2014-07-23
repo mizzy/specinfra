@@ -1,2 +1,3 @@
-module Specinfra::Command::Redhat::V5; end
+class Specinfra::Command::Redhat::V5 < Specinfra::Command::Redhat::Base
+end
 

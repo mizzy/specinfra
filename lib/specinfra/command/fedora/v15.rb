@@ -1,1 +1,2 @@
-module Specinfra::Command::Fedora::V15; end
+class Specinfra::Command::Fedora::V15 < Specinfra::Command::Fedora::Base
+end
