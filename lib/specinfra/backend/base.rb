@@ -1,5 +1,6 @@
 require 'singleton'
 require 'specinfra/command_result'
+require 'specinfra/command/processor'
 
 module Specinfra
   module Backend
@@ -22,12 +23,15 @@ module Specinfra
         run_command(commands.send(cmd, *args)).success?
       end
 
-      # Default action is to call check_zero with args
       def method_missing(meth, *args, &block)
-        if meth.to_s =~ /^check/
-          check_zero(meth, *args)
+        if os[:family] == 'windows'
+          if meth.to_s =~ /^check/
+            backend.check_zero(meth, *args)
+          else
+            backend.run_command(commands.send(meth, *args))
+          end
         else
-          run_command(commands.send(meth, *args))
+          Specinfra::Command::Processor.send(meth, *args)
         end
       end
     end
