@@ -63,7 +63,7 @@ module SpecInfra
       end
 
       def check_container_running(container)
-        "lxc-info -n #{escape(container)} -t RUNNING"
+        "lxc-info -n #{escape(container)} -s | grep -w RUNNING"
       end
 
       def check_attribute(file, attribute)
