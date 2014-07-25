@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SpecInfra::VERSION
   spec.authors       = ["Gosuke Miyashita"]
   spec.email         = ["gosukenator@gmail.com"]
-  spec.description   = %q{Common layer for serverspec and configspec}
-  spec.summary       = %q{Common layer for serverspec and configspec}
+  spec.description   = %q{Common layer for serverspec and lightchef}
+  spec.summary       = %q{Common layer for serverspec and lightchef}
   spec.homepage      = ""
   spec.license       = "MIT"
 
