@@ -9,7 +9,7 @@ module Specinfra
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        stdout = run_with_no_ruby_environment do
+        stdout = with_env do
           `#{build_command(cmd)} 2>&1`
         end
         # In ruby 1.9, it is possible to use Open3.capture3, but not in 1.8
@@ -23,14 +23,26 @@ module Specinfra
         CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
       end
 
-      def run_with_no_ruby_environment
+      def with_env
         keys = %w[BUNDLER_EDITOR BUNDLE_BIN_PATH BUNDLE_GEMFILE
           RUBYOPT GEM_HOME GEM_PATH GEM_CACHE]
 
         keys.each { |key| ENV["_SPECINFRA_#{key}"] = ENV[key] ; ENV.delete(key) }
+
+        env = Specinfra.configuration.env || {}
+        env['LANG'] ||= 'C'
+
+        env.each do |key, value|
+          ENV["_SPECINFRA_#{key}"] = ENV[key];
+          ENV[key] = value
+        end
+
         yield
       ensure
         keys.each { |key| ENV[key] = ENV.delete("_SPECINFRA_#{key}") }
+        env.each do |key, value|
+          ENV[key] = ENV.delete("_SPECINFRA_#{key}");
+        end
       end
 
       def build_command(cmd)
