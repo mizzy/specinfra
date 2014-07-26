@@ -46,7 +46,7 @@ describe Specinfra::Backend::Exec do
 
     context 'with custom path' do
       before do
-        RSpec.configure {|c| c.path = '/opt/bin:/opt/foo/bin' }
+        RSpec.configure {|c| c.path = '/opt/bin:/opt/foo/bin:$PATH' }
       end
 
       after do
@@ -54,13 +54,13 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH=/opt/bin:/opt/foo/bin:"$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/foo/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
     context 'with custom path that needs escaping' do
       before do
-        RSpec.configure {|c| c.path = '/opt/bin:/opt/test & spec/bin' }
+        RSpec.configure {|c| c.path = '/opt/bin:/opt/test & spec/bin:$PATH' }
       end
 
       after do
@@ -68,7 +68,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH=/opt/bin:/opt/test\ \&\ spec/bin:"$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/test & spec/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
   end
