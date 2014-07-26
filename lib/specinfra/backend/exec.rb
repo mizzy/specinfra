@@ -52,7 +52,7 @@ module Specinfra
 
         path = Specinfra.configuration.path
         if path
-          cmd = "env PATH=#{path.shellescape}:\"$PATH\" #{cmd}"
+          cmd = %Q{env PATH="#{path}" #{cmd}}
         end
 
         cmd
