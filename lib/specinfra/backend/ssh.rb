@@ -11,7 +11,9 @@ module Specinfra
       def run_command(cmd, opt={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        ret = ssh_exec!(cmd)
+        ret = with_env do
+          ssh_exec!(cmd)
+        end
 
         ret[:stdout].gsub!(/\r\n/, "\n")
 
@@ -21,6 +23,26 @@ module Specinfra
         end
 
         CommandResult.new ret
+      end
+
+      def with_env
+        env = Specinfra.configuration.env || {}
+        env['LANG'] ||= 'C'
+
+        ssh_options = Specinfra.configuration.ssh_options || {}
+        ssh_options[:send_env] ||= []
+
+        env.each do |key, value|
+          ENV["_SPECINFRA_#{key}"] = ENV[key];
+          ENV[key] = value
+          ssh_options[:send_env] << key
+        end
+
+        yield
+      ensure
+        env.each do |key, value|
+          ENV[key] = ENV.delete("_SPECINFRA_#{key}");
+        end
       end
 
       def build_command(cmd)
