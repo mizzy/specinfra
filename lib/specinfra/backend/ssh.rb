@@ -27,12 +27,13 @@ module Specinfra
 
       def with_env
         env = Specinfra.configuration.env || {}
-        env['LANG'] ||= 'C'
+        env[:LANG] ||= 'C'
 
         ssh_options = Specinfra.configuration.ssh_options || {}
         ssh_options[:send_env] ||= []
 
         env.each do |key, value|
+          key = key.to_s
           ENV["_SPECINFRA_#{key}"] = ENV[key];
           ENV[key] = value
           ssh_options[:send_env] << key
@@ -41,6 +42,7 @@ module Specinfra
         yield
       ensure
         env.each do |key, value|
+          key = key.to_s
           ENV[key] = ENV.delete("_SPECINFRA_#{key}");
         end
       end

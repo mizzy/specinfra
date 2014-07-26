@@ -7,7 +7,7 @@ end
 describe do
   before do
     ENV['LANG'] = 'C'
-    set :env, 'LANG' => 'ja_JP.UTF-8'
+    set :env, :LANG => 'ja_JP.UTF-8'
   end
   let(:lang) { backend.run_command('echo $LANG').stdout.strip }
   it { expect(lang).to eq 'ja_JP.UTF-8' }

@@ -30,9 +30,10 @@ module Specinfra
         keys.each { |key| ENV["_SPECINFRA_#{key}"] = ENV[key] ; ENV.delete(key) }
 
         env = Specinfra.configuration.env || {}
-        env['LANG'] ||= 'C'
+        env[:LANG] ||= 'C'
 
         env.each do |key, value|
+          key = key.to_s
           ENV["_SPECINFRA_#{key}"] = ENV[key];
           ENV[key] = value
         end
@@ -41,6 +42,7 @@ module Specinfra
       ensure
         keys.each { |key| ENV[key] = ENV.delete("_SPECINFRA_#{key}") }
         env.each do |key, value|
+          key = key.to_s
           ENV[key] = ENV.delete("_SPECINFRA_#{key}");
         end
       end
