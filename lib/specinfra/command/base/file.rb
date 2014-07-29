@@ -11,8 +11,8 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     "test -S #{escape(file)}"
   end
 
-  def check_contain(file, expected_pattern)
-    "#{check_file_contain_with_regexp(file, expected_pattern)} || #{check_file_contain_with_fixed_strings(file, expected_pattern)}"
+  def check_contains(file, expected_pattern)
+    "#{check_file_contains_with_regexp(file, expected_pattern)} || #{check_file_contains_with_fixed_strings(file, expected_pattern)}"
   end
 
   def check_is_grouped(file, group)
@@ -25,21 +25,21 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     "stat -c %U #{escape(file)} | grep -- #{escape(regexp)}"
   end
 
-  def check_mode(file, mode)
+  def check_has_mode(file, mode)
     regexp = "^#{mode}$"
     "stat -c %a #{escape(file)} | grep -- #{escape(regexp)}"
   end
 
-  def check_contain_within(file, expected_pattern, from=nil, to=nil)
+  def check_contains_within(file, expected_pattern, from=nil, to=nil)
     from ||= '1'
     to ||= '$'
     sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
-    checker_with_regexp = check_file_contain_with_regexp("-", expected_pattern)
-    checker_with_fixed  = check_file_contain_with_fixed_strings("-", expected_pattern)
+    checker_with_regexp = check_file_contains_with_regexp("-", expected_pattern)
+    checker_with_fixed  = check_file_contains_with_fixed_strings("-", expected_pattern)
     "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
   end
 
-  def check_contain_lines(file, expected_lines, from=nil, to=nil)
+  def check_contains_lines(file, expected_lines, from=nil, to=nil)
     require 'digest/md5'
     from ||= '1'
     to ||= '$'
@@ -50,11 +50,11 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     "#{sed} | grep -A #{escape(afterwards_length)} -F -- #{escape(head_line)} | md5sum | grep -qiw -- #{escape(lines_checksum)}"
   end
 
-  def check_contain_with_regexp(file, expected_pattern)
+  def check_contains_with_regexp(file, expected_pattern)
     "grep -q -- #{escape(expected_pattern)} #{escape(file)}"
   end
 
-  def check_contain_with_fixed_strings(file, expected_pattern)
+  def check_contains_with_fixed_strings(file, expected_pattern)
     "grep -qF -- #{escape(expected_pattern)} #{escape(file)}"
   end
 

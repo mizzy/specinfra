@@ -7,7 +7,7 @@ class Specinfra::Command::Windows::Base::User < Specinfra::Command::Windows::Bas
     end
   end
 
-  def check_is_belonging_to_group(user, group)
+  def check_belongs_to_group(user, group)
     user_id, user_domain = windows_account user
     group_id, group_domain = windows_account group
     Backend::PowerShell::Command.new do

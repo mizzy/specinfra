@@ -3,11 +3,11 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     "id #{escape(user)}"
   end
 
-  def check_is_belonging_to_group(user, group)
+  def check_belongs_to_group(user, group)
     "id #{escape(user)} | awk '{print $3}' | grep -- #{escape(group)}"
   end
 
-  def check_is_belonging_to_primary_group(user, group)
+  def check_belongs_to_primary_group(user, group)
     "id -gn #{escape(user)}| grep ^#{escape(group)}$"
   end
 

@@ -38,7 +38,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
     "[Io.File]::ReadAllText('#{file}')"
   end
   
-  def check_access_by_user(file, user, access)
+  def check_is_accessible_by_user(file, user, access)
     case access
     when 'r'
       check_is_readable(file, user)
@@ -70,13 +70,13 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
     end
   end
 
-  def check_contain(file, pattern)
+  def check_contains(file, pattern)
     Backend::PowerShell::Command.new do
       exec "[Io.File]::ReadAllText('#{file}') -match '#{convert_regexp(pattern)}'"
     end
   end
 
-  def check_contain_within file, pattern, from=nil, to=nil
+  def check_contains_within file, pattern, from=nil, to=nil
     from ||= '^'
     to ||= '$'
     Backend::PowerShell::Command.new do
@@ -85,7 +85,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
     end
   end
 
-  def check_version(name,version)
+  def check_has_version(name,version)
     cmd = "((Get-Command '#{name}').FileVersionInfo.ProductVersion -eq '#{version}') -or ((Get-Command '#{name}').FileVersionInfo.FileVersion -eq '#{version}')"
     Backend::PowerShell::Command.new { exec cmd }
   end
@@ -96,8 +96,3 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
   end
 
 end
-
-
-
-
-

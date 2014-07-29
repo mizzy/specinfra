@@ -1,10 +1,10 @@
 class Specinfra::Command::Aix::Base::File < Specinfra::Command::Base::File
-  def check_access_by_user(file, user, access)
+  def check_is_accessible_by_user(file, user, access)
     "su -s sh -c \"test -#{access} #{file}\" #{user}"
   end
 
-  def check_mode(file, mode)
-    raise NotImplementedError.new('check_mode is not implemented in Specinfra::Command::AIX::Base::File')
+  def check_has_mode(file, mode)
+    raise NotImplementedError.new('check_has_mode is not implemented in Specinfra::Command::AIX::Base::File')
   end
 
   def check_is_owned_by(file, owner)

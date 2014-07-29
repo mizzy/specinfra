@@ -1,6 +1,6 @@
 class Specinfra::Command::Solaris::V10::File < Specinfra::Command::Solaris::Base::File
   # reference: http://perldoc.perl.org/functions/stat.html
-  def check_mode(file, mode)
+  def check_has_mode(file, mode)
     regexp = "^#{mode}$"
     "perl -e 'printf \"%o\", (stat shift)[2]&07777' #{escape(file)}  | grep -- #{escape(regexp)}"
   end

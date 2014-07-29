@@ -1,5 +1,5 @@
 class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
-  def check_access_by_user(file, user, access)
+  def check_is_accessible_by_user(file, user, access)
     "sudo -u #{user} -s /bin/test -#{access} #{file}"
   end
 
@@ -15,7 +15,7 @@ class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
     "stat -f %Y #{escape(link)} | grep -- #{escape(target)}"
   end
 
-  def check_mode(file, mode)
+  def check_has_mode(file, mode)
     regexp = "^#{mode}$"
     "stat -f%Lp #{escape(file)} | grep -- #{escape(regexp)}"
   end
