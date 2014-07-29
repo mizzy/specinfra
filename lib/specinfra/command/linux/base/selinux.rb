@@ -1,5 +1,5 @@
 class Specinfra::Command::Linux::Base::Selinux < Specinfra::Command::Base::Selinux
-  def check_mode(mode)
+  def check_has_mode(mode)
     cmd =  ""
     cmd += "test ! -f /etc/selinux/config || (" if mode == "disabled"
     cmd += "getenforce | grep -i -- #{escape(mode)} "
@@ -8,3 +8,5 @@ class Specinfra::Command::Linux::Base::Selinux < Specinfra::Command::Base::Selin
     cmd
   end
 end
+
+

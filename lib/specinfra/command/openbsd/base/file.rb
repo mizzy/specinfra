@@ -13,7 +13,7 @@ class Specinfra::Command::Openbsd::Base::File < Specinfra::Command::Base::File
     "stat -f %Y #{escape(link)} | grep -- #{escape(target)}"
   end
 
-  def check_mode(file, mode)
+  def check_has_mode(file, mode)
     regexp = "^#{mode}$"
     "stat -f%Lp #{escape(file)} | grep #{escape(regexp)}"
   end

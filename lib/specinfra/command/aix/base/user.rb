@@ -1,5 +1,5 @@
 class Specinfra::Command::Aix::Base::User < Specinfra::Command::Base::User
-  def check_is_belonging_to_group(user, group)
+  def check_belongs_to_group(user, group)
     "lsuser -a groups #{escape(user)} | awk -F'=' '{print $2}'| sed -e 's/,/ /g' |grep -w  -- #{escape(group)}"
   end
 

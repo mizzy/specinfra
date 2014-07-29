@@ -1,5 +1,5 @@
 class Specinfra::Command::Solaris::Base::User < Specinfra::Command::Base::User
-  def check_is_belonging_to_group(user, group)
+  def check_belongs_to_group(user, group)
     "id -Gn #{escape(user)} | grep -- #{escape(group)}"
   end
 

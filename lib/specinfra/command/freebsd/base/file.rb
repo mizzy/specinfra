@@ -1,5 +1,5 @@
 class Specinfra::Command::Freebsd::Base::File < Specinfra::Command::Base::File
-  def check_mode(file, mode)
+  def check_has_mode(file, mode)
     regexp = "^#{mode}$"
     "stat -f%Lp #{escape(file)} | grep -- #{escape(regexp)}"
   end
