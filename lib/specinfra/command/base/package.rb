@@ -40,4 +40,3 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
     cmd
   end
 end
-

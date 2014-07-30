@@ -1,10 +1,6 @@
 require 'specinfra/helper/detect_os'
 
 module Specinfra::Helper::Os
-  def commands
-    Specinfra::Command::Base.new
-  end
-
   def os
     property[:os_by_host] = {} if ! property[:os_by_host]
     host_port = current_host_and_port
