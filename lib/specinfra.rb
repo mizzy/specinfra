@@ -13,6 +13,10 @@ module Specinfra
     def configuration
       Specinfra::Configuration
     end
+
+    def commands
+      Specinfra::Command::Base.new
+    end
   end
 end
 

@@ -20,7 +20,7 @@ module Specinfra
       end
 
       def check_zero(cmd, *args)
-        run_command(commands.send(cmd, *args)).success?
+        run_command(Specinfra.commands.send(cmd, *args)).success?
       end
 
       def method_missing(meth, *args, &block)
@@ -28,7 +28,7 @@ module Specinfra
           if meth.to_s =~ /^check/
             backend.check_zero(meth, *args)
           else
-            backend.run_command(commands.send(meth, *args))
+            backend.run_command(Specinfra.commands.send(meth, *args))
           end
         else
           Specinfra::Command::Processor.send(meth, *args)
