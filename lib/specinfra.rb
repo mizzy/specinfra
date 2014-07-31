@@ -14,7 +14,7 @@ module Specinfra
       Specinfra::Configuration
     end
 
-    def commands
+    def command
       Specinfra::Command::Base.new
     end
   end

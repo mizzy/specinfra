@@ -2,7 +2,7 @@ require 'spec_helper'
 
 set :os, { :family => nil }
 
-describe  Specinfra.commands.check_file_is_directory('/tmp') do
+describe  Specinfra.command.check_file_is_directory('/tmp') do
   after do
     property[:os_by_host] = nil
   end
