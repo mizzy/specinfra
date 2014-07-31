@@ -3,7 +3,7 @@ require 'spec_helper'
 property[:os_by_host] = {}
 set :os, { :family => 'redhat' }
 
-describe  Specinfra.commands.check_package_is_installed('httpd') do
+describe  Specinfra.command.check_package_is_installed('httpd') do
   after do
     property[:os_by_host] = nil
   end
