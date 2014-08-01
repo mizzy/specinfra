@@ -24,14 +24,10 @@ module Specinfra
       end
 
       def method_missing(meth, *args, &block)
-        if os[:family] == 'windows'
-          if meth.to_s =~ /^check/
-            backend.check_zero(meth, *args)
-          else
-            backend.run_command(Specinfra.command.send(meth, *args))
-          end
+        if meth.to_s =~ /^check/
+          backend.check_zero(meth, *args)
         else
-          Specinfra::Command::Processor.send(meth, *args)
+          backend.run_command(Specinfra.command.send(meth, *args))
         end
       end
     end

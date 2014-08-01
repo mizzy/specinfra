@@ -1,11 +1,7 @@
 module Specinfra::Command
   class Processor
     def self.method_missing(meth, *args, &block)
-      if meth.to_s =~ /^check/
-        backend.check_zero(meth, *args)
-      else
-        backend.run_command(Specinfra.command.send(meth, *args))
-      end
+      backend.send(meth, *args)
     end
 
     def self.check_service_is_running(service)
