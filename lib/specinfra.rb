@@ -17,6 +17,11 @@ module Specinfra
     def command
       Specinfra::Command::Base.new
     end
+
+    def backend
+      type = Specinfra.configuration.backend.to_s.to_camel_case
+      eval "Specinfra::Backend::#{type}.instance"
+    end
   end
 end
 

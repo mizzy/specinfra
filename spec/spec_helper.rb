@@ -2,7 +2,7 @@ require 'specinfra'
 require 'rspec/mocks/standalone'
 require 'rspec/its'
 
-include Specinfra::Helper::Exec
+set :backend, :exec
 
 module Specinfra
   module Backend
