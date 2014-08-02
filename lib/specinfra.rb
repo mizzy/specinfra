@@ -15,7 +15,7 @@ module Specinfra
     end
 
     def command
-      Specinfra::Command::Base.new
+      Specinfra::Command::Base
     end
 
     def backend

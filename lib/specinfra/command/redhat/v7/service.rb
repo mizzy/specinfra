@@ -1,3 +1,5 @@
 class Specinfra::Command::Redhat::V7::Service < Specinfra::Command::Redhat::Base::Service
-  include Specinfra::Command::Module::Systemd
+  class << self
+    include Specinfra::Command::Module::Systemd
+  end
 end
