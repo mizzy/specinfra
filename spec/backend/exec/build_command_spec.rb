@@ -1,18 +1,16 @@
 require 'spec_helper'
 
-include Specinfra::Helper::Exec
-
 describe Specinfra::Backend::Exec do
   describe '#build_command' do
     context 'with simple command' do
       it 'should escape spaces' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
     context 'with complex command' do
       it 'should escape special chars' do
-        expect(backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
+        expect(Specinfra.backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
       end
     end
 
@@ -26,7 +24,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom shell' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq '/usr/local/bin/tcsh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/usr/local/bin/tcsh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -40,7 +38,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom shell' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq '/usr/test\ \&\ spec/bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/usr/test\ \&\ spec/bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -54,7 +52,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/foo/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/foo/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -68,7 +66,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/test & spec/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/test & spec/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
   end
@@ -83,7 +81,7 @@ describe 'os' do
   context 'test ubuntu with lsb_release command' do
     subject { os }
     it do
-      expect(backend).to receive(:run_command).at_least(1).times do |args|
+      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'lsb_release -ir'].include? args
           double(
             :run_command_response,
@@ -103,7 +101,7 @@ describe 'os' do
   context 'test ubuntu with /etc/lsb-release' do
     subject { os }
     it do
-      expect(backend).to receive(:run_command).at_least(1).times do |args|
+      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
         if ['ls /etc/debian_version', 'cat /etc/lsb-release'].include? args
           double(
             :run_command_response,
@@ -128,7 +126,7 @@ EOF
   context 'test debian (no lsb_release or lsb-release)' do
     subject { os }
     it do
-      expect(backend).to receive(:run_command).at_least(1).times do |args|
+      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
         if args == 'ls /etc/debian_version'
           double :run_command_response, :success? => true, :stdout => nil
         elsif args == 'uname -m'

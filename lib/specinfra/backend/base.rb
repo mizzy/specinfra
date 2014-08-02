@@ -7,16 +7,8 @@ module Specinfra
     class Base
       include Singleton
 
-      def set_commands(c)
-        @commands = c
-      end
-
       def set_example(e)
         @example = e
-      end
-
-      def commands
-        @commands
       end
 
       def check_zero(cmd, *args)
@@ -25,9 +17,9 @@ module Specinfra
 
       def method_missing(meth, *args, &block)
         if meth.to_s =~ /^check/
-          backend.check_zero(meth, *args)
+          check_zero(meth, *args)
         else
-          backend.run_command(Specinfra.command.send(meth, *args))
+          run_command(Specinfra.command.send(meth, *args))
         end
       end
     end

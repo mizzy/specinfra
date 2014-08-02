@@ -3,7 +3,7 @@ module Specinfra
     include Singleton
     def method_missing(meth, *args, &block)
       if os.include?(:family) && os[:family] == 'windows'
-        backend.send(meth, *args)
+        Specinfra.backend.send(meth, *args)
       else
         Specinfra::Command::Processor.send(meth, *args)
       end

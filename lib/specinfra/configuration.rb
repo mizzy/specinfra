@@ -2,6 +2,7 @@ module Specinfra
   module Configuration
     class << self
       VALID_OPTIONS_KEYS = [
+        :backend,
         :env,
         :path,
         :shell,

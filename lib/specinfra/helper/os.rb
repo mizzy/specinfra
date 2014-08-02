@@ -30,7 +30,7 @@ module Specinfra::Helper::Os
   end
 
   def run_command(cmd)
-    backend.run_command(cmd)
+    Specinfra.backend.run_command(cmd)
   end
 
   def detect_os
