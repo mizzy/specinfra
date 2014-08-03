@@ -23,6 +23,20 @@ module SpecInfra
         "stat -f%Lp #{escape(file)} | grep -- #{escape(regexp)}"
       end
 
+      def check_owner(file, owner)
+        regexp = "^#{owner}$"
+        "stat -f%Su #{escape(file)} | grep -- #{escape(regexp)}"
+      end
+
+      def check_grouped(file, group)
+        regexp = "^#{group}$"
+        "stat -f%Sg #{escape(file)} | grep -- #{escape(regexp)}"
+      end
+
+      def check_link(link, target)
+        "stat -f%Y #{escape(link)} | grep -- #{escape(target)}"
+      end
+
       def get_mode(file)
         "stat -f%Lp #{escape(file)}"
       end
