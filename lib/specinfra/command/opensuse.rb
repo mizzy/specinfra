@@ -6,7 +6,7 @@ module SpecInfra
       end
 
       def check_running(service)
-        "systemctl is-active #{escape(service)}.service"
+        "service #{escape(service)} status"
       end
 
     end
