@@ -28,6 +28,11 @@ module SpecInfra
         "stat -f%Su #{escape(file)} | grep -- #{escape(regexp)}"
       end
 
+      def check_grouped(file, group)
+        regexp = "^#{group}$"
+        "stat -f%Sg #{escape(file)} | grep -- #{escape(regexp)}"
+      end
+
       def get_mode(file)
         "stat -f%Lp #{escape(file)}"
       end
