@@ -36,7 +36,7 @@ class Specinfra::Command::Base
       family  = os[:family]
       version = os[:release] ? "V#{os[:release].to_i}" : nil
 
-      common_class = self.class.const_get('Specinfra').const_get('Command')
+      common_class = Specinfra::Command
       base_class   = common_class.const_get('Base')
       os_class     = family.nil? ? base_class : common_class.const_get(family.capitalize)
 
