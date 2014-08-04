@@ -93,5 +93,18 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def get_size(file)
       "stat -c %s #{escape(file)}"
     end
+
+    def change_mode(file, mode)
+      "chmod #{mode} #{escape(file)}"
+    end
+
+    def change_owner(file, owner, group=nil)
+      owner = "#{owner}:#{group}" if group
+      "chown #{owner} #{escape(file)}"
+    end
+
+    def change_group(file, group)
+      "chgrp #{group} #{escape(file)}"
+    end
   end
 end
