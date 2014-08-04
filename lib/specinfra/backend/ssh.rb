@@ -1,6 +1,6 @@
 require 'specinfra/backend/exec'
 require 'net/ssh'
-
+require 'net/scp'
 module Specinfra
   module Backend
     class Ssh < Exec
@@ -58,6 +58,14 @@ module Specinfra
       end
 
       def copy_file(from, to)
+        if Specinfra.configuration.scp.nil?
+          Specinfra.configuration.scp = Net::SCP.start(
+            Specinfra.configuration.host,
+            Specinfra.configuration.ssh_options[:user],
+            Specinfra.configuration.ssh_options
+          )
+        end
+
         scp = Specinfra.configuration.scp
         begin
           scp.upload!(from, to)
