@@ -1,5 +1,7 @@
 class Specinfra::Command::Opensuse::Base::Service < Specinfra::Command::Suse::Base::Service
   class << self
-    include Specinfra::Command::Module::Systemd
+    def check_is_running(service)
+      "service #{escape(service)} status"
+    end
   end
 end
