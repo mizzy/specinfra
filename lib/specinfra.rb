@@ -19,8 +19,11 @@ module Specinfra
     end
 
     def backend
-      type = Specinfra.configuration.backend.to_s.to_camel_case
-      eval "Specinfra::Backend::#{type}.instance"
+      type = Specinfra.configuration.backend
+      if type.nil?
+        raise "No backend type is specified. Please specify backend type by `set :backend, :type'"
+      end
+      eval "Specinfra::Backend::#{type.to_s.to_camel_case}.instance"
     end
   end
 end
