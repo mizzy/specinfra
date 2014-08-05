@@ -305,6 +305,48 @@ module SpecInfra
         end
       end
 
+      def check_32bit_enabled(name)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').enable32BitAppOnWin64 -eq $true"
+        end
+      end
+
+      def check_idle_timeout(name, minutes)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').processModel.idleTimeout.Minutes -eq #{minutes}"
+        end
+      end
+
+      def check_identity_type(name, type)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').processModel.identityType -eq '#{type}'"
+        end
+      end
+
+      def check_user_profile(name)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').processModel.loadUserProfile -eq $true"
+        end
+      end
+
+      def check_username(name, username)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').processModel.username -eq '#{username}'"
+        end
+      end
+
+      def check_periodic_restart(name, minutes)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').recycling.periodicRestart.time.TotalMinutes -eq #{minutes}"
+        end
+      end
+
       def check_scheduled_task(name)
         Backend::PowerShell::Command.new do
           using 'find_scheduled_task.ps1'
