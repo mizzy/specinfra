@@ -106,5 +106,9 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def change_group(file, group)
       "chgrp #{group} #{escape(file)}"
     end
+
+    def create_as_directory(file)
+      "mkdir -p #{escape(file)}"
+    end
   end
 end
