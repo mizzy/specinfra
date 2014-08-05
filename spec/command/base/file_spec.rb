@@ -30,4 +30,12 @@ describe 'File related commands'  do
   context Specinfra.command.create_file_as_directory('/tmp') do
     it { should eq 'mkdir -p /tmp' }
   end
+
+  context Specinfra.command.get_file_owner_user('/tmp') do
+    it { should eq 'stat -c %U /tmp' }
+  end
+
+  context Specinfra.command.get_file_owner_group('/tmp') do
+    it { should eq 'stat -c %G /tmp' }
+  end
 end
