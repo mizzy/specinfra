@@ -26,4 +26,8 @@ describe 'File related commands'  do
   context Specinfra.command.change_file_group('/tmp', 'root') do
     it { should eq 'chgrp root /tmp' }
   end
+
+  context Specinfra.command.create_file_as_directory('/tmp') do
+    it { should eq 'mkdir -p /tmp' }
+  end
 end
