@@ -82,6 +82,14 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "stat -c %a #{escape(file)}"
     end
 
+    def get_owner_user(file)
+      "stat -c %U #{escape(file)}"
+    end
+
+    def get_owner_group(file)
+      "stat -c %G #{escape(file)}"
+    end
+
     def check_is_linked_to(link, target)
       "stat -c %N #{escape(link)} | egrep -e \"-> .#{escape(target)}.\""
     end
