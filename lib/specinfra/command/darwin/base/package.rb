@@ -10,8 +10,16 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       cmd
     end
 
+    alias :check_is_installed_by_homebrew :check_is_installed
+
+    def check_is_installed_by_pkgutil(package, version=nil)
+      cmd = "pkgutil --pkg-info #{package}"
+      cmd = "#{cmd} | grep '^version: #{escape(version)}'" if version
+    end
+
     def install(package)
       cmd = "brew install '#{package}'"
     end
   end
 end
+
