@@ -290,6 +290,17 @@ module SpecInfra
           exec "[System.Environment]::ExpandEnvironmentVariables( ( FindIISWebsite -name '#{name}' ).physicalPath ).replace('\\', '/' ) -eq ('#{path}'.trimEnd('/').replace('\\', '/'))"
         end
       end
+    
+      def check_iis_website_binding(name, bindings)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          port = bindings[:port]
+          protocol = bindings[:protocol]
+          hostHeader = bindings[:hostHeader]
+          ipAddress = bindings[:ipAddress]
+          exec "(FindSiteBindings -name '#{name}' -protocol '#{protocol}' -hostHeader '#{hostHeader}' -port #{port} -ipAddress '#{ipAddress}').count -gt 0"
+        end
+      end
 
       def check_iis_app_pool(name)
         Backend::PowerShell::Command.new do
