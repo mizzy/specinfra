@@ -24,12 +24,7 @@ module Specinfra
       end
 
       def copy_file(from, to)
-        begin
-          FileUtils.cp(from, File.join(ct.config_item('lxc.rootfs'), to))
-        rescue => e
-          return false
-        end
-        true
+        FileUtils.cp(from, File.join(ct.config_item('lxc.rootfs'), to))
       end
 
       def ct

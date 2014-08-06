@@ -63,12 +63,7 @@ module Specinfra
         end
 
         scp = Specinfra.configuration.scp
-        begin
-          scp.upload!(from, to)
-        rescue => e
-          return false
-        end
-        true
+        scp.upload!(from, to)
       end
 
       private
