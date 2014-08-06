@@ -323,6 +323,13 @@ module SpecInfra
         end
       end
 
+      def check_managed_pipeline_mode(name, mode)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindIISAppPool -name '#{name}').managedPipelineMode -eq '#{mode}'"
+        end
+      end
+
       def check_idle_timeout(name, minutes)
         Backend::PowerShell::Command.new do
           using 'find_iis_component.ps1'
