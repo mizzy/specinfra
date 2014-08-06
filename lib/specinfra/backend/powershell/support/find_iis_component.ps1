@@ -29,3 +29,18 @@ function FindSiteBindings
   
     Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
 }
+
+function FindSiteVirtualDir
+{
+    param($name, $vdir, $path)
+    
+    Import-Module WebAdministration
+    
+    $webVirtDirPath = [string]::Format('IIS:\Sites\{0}\{1}',$name, $vdir);
+    if (Test-Path $webVirtDirPath) {
+        (Get-Item $webVirtDirPath).physicalPath -eq $path
+    }
+    else {
+        $false
+    }
+}

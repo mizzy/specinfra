@@ -298,6 +298,13 @@ module SpecInfra
         end
       end
 
+      def check_iis_website_virtual_dir(name, vdir, path)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindSiteVirtualDir -name '#{name}' -vdir '#{vdir}' -path '#{path}') -eq $true"
+        end
+      end
+
       def check_iis_app_pool(name)
         Backend::PowerShell::Command.new do
           using 'find_iis_component.ps1'
