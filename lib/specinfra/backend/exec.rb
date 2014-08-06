@@ -70,12 +70,7 @@ module Specinfra
       end
 
       def copy_file(from, to)
-        begin
-          FileUtils.cp(from, to)
-        rescue => e
-          return false
-        end
-        true
+        FileUtils.cp(from, to)
       end
     end
   end

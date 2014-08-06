@@ -21,12 +21,7 @@ module Specinfra
       end
 
       def copy_file(from, to)
-        begin
-          @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
-        rescue ::Docker::Error::DockerError
-          return false
-        end
-        true
+        @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
       end
 
       private
