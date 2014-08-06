@@ -58,6 +58,12 @@ module SpecInfra
         end
         cmd
       end
+      alias :check_installed_by_homebrew :check_installed
+
+      def check_installed_by_pkgutil(package, version=nil)
+        cmd = "pkgutil --pkg-info #{package}"
+        cmd = "#{cmd} | grep '^version: #{escape(version)}'" if version
+      end
 
       def install(package)
         cmd = "brew install '#{package}'"
