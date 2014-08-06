@@ -1,8 +1,14 @@
 function FindIISWebsite 
 {
     param($name)
-    import-module WebAdministration
-    Get-Website | Where { $_.name -match $name }
+    Import-Module WebAdministration
+
+	Try {
+		Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
+	}
+	Catch [System.IO.FileNotFoundException] {
+		Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
+	}
 }
 
 function FindIISAppPool
