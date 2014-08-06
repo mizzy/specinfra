@@ -291,13 +291,9 @@ module SpecInfra
         end
       end
     
-      def check_iis_website_binding(name, bindings)
+      def check_iis_website_binding(name, port, protocol, ipAddress, hostHeader)
         Backend::PowerShell::Command.new do
           using 'find_iis_component.ps1'
-          port = bindings[:port]
-          protocol = bindings[:protocol]
-          hostHeader = bindings[:hostHeader]
-          ipAddress = bindings[:ipAddress]
           exec "(FindSiteBindings -name '#{name}' -protocol '#{protocol}' -hostHeader '#{hostHeader}' -port #{port} -ipAddress '#{ipAddress}').count -gt 0"
         end
       end
