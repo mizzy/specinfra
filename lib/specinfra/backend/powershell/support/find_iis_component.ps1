@@ -53,3 +53,28 @@ function FindSiteVirtualDir
         $false
     }
 }
+
+function FindSiteApplication
+{
+    param($name, $app, $pool, $physicalPath)
+    
+    Import-Module WebAdministration
+    
+    $path = "IIS:\Sites\${name}\${app}"
+    $result = $false
+    if (Test-Path $path) 
+    {
+        $result = $true    
+        if ([string]::IsNullOrEmpty($pool) -eq $false)
+        {
+            $result = $result -and (Get-Item $path).applicationPool -eq $pool
+        }
+
+        if ([string]::IsNullOrEmpty($physicalPath) -eq $false)
+        {
+            $result = $result -and (Get-Item $path).physicalPath -eq $physicalPath
+        }
+    }
+    
+    $result
+}

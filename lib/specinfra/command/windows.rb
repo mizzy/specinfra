@@ -305,6 +305,13 @@ module SpecInfra
         end
       end
 
+      def check_iis_website_application(name, app, pool, physicalPath)
+        Backend::PowerShell::Command.new do
+          using 'find_iis_component.ps1'
+          exec "(FindSiteApplication -name '#{name}' -app '#{app}' -pool '#{pool}' -physicalPath '#{physicalPath}') -eq $true"
+        end
+      end
+
       def check_iis_app_pool(name)
         Backend::PowerShell::Command.new do
           using 'find_iis_component.ps1'
