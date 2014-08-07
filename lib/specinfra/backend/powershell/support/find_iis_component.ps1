@@ -5,10 +5,10 @@ function FindIISWebsite
     Import-Module WebAdministration 
     
     Try {
-      Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
+        Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
     }
     Catch [System.IO.FileNotFoundException] {
-      Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
+        Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
     }
 }
 
@@ -24,9 +24,9 @@ function FindIISAppPool
 function FindSiteBindings
 {
     param($name, $protocol, $hostHeader, $port, $ipAddress)
-  
+    
     Import-Module WebAdministration
-  
+    
     Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
 }
 
@@ -37,10 +37,19 @@ function FindSiteVirtualDir
     Import-Module WebAdministration
     
     $webVirtDirPath = [string]::Format('IIS:\Sites\{0}\{1}',$name, $vdir);
-    if (Test-Path $webVirtDirPath) {
-        (Get-Item $webVirtDirPath).physicalPath -eq $path
+    if (Test-Path $webVirtDirPath) 
+    {
+        if ([string]::IsNullOrEmpty($path))
+        {
+            $true
+        }
+        else
+        {
+            (Get-Item $webVirtDirPath).physicalPath -eq $path
+        }
     }
-    else {
+    else 
+    {
         $false
     }
 }
