@@ -55,5 +55,15 @@ class Specinfra::Command::Windows::Base::IisAppPool < Specinfra::Command::Window
         exec "(FindIISAppPool -name '#{name}').recycling.periodicRestart.time.TotalMinutes -eq #{minutes}"
       end
     end
+
+    def check_has_managed_pipeline_mode(name, mode)
+      Backend::PowerShell::Command.new do
+        using 'find_iis_component.ps1'
+        exec "(FindIISAppPool -name '#{name}').managedPipelineMode -eq '#{mode}'"
+      end
+    end
   end
 end
+
+
+

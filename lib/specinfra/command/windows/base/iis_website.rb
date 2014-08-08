@@ -34,5 +34,26 @@ class Specinfra::Command::Windows::Base::IisWebsite < Specinfra::Command::Window
         exec "[System.Environment]::ExpandEnvironmentVariables( ( FindIISWebsite -name '#{name}' ).physicalPath ).replace('\\', '/' ) -eq ('#{path}'.trimEnd('/').replace('\\', '/'))"
       end
     end
+
+    def check_has_site_bindings(name, port, protocol, ipaddress, host_header)
+      Backend::PowerShell::Command.new do
+        using 'find_iis_component.ps1'
+        exec "(FindSiteBindings -name '#{name}' -protocol '#{protocol}' -hostHeader '#{host_header}' -port #{port} -ipAddress '#{ipaddress}').count -gt 0"
+      end
+    end
+
+    def check_has_virtual_dir(name, vdir, path)
+      Backend::PowerShell::Command.new do
+        using 'find_iis_component.ps1'
+        exec "(FindSiteVirtualDir -name '#{name}' -vdir '#{vdir}' -path '#{path}') -eq $true"
+      end
+    end
+
+    def check_has_site_application(name, app, pool, physical_path)
+      Backend::PowerShell::Command.new do
+        using 'find_iis_component.ps1'
+        exec "(FindSiteApplication -name '#{name}' -app '#{app}' -pool '#{pool}' -physicalPath '#{physical_path}') -eq $true"
+      end
+    end
   end
 end
