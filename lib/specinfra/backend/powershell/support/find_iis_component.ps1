@@ -1,9 +1,9 @@
 function FindIISWebsite 
 {
     param($name)
-    
-    Import-Module WebAdministration 
-    
+
+    Import-Module WebAdministration
+
     Try {
         Get-Item "IIS:\Sites\$name" -Erroraction silentlycontinue
     }
@@ -24,20 +24,20 @@ function FindIISAppPool
 function FindSiteBindings
 {
     param($name, $protocol, $hostHeader, $port, $ipAddress)
-    
+
     Import-Module WebAdministration
-    
+
     Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
 }
 
 function FindSiteVirtualDir
 {
     param($name, $vdir, $path)
-    
+
     Import-Module WebAdministration
-    
+
     $webVirtDirPath = [string]::Format('IIS:\Sites\{0}\{1}',$name, $vdir);
-    if (Test-Path $webVirtDirPath) 
+    if (Test-Path $webVirtDirPath)
     {
         if ([string]::IsNullOrEmpty($path))
         {
@@ -48,7 +48,7 @@ function FindSiteVirtualDir
             (Get-Item $webVirtDirPath).physicalPath -eq $path
         }
     }
-    else 
+    else
     {
         $false
     }
@@ -57,14 +57,14 @@ function FindSiteVirtualDir
 function FindSiteApplication
 {
     param($name, $app, $pool, $physicalPath)
-    
+
     Import-Module WebAdministration
-    
+
     $path = "IIS:\Sites\${name}\${app}"
     $result = $false
-    if (Test-Path $path) 
+    if (Test-Path $path)
     {
-        $result = $true    
+        $result = $true
         if ([string]::IsNullOrEmpty($pool) -eq $false)
         {
             $result = $result -and (Get-Item $path).applicationPool -eq $pool
@@ -75,6 +75,6 @@ function FindSiteApplication
             $result = $result -and (Get-Item $path).physicalPath -eq $physicalPath
         }
     }
-    
+
     $result
 }
