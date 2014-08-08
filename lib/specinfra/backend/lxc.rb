@@ -1,6 +1,5 @@
-
 module Specinfra
-  module Backend
+  class Backend
     class Lxc < Exec
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
@@ -28,7 +27,7 @@ module Specinfra
       end
 
       def ct
-        @ct ||= ::LXC::Container.new(RSpec.configuration.lxc)
+        @ct ||= ::LXC::Container.new(@config[:lxc])
       end
     end
   end

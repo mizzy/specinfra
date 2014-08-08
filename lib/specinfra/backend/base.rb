@@ -3,9 +3,11 @@ require 'specinfra/command_result'
 require 'specinfra/command/processor'
 
 module Specinfra
-  module Backend
+  class Backend
     class Base
-      include Singleton
+      def initialize(config)
+        @config = config
+      end
 
       def set_example(e)
         @example = e

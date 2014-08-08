@@ -1,7 +1,7 @@
 require 'singleton'
 
 module Specinfra
-  module Backend
+  class Backend
     class ShellScript < Base
       def initialize
         @lines = [ "#!/bin/sh", "" ]
