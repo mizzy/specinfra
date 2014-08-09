@@ -1,5 +1,5 @@
 module Specinfra
-  class Backend
+  module Backend
     class Dockerfile < Specinfra::Backend::Base
       def initialize
         @lines = []

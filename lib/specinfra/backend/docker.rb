@@ -1,9 +1,9 @@
 module Specinfra
-  class Backend
+  module Backend
     class Docker < Exec
       def initialize
         @images = []
-        ::Docker.url = @config[:docker_url]
+        ::Docker.url = Specinfra.configuration.docker_url
       end
 
       def run_command(cmd, opts={})
@@ -27,7 +27,7 @@ module Specinfra
       private
 
       def base_image
-        @base_image ||= ::Docker::Image.get(@config[:docker_image])
+        @base_image ||= ::Docker::Image.get(Specinfra.configuration.docker_image)
       end
 
       def current_image
@@ -40,7 +40,7 @@ module Specinfra
           'Cmd' => %W{/bin/sh -c #{cmd}},
         }.merge(opts)
 
-        if path = @config[:path]
+        if path = Specinfra::configuration::path
           (opts['Env'] ||= {})['PATH'] = path
         end
 

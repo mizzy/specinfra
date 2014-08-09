@@ -1,7 +1,7 @@
 require 'open3'
 
 module Specinfra
-  class Backend
+  module Backend
     class Cmd < Base
       include PowerShell::ScriptHelper
 
@@ -38,7 +38,7 @@ module Specinfra
       private
 
       def powershell
-        architecture = @example.metadata[:architecture] || @config[:architecture]
+        architecture = @example.metadata[:architecture] || Specinfra.configuration.architecture
 
         case architecture
         when :i386 then x86_powershell

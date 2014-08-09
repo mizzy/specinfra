@@ -1,5 +1,5 @@
 module Specinfra
-  class Backend
+  module Backend
     module PowerShell
       class Command
         attr_reader :import_functions, :script

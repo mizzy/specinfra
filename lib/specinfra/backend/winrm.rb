@@ -1,11 +1,11 @@
 module Specinfra
-  class Backend
+  module Backend
     class WinRM < Base
       include PowerShell::ScriptHelper
 
       def run_command(cmd, opts={})
         script = create_script(cmd)
-        winrm = @config[:winrm]
+        winrm = Specinfra.configuration.winrm
 
         result = winrm.powershell(script)
         stdout, stderr = [:stdout, :stderr].map do |s|

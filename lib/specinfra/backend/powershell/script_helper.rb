@@ -1,11 +1,11 @@
 require 'base64'
 
 module Specinfra
-  class Backend
+  module Backend
     module PowerShell
       module ScriptHelper
         def build_command(cmd)
-          path = @config[:path]
+          path = Specinfra.configuration.path
           if path
             cmd.strip!
             cmd = 
@@ -18,12 +18,12 @@ EOF
         end
 
         def add_pre_command(cmd)
-          path = @config[:path]
-          if @config[:pre_command]
+          path = Specinfra.configuration.path
+          if Specinfra.configuration.pre_command
             cmd.strip!
             cmd = 
 <<-EOF
-if (#{@config[:pre_command]})
+if (#{Specinfra.configuration.pre_command})
 {
 #{cmd}
 }

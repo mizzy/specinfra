@@ -9,22 +9,23 @@ require 'specinfra/runner'
 include Specinfra
 
 module Specinfra
-  @@backend = nil
-  def self.configuration
-    Specinfra::Configuration
-  end
-
-  def self.command
-    Specinfra::Command::Base
-  end
-
-  def self.backend
-    type = Specinfra.configuration.backend
-    if type.nil?
-      warn "No backend type is specified. Fall back to :exec type."
-      type = :exec
+  class << self
+    def configuration
+      Specinfra::Configuration
     end
-    @@backend ||= Specinfra::Backend.new(type, Specinfra.configuration)
+
+    def command
+      Specinfra::Command::Base
+    end
+
+    def backend
+      type = Specinfra.configuration.backend
+      if type.nil?
+        warn "No backend type is specified. Fall back to :exec type."
+        type = :exec
+      end
+      eval "Specinfra::Backend::#{type.to_s.to_camel_case}.instance"
+    end
   end
 end
 

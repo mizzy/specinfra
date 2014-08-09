@@ -33,14 +33,6 @@ module Specinfra
         @os
       end
 
-      def [](key)
-        self.send(key)
-      end
-
-      def []=(key, val)
-        self.send(key, val)
-      end
-
       def method_missing(meth, val=nil)
         key = meth.to_s
         key.gsub!(/=$/, '')

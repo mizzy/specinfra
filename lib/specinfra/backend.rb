@@ -9,12 +9,3 @@ require 'specinfra/backend/lxc'
 require 'specinfra/backend/winrm'
 require 'specinfra/backend/shellscript'
 require 'specinfra/backend/dockerfile'
-
-module Specinfra
-  class Backend
-    def Backend.new(type, config)
-      eval "Specinfra::Backend::#{type.to_s.to_camel_case}.new(config)"
-    end
-  end
-end
-

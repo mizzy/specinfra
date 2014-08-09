@@ -2,7 +2,7 @@ require 'specinfra/backend/exec'
 require 'net/ssh'
 require 'net/scp'
 module Specinfra
-  class Backend
+  module Backend
     class Ssh < Exec
       def prompt
         'Password: '
@@ -26,10 +26,10 @@ module Specinfra
       end
 
       def with_env
-        env = @config[:env] || {}
+        env = Specinfra.configuration.env || {}
         env[:LANG] ||= 'C'
 
-        ssh_options = @config[:ssh_options] || {}
+        ssh_options = Specinfra.configuration.ssh_options || {}
         ssh_options[:send_env] ||= []
 
         env.each do |key, value|
@@ -49,8 +49,8 @@ module Specinfra
 
       def build_command(cmd)
         cmd = super(cmd)
-        user = @config[:ssh_options][:user]
-        disable_sudo = @config[:disable_sudo]
+        user = Specinfra.configuration.ssh_options[:user]
+        disable_sudo = Specinfra.configuration.disable_sudo
         if user != 'root' && !disable_sudo
           cmd = "#{sudo} -p '#{prompt}' #{cmd}"
         end
@@ -58,25 +58,25 @@ module Specinfra
       end
 
       def copy_file(from, to)
-        if @config[:scp].nil?
-          @config[:scp] = create_scp
+        if Specinfra.configuration.scp.nil?
+          Specinfra.configuration.scp = create_scp
         end
 
-        scp = @config[:scp]
+        scp = Specinfra.configuration.scp
         scp.upload!(from, to)
       end
 
       private
       def create_ssh
         Net::SSH.start(
-          @config[:host],
-          @config[:ssh_options][:user],
-          @config[:ssh_options]
+          Specinfra.configuration.host,
+          Specinfra.configuration.ssh_options[:user],
+          Specinfra.configuration.ssh_options
         )
       end
 
       def create_scp
-        ssh = @config[:ssh]
+        ssh = Specinfra.configuration.ssh
         if ssh.nil?
           ssh = create_ssh
         end
@@ -89,13 +89,13 @@ module Specinfra
         exit_status = nil
         exit_signal = nil
 
-        if @config[:ssh].nil?
-          @config[:ssh] = create_ssh
+        if Specinfra.configuration.ssh.nil?
+          Specinfra.configuration.ssh = create_ssh
         end
 
-        ssh = @config[:ssh]
+        ssh = Specinfra.configuration.ssh
         ssh.open_channel do |channel|
-          if @config[:sudo_password] or @config[:request_pty]
+          if Specinfra.configuration.sudo_password or Specinfra.configuration.request_pty
             channel.request_pty do |ch, success|
               abort "Could not obtain pty " if !success
             end
@@ -104,7 +104,7 @@ module Specinfra
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
               if data.match /^#{prompt}/
-                channel.send_data "#{@config[:sudo_password]}\n"
+                channel.send_data "#{Specinfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
               end
@@ -112,7 +112,7 @@ module Specinfra
 
             channel.on_extended_data do |ch, type, data|
               if data.match /you must have a tty to run sudo/
-                abort 'Please write "set :request_pty, true" in your spec_helper.rb or other appropriate file.'
+                abort 'Please set "Specinfra.configuration.request_pty = true" or "c.request_pty = true" in your spec_helper.rb or other appropriate file.'
               end
 
               if data.match /^sudo: no tty present and no askpass program specified/
@@ -136,13 +136,13 @@ module Specinfra
       end
 
       def sudo
-        if sudo_path = @config[:sudo_path]
+        if sudo_path = Specinfra.configuration.sudo_path
           sudo_path += '/sudo'
         else
           sudo_path = 'sudo'
         end
 
-        sudo_options = @config[:sudo_options]
+        sudo_options = Specinfra.configuration.sudo_options
         if sudo_options
           sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
           sudo_options = ' ' + sudo_options
