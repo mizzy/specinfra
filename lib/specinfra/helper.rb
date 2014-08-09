@@ -11,3 +11,7 @@ include Specinfra::Helper::Properties
 
 require 'specinfra/helper/set'
 include Specinfra::Helper::Set
+
+require 'specinfra/helper/run_command'
+include Specinfra::Helper::RunCommand
+
