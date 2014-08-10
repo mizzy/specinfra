@@ -1,7 +1,14 @@
-
 module Specinfra
   module Backend
     class Lxc < Exec
+      def initialize
+        begin
+          require 'lxc/extra' unless defined?(::LXC::Extra)
+        rescue LoadError
+          fail "LXC client library is not available. Try installing `lxc-extra' gem"
+        end
+      end
+
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
@@ -28,7 +35,7 @@ module Specinfra
       end
 
       def ct
-        @ct ||= ::LXC::Container.new(RSpec.configuration.lxc)
+        @ct ||= ::LXC::Container.new(Specinfra.configuration.lxc)
       end
     end
   end
