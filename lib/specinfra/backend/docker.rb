@@ -2,6 +2,12 @@ module Specinfra
   module Backend
     class Docker < Exec
       def initialize
+        begin
+          require 'docker' unless defined?(::Docker)
+        rescue LoadError
+          fail "Docker client library is not available. Try installing `docker-api' gem."
+        end
+
         @images = []
         ::Docker.url = Specinfra.configuration.docker_url
       end
