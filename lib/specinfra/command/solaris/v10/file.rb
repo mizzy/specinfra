@@ -30,8 +30,8 @@ class Specinfra::Command::Solaris::V10::File < Specinfra::Command::Solaris::Base
       "grep -- #{escape(expected_pattern)} #{escape(file)}"
     end
 
-    def check_has_md5checksum(file, expected)
-      "digest -a md5 -v #{escape(file)} | grep -iw -- #{escape(expected)}"
+    def get_md5sum(file)
+      "digest -a md5 -v #{escape(file)} | cut -d '=' -f 2 |  cut -c 2-"
     end
 
     # reference: http://perldoc.perl.org/functions/stat.html

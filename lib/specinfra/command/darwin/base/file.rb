@@ -4,12 +4,12 @@ class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
       "sudo -u #{user} -s /bin/test -#{access} #{file}"
     end
 
-    def check_has_md5checksum(file, expected)
-      "openssl md5 #{escape(file)} | cut -d'=' -f2 | cut -c 2- | grep -E ^#{escape(expected)}$"
+    def get_md5sum(file)
+      "openssl md5 #{escape(file)} | cut -d'=' -f2 | cut -c 2-"
     end
 
-    def check_has_sha256checksum(file, expected)
-      "openssl sha256 #{escape(file)} | cut -d'=' -f2 | cut -c 2- | grep -E ^#{escape(expected)}$"
+    def get_sha256sum(file)
+      "openssl sha256 #{escape(file)} | cut -d'=' -f2 | cut -c 2-"
     end
 
     def check_is_linked_to(link, target)

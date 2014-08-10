@@ -59,14 +59,12 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "grep -qF -- #{escape(expected_pattern)} #{escape(file)}"
     end
 
-    def check_has_md5checksum(file, expected)
-      regexp = "^#{expected}"
-      "md5sum #{escape(file)} | grep -iw -- #{escape(regexp)}"
+    def get_md5sum(file)
+      "md5sum #{escape(file)} | cut -d ' ' -f 1"
     end
 
-    def check_has_sha256checksum(file, expected)
-      regexp = "^#{expected}"
-      "sha256sum #{escape(file)} | grep -iw -- #{escape(regexp)}"
+    def get_sha256sum(file)
+      "sha256sum #{escape(file)} | cut -d ' ' -f 1"
     end
 
     def get_content(file)

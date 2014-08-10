@@ -1,13 +1,11 @@
 class Specinfra::Command::Openbsd::Base::File < Specinfra::Command::Base::File
   class << self
-    def check_has_md5checksum(file, expected)
-      regexp = "^#{expected}"
-      "cksum -qa md5 #{escape(file)} | grep -w #{escape(regexp)}"
+    def get_md5sum(file)
+      "cksum -qa md5 #{escape(file)} | cut -d ' ' -f 1"
     end
 
-    def check_has_sha256checksum(file, expected)
-      regexp = "^#{expected}"
-      "cksum -qa sha256 #{escape(file)} | grep -w #{escape(regexp)}"
+    def get_sha256sum(file)
+      "cksum -qa sha256 #{escape(file)} | cut -d ' ' -f 1"
     end
 
     def check_is_linked_to(link, target)
