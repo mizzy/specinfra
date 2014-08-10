@@ -4,7 +4,7 @@ module Specinfra
       if os.include?(:family) && os[:family] == 'windows'
         Specinfra.backend.send(meth, *args)
       else
-        Specinfra::Command::Processor.send(meth, *args)
+        Specinfra::Processor.send(meth, *args)
       end
     end
   end

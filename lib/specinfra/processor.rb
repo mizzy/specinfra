@@ -1,4 +1,4 @@
-module Specinfra::Command
+module Specinfra
   class Processor
     def self.method_missing(meth, *args, &block)
       Specinfra.backend.send(meth, *args)
