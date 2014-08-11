@@ -6,44 +6,44 @@ end
 
 describe 'no ssh connection without cache' do
   before do
+    property[:os] = nil
     set_stub_chain(:ssh, nil)
     set_stub_chain(:ssh_options, nil)
     set_stub_chain(:host, 'localhost')
     set_stub_chain(:os, :family => 'redhat')
   end
 
-  it { expect(property[:os_by_host]).to eq nil }
   it { expect(os[:family]).to eq 'redhat' }
 end
 
 describe 'no ssh connection with cache' do
-  it { expect(property[:os_by_host]['localhost:0']).to eq(:family => 'redhat') }
+  it { expect(property[:os]).to eq(:family => 'redhat') }
 end
 
 describe 'ssh_options without cache' do
   before do
+    property[:os] = nil
     set_stub_chain(:ssh, nil)
     set_stub_chain(:ssh_options, :port => 22)
     set_stub_chain(:host, 'localhost')
     set_stub_chain(:os, :family => 'ubuntu')
   end
 
-  it { expect(property[:os_by_host]['localhost:22']).to eq nil }
   it { expect(os[:family]).to eq 'ubuntu' }
 end
 
 describe 'ssh_options with cache' do
-  it { expect(property[:os_by_host]['localhost:22']).to eq(:family => 'ubuntu') }
+  it { expect(property[:os]).to eq(:family => 'ubuntu') }
 end
 
 describe 'ssh_connection without cache' do
   before do
+    property[:os] = nil
     set_stub_chain([:ssh, :host], 'localhost')
     set_stub_chain([:ssh, :options], :port => 2222)
     set_stub_chain(:os, :family => 'nixos')
   end
 
-  it { expect(property[:os_by_host]['localhost:2222']).to eq nil }
   it { expect(os[:family]).to eq 'nixos' }
 end
 
@@ -54,5 +54,5 @@ describe 'ssh_connection wit cache' do
     set_stub_chain(:os, :family => 'nixos')
   end
 
-  it { expect(property[:os_by_host]['localhost:2222']).to eq(:family => 'nixos') }
+  it { expect(property[:os]).to eq(:family => 'nixos') }
 end

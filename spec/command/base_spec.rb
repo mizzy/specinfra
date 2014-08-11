@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'create_command_class work correctly' do
-  after do
-    property[:os_by_host] = nil
+  before do
+    property[:os] = nil
   end
 
   context 'family: base, release: nil' do

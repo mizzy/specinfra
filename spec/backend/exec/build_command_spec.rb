@@ -99,6 +99,9 @@ describe 'os' do
   end
 
   context 'test ubuntu with /etc/lsb-release' do
+    before do
+      property[:os] = nil
+    end
     subject { os }
     it do
       expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
@@ -124,6 +127,9 @@ EOF
   end
 
   context 'test debian (no lsb_release or lsb-release)' do
+    before do
+      property[:os] = nil
+    end
     subject { os }
     it do
       expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
