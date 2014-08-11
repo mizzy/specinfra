@@ -29,16 +29,12 @@ module Specinfra::Helper::Os
     end
   end
 
-  def run_command(cmd)
-    Specinfra.backend.run_command(cmd)
-  end
-
   def detect_os
     return Specinfra.configuration.os if Specinfra.configuration.os
     Specinfra::Helper::DetectOs.subclasses.each do |c|
       res = c.detect
       if res
-        res[:arch] ||= run_command('uname -m').stdout.strip
+        res[:arch] ||= Specinfra.backend.run_command('uname -m').stdout.strip
         return res
       end
     end

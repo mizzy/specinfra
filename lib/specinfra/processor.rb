@@ -1,9 +1,5 @@
 module Specinfra
   class Processor
-    def self.method_missing(meth, *args, &block)
-      Specinfra.backend.send(meth, *args)
-    end
-
     def self.check_service_is_running(service)
       ret = Specinfra.backend.run_command(Specinfra.command.check_service_is_running(service))
 
@@ -114,7 +110,7 @@ module Specinfra
 
     def self.check_routing_table_has_entry(expected_attr)
       return false if ! expected_attr[:destination]
-      ret = Specinfra.backend.get_routing_table_entry(expected_attr[:destination])
+      ret = Specinfra.backend.run_command(Specinfra.command.get_routing_table_entry(expected_attr[:destination]))
       return false if ret.failure?
 
       ret.stdout.gsub!(/\r\n/, "\n")

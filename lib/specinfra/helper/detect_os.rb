@@ -1,5 +1,8 @@
 module Specinfra::Helper
   class DetectOs
+    def self.run_command(cmd)
+      Specinfra.backend.run_command(cmd)
+    end
   end
 end
 
