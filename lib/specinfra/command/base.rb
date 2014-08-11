@@ -20,7 +20,7 @@ class Specinfra::Command::Base
       Shellwords.shellescape(str)
     end
 
-    def method_missing(meth, *args)
+    def get(meth, *args)
       action, resource_type, subaction = breakdown(meth)
       method =  action
       method += "_#{subaction}" if subaction

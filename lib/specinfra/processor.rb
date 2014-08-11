@@ -1,7 +1,8 @@
 module Specinfra
   class Processor
     def self.check_service_is_running(service)
-      ret = Specinfra.backend.run_command(Specinfra.command.check_service_is_running(service))
+      cmd = Specinfra.command.get(:check_service_is_running, service)
+      ret = Specinfra.backend.run_command(cmd)
 
       # In Ubuntu, some services are under upstart and "service foo status" returns
       # exit status 0 even though they are stopped.
@@ -10,14 +11,16 @@ module Specinfra
 
       # If the service is not registered, check by ps command
       if ret.exit_status == 1
-        ret = Specinfra.backend.run_command(Specinfra.command.check_process_is_running(service))
+        cmd = Specinfra.command.get(:check_process_is_running, service)
+        ret = Specinfra.backend.run_command(cmd)
       end
 
       ret.success?
     end
 
     def self.check_service_is_monitored_by_monit(process)
-      ret = Specinfra.backend.run_command(Specinfra.command.check_service_is_monitored_by_monit(process))
+      cmd = Specinfra.command.get(:check_service_is_monitored_by_monit, process)
+      ret = Specinfra.backend.run_command(cmd)
       return false unless ret.stdout != nil && ret.success?
 
       retlines = ret.stdout.split(/[\r\n]+/).map(&:strip)
@@ -28,7 +31,8 @@ module Specinfra
     end
 
     def self.check_file_is_readable(file, by_whom)
-      mode = sprintf('%04s',Specinfra.backend.run_command(Specinfra.command.get_file_mode(file)).stdout.strip)
+      cmd = Specinfra.command.get(:get_file_mode, file)
+      mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
       case by_whom
@@ -44,7 +48,8 @@ module Specinfra
     end
 
     def self.check_file_is_writable(file, by_whom)
-      mode = sprintf('%04s',Specinfra.backend.run_command(Specinfra.command.get_file_mode(file)).stdout.strip)
+      cmd = Specinfra.command.get(:get_file_mode, file)
+      mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
       case by_whom
@@ -60,7 +65,8 @@ module Specinfra
     end
 
     def self.check_file_is_executable(file, by_whom)
-      mode = sprintf('%04s',Specinfra.backend.run_command(Specinfra.command.get_file_mode(file)).stdout.strip)
+      cmd  = Specinfra.command.get(:get_file_mode, file)
+      mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
       case by_whom
@@ -76,7 +82,8 @@ module Specinfra
     end
 
     def self.check_file_is_mounted(path, expected_attr, only_with)
-      ret = Specinfra.backend.run_command(Specinfra.command.check_file_is_mounted(path))
+      cmd = Specinfra.command.get(:check_file_is_mounted, path)
+      ret = Specinfra.backend.run_command(cmd)
       if expected_attr.nil? || ret.failure?
         return ret.success?
       end
@@ -110,7 +117,8 @@ module Specinfra
 
     def self.check_routing_table_has_entry(expected_attr)
       return false if ! expected_attr[:destination]
-      ret = Specinfra.backend.run_command(Specinfra.command.get_routing_table_entry(expected_attr[:destination]))
+      cmd = Specinfra.command.get(:get_routing_table_entry, expected_attr[:destination])
+      ret = Specinfra.backend.run_command(cmd)
       return false if ret.failure?
 
       ret.stdout.gsub!(/\r\n/, "\n")

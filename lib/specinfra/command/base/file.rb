@@ -13,7 +13,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def check_contains(file, expected_pattern)
-      "#{check_file_contains_with_regexp(file, expected_pattern)} || #{check_file_contains_with_fixed_strings(file, expected_pattern)}"
+      "#{check_contains_with_regexp(file, expected_pattern)} || #{check_contains_with_fixed_strings(file, expected_pattern)}"
     end
 
     def check_is_grouped(file, group)
@@ -35,8 +35,8 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       from ||= '1'
       to ||= '$'
       sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
-      checker_with_regexp = check_file_contains_with_regexp("-", expected_pattern)
-      checker_with_fixed  = check_file_contains_with_fixed_strings("-", expected_pattern)
+      checker_with_regexp = check_contains_with_regexp("-", expected_pattern)
+      checker_with_fixed  = check_contains_with_fixed_strings("-", expected_pattern)
       "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
     end
 
