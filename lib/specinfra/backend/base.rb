@@ -10,20 +10,18 @@ module Specinfra
         @example = e
       end
 
-      def success?(cmd, *args)
-        run_command(Specinfra.command.send(cmd, *args)).success?
+      def success?(cmd)
+        run_command(cmd).success?
       end
 
-      def method_missing(meth, *args, &block)
+      def method_missing(meth, *args)
+        cmd = Specinfra.command.send(meth, *args)
         if meth.to_s =~ /^check/
-          success?(meth, *args)
+          success?(cmd)
         else
-          run_command(Specinfra.command.send(meth, *args))
+          run_command(cmd)
         end
       end
     end
   end
 end
-
-
-
