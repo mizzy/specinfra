@@ -4,8 +4,8 @@ class Specinfra::Command::Solaris::Base::File < Specinfra::Command::Base::File
       from ||= '1'
       to ||= '$'
       sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
-      checker_with_regexp = check_file_contains_with_regexp("/dev/stdin", expected_pattern)
-      checker_with_fixed  = check_file_contains_with_fixed_strings("/dev/stdin", expected_pattern)
+      checker_with_regexp = check_contains_with_regexp("/dev/stdin", expected_pattern)
+      checker_with_fixed  = check_contains_with_fixed_strings("/dev/stdin", expected_pattern)
       "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
     end
 
