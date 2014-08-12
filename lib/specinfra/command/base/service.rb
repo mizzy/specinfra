@@ -4,10 +4,6 @@ class Specinfra::Command::Base::Service < Specinfra::Command::Base
       "service #{escape(service)} status"
     end
 
-    def check_is_installed(service, level=3)
-      raise NotImplementedError.new
-    end
-
     def check_is_running_under_supervisor(service)
       "supervisorctl status #{escape(service)} | grep RUNNING"
     end
