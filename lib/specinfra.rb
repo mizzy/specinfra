@@ -2,6 +2,7 @@ require 'specinfra/version'
 require 'specinfra/helper'
 require 'specinfra/backend'
 require 'specinfra/command'
+require 'specinfra/command_factory'
 require 'specinfra/command_result'
 require 'specinfra/configuration'
 require 'specinfra/runner'
@@ -16,7 +17,7 @@ module Specinfra
     end
 
     def command
-      Specinfra::Command::Base
+      Specinfra::CommandFactory
     end
 
     def backend
