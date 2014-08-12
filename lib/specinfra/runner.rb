@@ -1,11 +1,16 @@
 module Specinfra
   class Runner
     def self.method_missing(meth, *args)
+      backend   = Specinfra.backend
+      processor = Specinfra::Processor
+      
       if os.include?(:family) && os[:family] == 'windows'
-        run(meth, *args)
+        if backend.respond_to?(meth)
+          backend.send(meth, *args)
+        else
+          run(meth, *args)
+        end
       else
-        processor = Specinfra::Processor
-        backend   = Specinfra.backend
         if processor.respond_to?(meth)
           processor.send(meth, *args)
         elsif backend.respond_to?(meth)
