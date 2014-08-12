@@ -24,10 +24,11 @@ module Specinfra
     private
     def self.run(meth, *args)
       cmd = Specinfra.command.get(meth, *args)
+      ret = Specinfra.backend.run_command(cmd)
       if meth.to_s =~ /^check/
-        Specinfra.backend.run_command(cmd).success?
+        ret.success?
       else
-        Specinfra.backend.run_command(cmd)
+        ret
       end
     end
   end
