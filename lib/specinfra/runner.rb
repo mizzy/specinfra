@@ -16,10 +16,6 @@ module Specinfra
       end
     end
 
-    def self.run_command(cmd)
-      Specinfra.backend.run_command(cmd)
-    end
-
     private
     def self.run(meth, *args)
       cmd = Specinfra.command.get(meth, *args)
@@ -29,6 +25,5 @@ module Specinfra
         Specinfra.backend.run_command(cmd)
       end
     end
-
   end
 end
