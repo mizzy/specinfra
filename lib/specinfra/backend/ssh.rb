@@ -1,13 +1,10 @@
+# -*- coding: utf-8 -*-
 require 'specinfra/backend/exec'
 require 'net/ssh'
 require 'net/scp'
 
 module Specinfra::Backend
   class Ssh < Exec
-    def prompt
-      'Password: '
-    end
-
     def run_command(cmd, opt={})
       cmd = build_command(cmd)
       cmd = add_pre_command(cmd)
@@ -23,6 +20,30 @@ module Specinfra::Backend
       end
 
       CommandResult.new ret
+    end
+
+    def copy_file(from, to)
+      if Specinfra.configuration.scp.nil?
+        Specinfra.configuration.scp = create_scp
+      end
+
+      scp = Specinfra.configuration.scp
+      scp.upload!(from, to)
+    end
+
+    private
+    def prompt
+      'Password: '
+    end
+
+    def build_command(cmd)
+      cmd = super(cmd)
+      user = Specinfra.configuration.ssh_options[:user]
+      disable_sudo = Specinfra.configuration.disable_sudo
+      if user != 'root' && !disable_sudo
+        cmd = "#{sudo} -p '#{prompt}' #{cmd}"
+      end
+      cmd
     end
 
     def with_env
@@ -47,26 +68,6 @@ module Specinfra::Backend
       end
     end
 
-    def build_command(cmd)
-      cmd = super(cmd)
-      user = Specinfra.configuration.ssh_options[:user]
-      disable_sudo = Specinfra.configuration.disable_sudo
-      if user != 'root' && !disable_sudo
-        cmd = "#{sudo} -p '#{prompt}' #{cmd}"
-      end
-      cmd
-    end
-
-    def copy_file(from, to)
-      if Specinfra.configuration.scp.nil?
-        Specinfra.configuration.scp = create_scp
-      end
-
-      scp = Specinfra.configuration.scp
-      scp.upload!(from, to)
-    end
-
-    private
     def create_ssh
       Net::SSH.start(
         Specinfra.configuration.host,

@@ -22,6 +22,11 @@ module Specinfra::Backend
       CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
     end
 
+    def copy_file(from, to)
+      FileUtils.cp(from, to)
+    end
+
+    private
     def with_env
       keys = %w[BUNDLER_EDITOR BUNDLE_BIN_PATH BUNDLE_GEMFILE
           RUBYOPT GEM_HOME GEM_PATH GEM_CACHE]
@@ -66,10 +71,6 @@ module Specinfra::Backend
       else
         cmd
       end
-    end
-
-    def copy_file(from, to)
-      FileUtils.cp(from, to)
     end
   end
 end
