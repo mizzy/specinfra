@@ -4,7 +4,6 @@ require 'shellwords'
 
 module Specinfra::Backend
   class Exec < Base
-
     def run_command(cmd, opts={})
       cmd = build_command(cmd)
       cmd = add_pre_command(cmd)
