@@ -19,6 +19,3 @@ class Specinfra::Command::Base
     end
   end
 end
-
-
-
