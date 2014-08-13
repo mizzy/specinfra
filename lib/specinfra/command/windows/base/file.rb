@@ -93,7 +93,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
 
     private
     def item_has_attribute item, attribute
-      "((Get-Item -Path '#{item}' -Force).attributes.ToString() -Split ', ') -contains '#{attribute}'"
+      %Q!((Get-Item -Path "#{item}" -Force).attributes.ToString() -Split ', ') -contains '#{attribute}'!
     end
   end
 end
