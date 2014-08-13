@@ -385,7 +385,7 @@ module SpecInfra
       private
 
       def item_has_attribute item, attribute
-        "((Get-Item -Path '#{item}' -Force).attributes.ToString() -Split ', ') -contains '#{attribute}'"
+        %Q!((Get-Item -Path "#{item}" -Force).attributes.ToString() -Split ', ') -contains '#{attribute}'!
       end
 
       def convert_key_property_value property
