@@ -142,11 +142,11 @@ module SpecInfra
       end
 
       def check_file_contain_with_regexp(file, expected_pattern)
-        "grep -q -- #{escape(expected_pattern)} #{escape(file)}"
+        "grep -qs -- #{escape(expected_pattern)} #{escape(file)}"
       end
 
       def check_file_contain_with_fixed_strings(file, expected_pattern)
-        "grep -qF -- #{escape(expected_pattern)} #{escape(file)}"
+        "grep -qFs -- #{escape(expected_pattern)} #{escape(file)}"
       end
 
       def check_file_checksum(file, expected)
