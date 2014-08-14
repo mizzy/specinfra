@@ -10,5 +10,3 @@ class Specinfra::Command::Linux::Base::Selinux < Specinfra::Command::Base::Selin
     end
   end
 end
-
-

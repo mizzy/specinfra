@@ -9,10 +9,3 @@ class Specinfra::Command::Openbsd::Base::User < Specinfra::Command::Base::User
     end
   end
 end
-
-
-
-
-
-
-
