@@ -52,11 +52,11 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def check_contains_with_regexp(file, expected_pattern)
-      "grep -q -- #{escape(expected_pattern)} #{escape(file)}"
+      "grep -qs -- #{escape(expected_pattern)} #{escape(file)}"
     end
 
     def check_contains_with_fixed_strings(file, expected_pattern)
-      "grep -qF -- #{escape(expected_pattern)} #{escape(file)}"
+      "grep -qFs -- #{escape(expected_pattern)} #{escape(file)}"
     end
 
     def get_md5sum(file)
