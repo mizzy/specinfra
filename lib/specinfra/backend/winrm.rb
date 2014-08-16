@@ -3,6 +3,7 @@ module Specinfra::Backend
     include PowerShell::ScriptHelper
 
     def run_command(cmd, opts={})
+      set :os, :family => 'windows'
       script = create_script(cmd)
       winrm = Specinfra.configuration.winrm
 
