@@ -35,8 +35,8 @@ module Specinfra
       mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
-      case by_whom
-      when nil
+      case by_whom.to_s
+      when ''
         mode_octal & 0444 != 0
       when 'owner'
         mode_octal & 0400 != 0
@@ -52,8 +52,8 @@ module Specinfra
       mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
-      case by_whom
-      when nil
+      case by_whom.to_s
+      when ''
         mode_octal & 0222 != 0
       when 'owner'
         mode_octal & 0200 != 0
@@ -69,8 +69,8 @@ module Specinfra
       mode = sprintf('%04s',Specinfra.backend.run_command(cmd).stdout.strip)
       mode = mode.split('')
       mode_octal = mode[0].to_i * 512 + mode[1].to_i * 64 + mode[2].to_i * 8 + mode[3].to_i * 1
-      case by_whom
-      when nil
+      case by_whom.to_s
+      when ''
         mode_octal & 0111 != 0
       when 'owner'
         mode_octal & 0100 != 0
