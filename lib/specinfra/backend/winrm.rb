@@ -1,5 +1,5 @@
 module Specinfra::Backend
-  class WinRM < Base
+  class Winrm < Base
     include PowerShell::ScriptHelper
 
     def run_command(cmd, opts={})
