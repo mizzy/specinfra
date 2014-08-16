@@ -9,21 +9,21 @@ describe 'create_command_class work correctly' do
     before do
       set :os, :family => 'base'
     end
-    it { expect(Specinfra::Command::Base.create_command_class('file')).to eq Specinfra::Command::Base::File }
+    it { expect(Specinfra.command.send(:create_command_class, 'file')).to eq Specinfra::Command::Base::File }
   end
 
   context 'family: redhat, release: nil' do
     before do
       set :os, :family => 'redhat'
     end
-    it { expect(Specinfra::Command::Base.create_command_class('file')).to eq Specinfra::Command::Redhat::Base::File }
+    it { expect(Specinfra.command.send(:create_command_class, 'file')).to eq Specinfra::Command::Redhat::Base::File }
   end
 
   context 'family: redhat, release: 7' do
     before do
       set :os, :family => 'redhat', :release => 7
     end
-    it { expect(Specinfra::Command::Base.create_command_class('file')).to eq Specinfra::Command::Redhat::V7::File }
+    it { expect(Specinfra.command.send(:create_command_class, 'file')).to eq Specinfra::Command::Redhat::V7::File }
   end
 end
 

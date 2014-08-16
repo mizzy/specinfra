@@ -14,6 +14,7 @@ class Specinfra::CommandFactory
       end
     end
 
+    private
     def create_command_class(resource_type)
       family  = os[:family]
       version = os[:release] ? "V#{os[:release].to_i}" : nil
@@ -46,7 +47,6 @@ class Specinfra::CommandFactory
       command_class.create
     end
 
-    private
     def breakdown(meth)
       types = resource_types.map {|t| t.to_snake_case }.join('|')
       md = meth.to_s.match(/^([^_]+)_(#{types})_?(.+)?$/)
