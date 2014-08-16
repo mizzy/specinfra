@@ -4,9 +4,10 @@ class Specinfra::Command::Solaris::Base::File < Specinfra::Command::Base::File
       from ||= '1'
       to ||= '$'
       sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
+      sed_end = "sed -n 1,#{escape(to)}p"
       checker_with_regexp = check_contains_with_regexp("/dev/stdin", expected_pattern)
       checker_with_fixed  = check_contains_with_fixed_strings("/dev/stdin", expected_pattern)
-      "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
+      "#{sed} | #{sed_end} | #{checker_with_regexp}|| #{sed} | #{sed_end} | #{checker_with_fixed}"
     end
 
     def check_is_accessible_by_user(file, user, access)
