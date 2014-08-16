@@ -168,9 +168,10 @@ module SpecInfra
         from ||= '1'
         to ||= '$'
         sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
+        sed_end = "sed -n 1,#{escape(to)}p"
         checker_with_regexp = check_file_contain_with_regexp("-", expected_pattern)
         checker_with_fixed  = check_file_contain_with_fixed_strings("-", expected_pattern)
-        "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
+        "#{sed} | #{sed_end} | #{checker_with_regexp} || #{sed} | #{sed_end} | #{checker_with_fixed}"
       end
 
       def check_file_contain_lines(file, expected_lines, from=nil, to=nil)
