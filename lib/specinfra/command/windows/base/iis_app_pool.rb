@@ -64,6 +64,3 @@ class Specinfra::Command::Windows::Base::IisAppPool < Specinfra::Command::Window
     end
   end
 end
-
-
-
