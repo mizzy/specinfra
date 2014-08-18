@@ -1,1 +1,1 @@
-module Specinfra::Command::Freebsd; end
+class Specinfra::Command::Freebsd; end

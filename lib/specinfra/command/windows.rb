@@ -1,1 +1,1 @@
-module Specinfra::Command::Windows; end
+class Specinfra::Command::Windows; end

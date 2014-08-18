@@ -1,1 +1,1 @@
-module Specinfra::Command::Plamo; end
+class Specinfra::Command::Plamo; end

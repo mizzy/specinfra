@@ -1,1 +1,1 @@
-module Specinfra::Command::Openbsd; end
+class Specinfra::Command::Openbsd; end

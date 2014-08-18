@@ -1,1 +1,1 @@
-module Specinfra::Command::Nixos; end
+class Specinfra::Command::Nixos; end

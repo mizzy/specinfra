@@ -1,2 +1,2 @@
-module Specinfra::Command::Module;end
+module  Specinfra::Command::Module; end
 

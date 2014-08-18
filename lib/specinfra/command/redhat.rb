@@ -1,1 +1,1 @@
-module Specinfra::Command::Redhat;end
+class Specinfra::Command::Redhat;end

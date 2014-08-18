@@ -1,1 +1,1 @@
-module Specinfra::Command::Opensuse; end
+class Specinfra::Command::Opensuse; end

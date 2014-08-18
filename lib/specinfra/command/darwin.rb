@@ -1,1 +1,1 @@
-module Specinfra::Command::Darwin; end
+class Specinfra::Command::Darwin; end

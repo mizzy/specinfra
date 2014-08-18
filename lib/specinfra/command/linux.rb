@@ -1,1 +1,1 @@
-module Specinfra::Command::Linux; end
+class Specinfra::Command::Linux; end

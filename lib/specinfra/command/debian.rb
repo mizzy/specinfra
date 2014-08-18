@@ -1,1 +1,1 @@
-module Specinfra::Command::Debian; end
+class Specinfra::Command::Debian; end

@@ -1,1 +1,1 @@
-module Specinfra::Command::Smartos; end
+class Specinfra::Command::Smartos; end

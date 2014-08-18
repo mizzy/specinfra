@@ -1,1 +1,1 @@
-module Specinfra::Command::Suse; end
+class Specinfra::Command::Suse; end
