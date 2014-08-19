@@ -38,4 +38,8 @@ describe 'File related commands'  do
   context Specinfra.command.get(:get_file_owner_group, '/tmp') do
     it { should eq 'stat -c %G /tmp' }
   end
+
+  context Specinfra.command.get(:move_file, '/src', '/dest') do
+    it { should eq 'mv /src /dest' }
+  end
 end

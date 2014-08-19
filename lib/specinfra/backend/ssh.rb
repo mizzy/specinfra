@@ -27,8 +27,10 @@ module Specinfra::Backend
         Specinfra.configuration.scp = create_scp
       end
 
+      tmp = File.join('/tmp', File.basename(to))
       scp = Specinfra.configuration.scp
-      scp.upload!(from, to)
+      scp.upload!(from, tmp)
+      run_command(Specinfra.command.get(:move_file, tmp, to))
     end
 
     private
