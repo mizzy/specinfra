@@ -117,5 +117,9 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def create_as_directory(file)
       "mkdir -p #{escape(file)}"
     end
+
+    def move(src, dest)
+      "mv #{escape(src)} #{escape(dest)}"
+    end
   end
 end
