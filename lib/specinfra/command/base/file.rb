@@ -121,5 +121,15 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def move(src, dest)
       "mv #{escape(src)} #{escape(dest)}"
     end
+
+    def link_to(link, target)
+      "ln -s #{escape(target)} #{escape(link)}"
+    end
   end
 end
+
+
+
+
+
+

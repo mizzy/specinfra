@@ -42,4 +42,8 @@ describe 'File related commands'  do
   context Specinfra.command.get(:move_file, '/src', '/dest') do
     it { should eq 'mv /src /dest' }
   end
+
+  context Specinfra.command.get(:link_file_to, '/link', '/target') do
+    it { should eq 'ln -s /target /link' }
+  end
 end
