@@ -13,7 +13,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     alias :check_is_installed_by_apt :check_is_installed
 
     def install(package)
-      "apt-get -y install #{package}"
+      "DEBIAN_FRONTEND='noninteractive' apt-get -y install #{package}"
     end
 
     def get_version(package, opts=nil)
