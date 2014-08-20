@@ -21,7 +21,7 @@ module Specinfra::Backend
       CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
     end
 
-    def copy_file(from, to)
+    def send_file(from, to)
       FileUtils.cp(from, to)
     end
 
