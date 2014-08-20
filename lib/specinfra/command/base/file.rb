@@ -118,6 +118,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "mkdir -p #{escape(file)}"
     end
 
+    def copy(src, dest)
+      "cp #{escape(src)} #{escape(dest)}"
+    end
+
     def move(src, dest)
       "mv #{escape(src)} #{escape(dest)}"
     end
