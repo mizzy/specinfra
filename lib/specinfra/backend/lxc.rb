@@ -29,7 +29,7 @@ module Specinfra::Backend
       cmd
     end
 
-    def copy_file(from, to)
+    def send_file(from, to)
       FileUtils.cp(from, File.join(ct.config_item('lxc.rootfs'), to))
     end
 

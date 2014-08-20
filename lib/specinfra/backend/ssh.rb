@@ -22,7 +22,7 @@ module Specinfra::Backend
       CommandResult.new ret
     end
 
-    def copy_file(from, to)
+    def send_file(from, to)
       if Specinfra.configuration.scp.nil?
         Specinfra.configuration.scp = create_scp
       end
