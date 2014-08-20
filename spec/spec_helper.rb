@@ -13,3 +13,11 @@ module Specinfra
     end
   end
 end
+
+module GetCommand
+  def get_command(method, *args)
+    Specinfra.command.get(method, *args)
+  end
+end
+
+include GetCommand

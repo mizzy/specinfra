@@ -1,12 +1,7 @@
 require 'spec_helper'
 
-property[:os] = nil
 set :os, { :family => 'redhat' }
 
-describe  Specinfra.command.get(:check_package_is_installed, 'httpd') do
-  after do
-    property[:os] = nil
-  end
-
+describe  get_command(:check_package_is_installed, 'httpd') do
   it { should eq 'rpm -q httpd' }
 end
