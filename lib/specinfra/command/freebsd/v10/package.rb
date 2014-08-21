@@ -8,7 +8,7 @@ class Specinfra::Command::Freebsd::V10::Package < Specinfra::Command::Freebsd::B
       end
     end
 
-    def install(package)
+    def install(package, version=nil)
       "pkg install -y #{package}"
     end
 

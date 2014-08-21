@@ -14,8 +14,13 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
       "rpm -qi #{package} | grep Version | awk '{print $3}'"
     end
 
-    def install(package)
-      cmd = "yum -y install #{package}"
+    def install(package, version=nil)
+      if version
+        full_package = "#{package}-#{version}"
+      else
+        full_package = package
+      end
+      cmd = "yum -y install #{full_package}"
     end
   end
 end
