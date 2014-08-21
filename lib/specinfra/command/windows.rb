@@ -53,7 +53,7 @@ module SpecInfra
 
       def check_file_contain(file, pattern)
         Backend::PowerShell::Command.new do
-          exec "[Io.File]::ReadAllText('#{file}') -match '#{convert_regexp(pattern)}'"
+          exec %Q![[Io.File]::ReadAllText("#{file}") -match '#{convert_regexp(pattern)}'!
         end
       end
 
@@ -62,12 +62,12 @@ module SpecInfra
         to ||= '$'
         Backend::PowerShell::Command.new do
           using 'crop_text.ps1'
-          exec %Q[(CropText -text ([Io.File]::ReadAllText('#{file}')) -fromPattern '#{convert_regexp(from)}' -toPattern '#{convert_regexp(to)}') -match '#{pattern}']
+          exec %Q!(CropText -text ([Io.File]::ReadAllText("#{file}")) -fromPattern '#{convert_regexp(from)}' -toPattern '#{convert_regexp(to)}') -match '#{pattern}'!
         end
       end
 
       def get_file_content(file)
-        "[Io.File]::ReadAllText('#{file}')"
+        %Q![Io.File]::ReadAllText("#{file}")!
       end
 
       def check_access_by_user(file, user, access)
