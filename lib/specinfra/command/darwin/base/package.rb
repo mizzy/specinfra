@@ -17,7 +17,8 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       cmd = "#{cmd} | grep '^version: #{escape(version)}'" if version
     end
 
-    def install(package)
+    def install(package, version=nil)
+      # Homebrew doesn't support to install specific version.
       cmd = "brew install '#{package}'"
     end
   end

@@ -12,7 +12,8 @@ class Specinfra::Command::Arch::Base::Package < Specinfra::Command::Linux::Base:
       "pacman -Qi #{package} | grep Version | awk '{print $3}'"
     end
 
-    def install(package)
+    def install(package, version=nil)
+      # Pacman doesn't support to install specific version.
       "pacman -S --noconfirm #{package}"
     end
 
