@@ -35,10 +35,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       from ||= '1'
       to ||= '$'
       sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
-      sed_end = "sed -n 1,#{escape(to)}p"
+      sed += " | sed -n 1,#{escape(to)}p" if from != '1' and to != '$'
       checker_with_regexp = check_contains_with_regexp("-", expected_pattern)
       checker_with_fixed  = check_contains_with_fixed_strings("-", expected_pattern)
-      "#{sed} | #{sed_end} | #{checker_with_regexp} || #{sed} | #{sed_end} | #{checker_with_fixed}"
+      "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
     end
 
     def check_contains_lines(file, expected_lines, from=nil, to=nil)
