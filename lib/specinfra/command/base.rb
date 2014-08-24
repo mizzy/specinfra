@@ -29,7 +29,7 @@ module SpecInfra
       end
 
       def check_mounted(path)
-        regexp = "on #{path}"
+        regexp = "on #{path} "
         "mount | grep -w -- #{escape(regexp)}"
       end
 
