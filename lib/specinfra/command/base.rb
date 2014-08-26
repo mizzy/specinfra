@@ -30,7 +30,7 @@ module SpecInfra
 
       def check_mounted(path)
         regexp = "on #{path} "
-        "mount | grep -w -- #{escape(regexp)}"
+        "mount | grep -- '#{escape(regexp)}'"
       end
 
       def check_routing_table(destination)
