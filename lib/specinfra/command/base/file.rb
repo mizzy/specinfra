@@ -129,11 +129,9 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def link_to(link, target)
       "ln -s #{escape(target)} #{escape(link)}"
     end
+
+    def remove(file)
+      "rm -rf #{escape(file)}"
+    end
   end
 end
-
-
-
-
-
-
