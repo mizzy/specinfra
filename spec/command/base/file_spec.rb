@@ -46,4 +46,8 @@ describe 'File related commands'  do
   context get_command(:link_file_to, '/link', '/target') do
     it { should eq 'ln -s /target /link' }
   end
+
+  context get_command(:remove_file, '/tmp') do
+    it { should eq 'rm -rf /tmp' }
+  end
 end
