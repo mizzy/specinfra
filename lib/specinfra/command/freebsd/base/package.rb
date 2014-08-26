@@ -8,8 +8,8 @@ class Specinfra::Command::Freebsd::Base::Package < Specinfra::Command::Base::Pac
       end
     end
 
-    def install(package, version=nil)
-      "pkg_add -r install #{package}"
+    def install(package, version=nil, option='')
+      "pkg_add -r #{option} install #{package}"
     end
 
     def get_version(package, opts=nil)

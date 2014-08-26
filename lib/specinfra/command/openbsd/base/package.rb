@@ -8,8 +8,8 @@ class Specinfra::Command::Openbsd::Base::Package < Specinfra::Command::Base::Pac
       end
     end
 
-    def install(package, version=nil)
-      "pkg_add #{package}"
+    def install(package, version=nil, option='')
+      "pkg_add #{option} #{package}"
     end
   end
 end

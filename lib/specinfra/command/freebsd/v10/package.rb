@@ -8,8 +8,8 @@ class Specinfra::Command::Freebsd::V10::Package < Specinfra::Command::Freebsd::B
       end
     end
 
-    def install(package, version=nil)
-      "pkg install -y #{package}"
+    def install(package, version=nil, option='')
+      "pkg install -y #{option} #{package}"
     end
 
     def get_version(package, opts=nil)
