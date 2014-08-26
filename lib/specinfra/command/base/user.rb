@@ -29,5 +29,44 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       key.sub!(/\s+\S*$/, '') if key.match(/^\S+\s+\S+\s+\S*$/)
       "grep -w -- #{escape(key)} ~#{escape(user)}/.ssh/authorized_keys"
     end
+
+    def get_uid(user)
+      "id -u #{escape(user)}"
+    end
+
+    def get_gid(user)
+      "id -g #{escape(user)}"
+    end
+
+    def get_home_directory(user)
+      "getent passwd #{escape(user)} | awk -F: '{ print $6 }'"
+    end
+
+    def update_uid(user, uid)
+      "usermod -u #{escape(uid)} #{escape(user)}"
+    end
+
+    def update_gid(user, gid)
+      "usermod -g #{escape(gid)} #{escape(user)}"
+    end
+
+    def add(user, options)
+      command = ['useradd']
+      command << '-g' << options[:gid]            if options[:gid]
+      command << '-d' << options[:home_directory] if options[:home_directory]
+      command << '-p' << options[:password]       if options[:password]
+      command << '-r' if options[:system_user]
+      command << '-u' << options[:uid]            if options[:uid]
+      command << user
+      command.join(' ')
+    end
+
+    def update_encrypted_password(user, encrypted_password)
+      %Q!echo #{escape("#{user}:#{encrypted_password}")} | chpasswd -e!
+    end
+
+    def get_encrypted_password(user)
+      "getent shadow #{escape(user)} | awk -F: '{ print $2 }'"
+    end
   end
 end
