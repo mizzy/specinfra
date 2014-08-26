@@ -10,8 +10,8 @@ class Specinfra::Command::Nixos::Base::Package < Specinfra::Command::Linux::Base
 
     alias :check_is_installed_by_nix :check_is_installed
 
-    def install(package, version=nil)
-      "nix-env -i #{package}"
+    def install(package, version=nil, option='')
+      "nix-env -i #{option} #{package}"
     end
   end
 end

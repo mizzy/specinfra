@@ -10,8 +10,8 @@ class Specinfra::Command::Suse::Base::Package < Specinfra::Command::Linux::Base:
 
     alias :check_is_installed_by_rpm :check_is_installed
 
-    def install(package, version=nil)
-      cmd = "zypper -n install #{package}"
+    def install(package, version=nil, option='')
+      cmd = "zypper -n #{option} install #{package}"
     end
 
     def get_version(package, opts=nil)
