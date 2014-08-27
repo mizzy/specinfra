@@ -74,7 +74,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
 
     def check_is_mounted(path)
       regexp = "on #{path} "
-      "mount | grep -w -- #{escape(regexp)}"
+      "mount | grep -- '#{escape(regexp)}'"
     end
 
     def get_mode(file)
