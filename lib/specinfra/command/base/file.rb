@@ -93,6 +93,14 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "stat -c %N #{escape(link)} | egrep -e \"-> .#{escape(target)}.\""
     end
 
+    def check_is_link(link)
+      "test -L #{escape(link)}"
+    end
+
+    def get_link_target(link)
+      "readlink -f #{escape(link)}"
+    end
+
     def get_mtime(file)
       "stat -c %Y #{escape(file)}"
     end
