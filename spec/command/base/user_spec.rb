@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+set :os, { :family => nil }
+
 describe get_command(:get_user_uid, 'foo') do
   it { should eq 'id -u foo' }
 end
