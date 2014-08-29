@@ -17,6 +17,18 @@ module SpecInfra
         cmd
       end
 
+      def check_ip6tables_rule(rule, table=nil, chain=nil)
+        cmd = "ip6tables"
+        cmd += " -t #{escape(table)}" if table
+        cmd += " -S"
+        cmd += " #{escape(chain)}" if chain
+        cmd += " | grep -- #{escape(rule)}"
+        cmd += " || ip6tables-save"
+        cmd += " -t #{escape(table)}" if table
+        cmd += " | grep -- #{escape(rule)}"
+        cmd
+      end
+
       def check_selinux(mode)
         cmd =  ""
         cmd += "test ! -f /etc/selinux/config || (" if mode == "disabled"

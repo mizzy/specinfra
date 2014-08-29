@@ -289,6 +289,10 @@ module SpecInfra
         raise NotImplementedError.new
       end
 
+      def check_ip6tables_rule(rule, table=nil, chain=nil)
+        raise NotImplementedError.new
+      end
+
       def check_zfs(zfs, property=nil, value=nil)
         raise NotImplementedError.new
       end
