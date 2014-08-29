@@ -4,16 +4,16 @@ module Specinfra
       backend   = Specinfra.backend
       processor = Specinfra::Processor
       
-      if os.include?(:family) && os[:family] == 'windows'
-        if backend.respond_to?(meth)
+      if ! os.include?(:family) || os[:family] != 'windows'
+        if processor.respond_to?(meth)
+          processor.send(meth, *args)
+        elsif backend.respond_to?(meth)
           backend.send(meth, *args)
         else
           run(meth, *args)
         end
       else
-        if processor.respond_to?(meth)
-          processor.send(meth, *args)
-        elsif backend.respond_to?(meth)
+        if backend.respond_to?(meth)
           backend.send(meth, *args)
         else
           run(meth, *args)
