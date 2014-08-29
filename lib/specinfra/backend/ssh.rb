@@ -58,6 +58,7 @@ module SpecInfra
         exit_status = nil
         exit_signal = nil
         pass_prompt = SpecInfra.configuration.pass_prompt || /^\[sudo\] password for/
+        retry_prompt = /^Sorry, try again/
 
         ssh = SpecInfra.configuration.ssh
         ssh.open_channel do |channel|
@@ -69,7 +70,9 @@ module SpecInfra
           channel.exec("#{command}") do |ch, success|
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
-              if data.match pass_prompt
+              if data.match retry_prompt
+                abort 'Wrong sudo password! Please confirm your password.'
+              elsif data.match pass_prompt
                 channel.send_data "#{SpecInfra.configuration.sudo_password}\n"
               else
                 stdout_data += data
