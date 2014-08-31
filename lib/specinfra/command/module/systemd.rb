@@ -4,7 +4,7 @@ module Specinfra::Command::Module::Systemd
       level = "runlevel#{level}.target"
     end
 
-    "systemctl --plain list-dependencies #{level} | grep '^#{escape(service)}.service$'"
+    "systemctl --plain list-dependencies #{level} | grep '\\(^\\| \\)#{escape(service)}.service$'"
   end
 
   def check_is_running(service)
