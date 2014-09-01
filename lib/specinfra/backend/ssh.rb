@@ -91,6 +91,7 @@ module Specinfra::Backend
       stderr_data = ''
       exit_status = nil
       exit_signal = nil
+      retry_prompt = /^Sorry, try again/
 
       if Specinfra.configuration.ssh.nil?
         Specinfra.configuration.ssh = create_ssh
@@ -106,7 +107,9 @@ module Specinfra::Backend
         channel.exec("#{command}") do |ch, success|
           abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
           channel.on_data do |ch, data|
-            if data.match /^#{prompt}/
+            if data.match retry_prompt
+              abort 'Wrong sudo password! Please confirm your password.'
+            elsif data.match /^#{prompt}/
               channel.send_data "#{Specinfra.configuration.sudo_password}\n"
             else
               stdout_data += data
