@@ -3,35 +3,38 @@ module Specinfra::Command::Module::Systemd
     if level.to_s =~ /^\d+$/
       level = "runlevel#{level}.target"
     end
+    unless service.include?('.')
+      service += '.service'
+    end
 
-    "systemctl --plain list-dependencies #{level} | grep '\\(^\\| \\)#{escape(service)}.service$'"
+    "systemctl --plain list-dependencies #{level} | grep '\\(^\\| \\)#{escape(service)}$'"
   end
 
   def check_is_running(service)
-    "systemctl is-active #{escape(service)}.service"
+    "systemctl is-active #{escape(service)}"
   end
 
   def enable(service)
-    "systemctl enable #{escape(service)}.service"
+    "systemctl enable #{escape(service)}"
   end
 
   def disable(service)
-    "systemctl disable #{escape(service)}.service"
+    "systemctl disable #{escape(service)}"
   end
 
   def start(service)
-    "systemctl start #{escape(service)}.service"
+    "systemctl start #{escape(service)}"
   end
 
   def stop(service)
-    "systemctl stop #{escape(service)}.service"
+    "systemctl stop #{escape(service)}"
   end
 
   def restart(service)
-    "systemctl restart #{escape(service)}.service"
+    "systemctl restart #{escape(service)}"
   end
 
   def reload(service)
-    "systemctl reload #{escape(service)}.service"
+    "systemctl reload #{escape(service)}"
   end
 end
