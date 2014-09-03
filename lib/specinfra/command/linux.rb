@@ -56,6 +56,17 @@ module SpecInfra
         ip_address.gsub!(".", "\\.")
         "ip addr show #{interface} | grep 'inet #{ip_address}'"
       end
+      
+      def check_ipv6_address(interface, ip_address)
+        ip_address = ip_address.dup
+        if ip_address =~ /\/\d+$/
+          ip_address << " "
+        else
+          ip_address << "/"
+        end
+        ip_address.downcase!
+        "ip addr show #{interface} | grep 'inet6 #{ip_address}'"
+      end
 
       def check_zfs(zfs, property=nil)
         if property.nil?
