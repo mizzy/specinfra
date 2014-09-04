@@ -332,6 +332,10 @@ module SpecInfra
       def check_ipv4_address(interface, ip_address)
         raise NotImplementedError.new
       end
+      
+      def check_ipv6_address(interface, ip_address)
+        raise NotImplementedError.new
+      end
 
       def check_mail_alias(recipient, target)
         target = "[[:space:]]#{target}"
