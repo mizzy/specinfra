@@ -3,7 +3,7 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
     def check_is_installed_by_gem(name, version=nil)
       regexp = "^#{name}"
       cmd = "gem list --local | grep -w -- #{escape(regexp)}"
-      cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
+      cmd = %Q!#{cmd} | grep -w -- "[( ]#{escape(version)}[,)]"! if version
       cmd
     end
 
