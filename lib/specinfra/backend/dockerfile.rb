@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 module Specinfra::Backend
   class Dockerfile < Specinfra::Backend::Base
     def initialize
       @lines = []
       ObjectSpace.define_finalizer(self) {
-        File.write("Dockerfile", @lines.join("\n"))
+        puts @lines
       }
     end
 
