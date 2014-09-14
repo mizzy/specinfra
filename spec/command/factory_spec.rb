@@ -17,6 +17,8 @@ describe 'create_command_class work correctly' do
       set :os, :family => 'redhat'
     end
     it { expect(Specinfra.command.send(:create_command_class, 'file')).to eq Specinfra::Command::Redhat::Base::File }
+
+    it { expect(Specinfra.command.send(:create_command_class, 'selinux')).to eq Specinfra::Command::Linux::Base::Selinux }
   end
 
   context 'family: redhat, release: 7' do
@@ -26,11 +28,3 @@ describe 'create_command_class work correctly' do
     it { expect(Specinfra.command.send(:create_command_class, 'file')).to eq Specinfra::Command::Redhat::V7::File }
   end
 end
-
-
-
-
-
-
-
-
