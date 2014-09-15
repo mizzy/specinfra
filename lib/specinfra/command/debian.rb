@@ -2,8 +2,12 @@ module SpecInfra
   module Command
     class Debian < Linux
       def check_enabled(service, level=3)
-        # Until everything uses Upstart, this needs an OR.
-        "ls /etc/rc#{level}.d/ | grep -- '^S..#{escape(service)}' || grep 'start on' /etc/init/#{escape(service)}.conf"
+        # Debian jessie default init system (on Linux) is systemd,
+        # but upstart and sysvinit is also available.
+        cmd  = "if [ -d /run/systemd/system ]; then systemctl --plain list-dependencies runlevel#{level}.target | grep '^#{escape(service)}.service$'; "
+        cmd += "else ls /etc/rc#{level}.d/ | grep -- '^S..#{escape(service)}' || grep 'start on' /etc/init/#{escape(service)}.conf; "
+        cmd += "fi"
+        "sh -c \"#{cmd}\""
       end
 
       def check_installed(package, version=nil)
