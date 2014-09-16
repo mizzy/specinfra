@@ -2,7 +2,7 @@ module SpecInfra
   module Command
     class OpenBSD < Base
       def check_enabled(service, level=3)
-        "egrep '(#{escape(service)}_flags=|^pkg_scripts=\"(.*)#{escape(service)}(.*)\")' /etc/rc.conf.local | grep -v \=NO"
+        "rcctl status #{escape(service)}"
       end
 
       def check_file_md5checksum(file, expected)
@@ -76,7 +76,7 @@ module SpecInfra
 #      end
 
       def check_running(service)
-        "/etc/rc.d/#{escape(service)} status"
+        "rcctl check #{escape(service)}"
       end
 
       def get_mode(file)
