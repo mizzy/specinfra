@@ -1,3 +1,0 @@
-[submodule "integration-test"]
-	path = integration-test
-	url = https://github.com/serverspec/serverspec-integration-test.git
