@@ -144,5 +144,25 @@ module Specinfra
       end
       true
     end
+
+    def self.get_default_gateway(attr)
+      cmd = Specinfra.command.get(:get_routing_table_entry, 'default')
+      ret = Specinfra.backend.run_command(cmd)
+      return false if ret.failure?
+
+      ret.stdout.gsub!(/\r\n/, "\n")
+
+      if os[:family] == 'openbsd'
+        match = ret.stdout.match(/^(?<destination>\S+)\s+(?<gateway>\S+).*?(?<interface>\S+[0-9]+)(\s*)$/)
+	match[attr]
+      else
+        ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
+	if attr == :gateway
+	  $2 ? $2 : $4
+	elsif attr == :interface
+	  $3
+	end
+      end
+    end
   end
 end
