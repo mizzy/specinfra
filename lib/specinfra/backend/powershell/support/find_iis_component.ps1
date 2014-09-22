@@ -17,8 +17,14 @@ function FindIISAppPool
     param($name)
     
     Import-Module WebAdministration
-    
-    Get-Item "IIS:\AppPools\$name" -Erroraction silentlycontinue
+
+    Try {
+        Get-Item "IIS:\AppPools\$name" -Erroraction silentlycontinue
+    }
+    Catch [System.IO.FileNotFoundException] {
+        Get-Item "IIS:\AppPools\$name" -Erroraction silentlycontinue
+
+    }
 }
 
 function FindSiteBindings
@@ -26,8 +32,12 @@ function FindSiteBindings
     param($name, $protocol, $hostHeader, $port, $ipAddress)
 
     Import-Module WebAdministration
-
-    Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
+    Try {
+        Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
+    }
+    Catch [System.IO.FileNotFoundException] {
+        Get-WebBinding -Name $name -Protocol $protocol -HostHeader $hostHeader -Port $port -IPAddress $ipAddress
+    }
 }
 
 function FindSiteVirtualDir
