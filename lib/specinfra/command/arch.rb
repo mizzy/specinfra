@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module SpecInfra
   module Command
     class Arch < Linux
