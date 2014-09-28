@@ -7,7 +7,7 @@ module SpecInfra
 
       def check_enabled(service, level)
         level = "multi-user.target" if level == 3
-        "systemctl --plain list-dependencies #{level} | grep '^#{escape(service)}.service$'"
+        "systemctl --plain list-dependencies #{level} | grep '^● #{escape(service)}.service$'"
       end
 
       def check_running(service)
