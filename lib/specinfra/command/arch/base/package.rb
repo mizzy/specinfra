@@ -2,9 +2,10 @@ class Specinfra::Command::Arch::Base::Package < Specinfra::Command::Linux::Base:
   class << self
     def check_is_installed(package,version=nil)
       if version
-        "pacman -Q | grep #{escape(package)} #{escape(version)}"
+        grep = version.include?('-') ? "^#{escape(version)}$" : "^#{escape(version)}-"
+        "pacman -Q #{escape(package)} | awk '{print $2}' | grep '#{grep}'"
       else
-        "pacman -Q | grep #{escape(package)}"
+        "pacman -Q #{escape(package)}"
       end
     end
 
