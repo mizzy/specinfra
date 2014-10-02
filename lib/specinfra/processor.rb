@@ -153,10 +153,12 @@ module Specinfra
       ret.stdout.gsub!(/\r\n/, "\n")
 
       if os[:family] == 'openbsd'
-        # This code does not work with Ruby 1.8.7.
-        # So commented out.
-        # match = ret.stdout.match(/^(?<destination>\S+)\s+(?<gateway>\S+).*?(?<interface>\S+[0-9]+)(\s*)$/)
-        # match[attr]
+        match = ret.stdout.match(/^(\S+)\s+(\S+).*?(\S+[0-9]+)(\s*)$/)
+        if attr == :gateway
+          $2
+        elsif attr == :interface
+          $3
+        end
       else
         ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
         if attr == :gateway
