@@ -321,6 +321,14 @@ module SpecInfra
         raise NotImplementedError.new
       end
 
+      def check_selinux_module_installed(name)
+        raise NotImplementedError.new
+      end
+
+      def check_selinux_module_enabled(name)
+        raise NotImplementedError.new
+      end
+
       def check_access_by_user(file, user, access)
         raise NotImplementedError.new
       end
@@ -332,7 +340,7 @@ module SpecInfra
       def check_ipv4_address(interface, ip_address)
         raise NotImplementedError.new
       end
-      
+
       def check_ipv6_address(interface, ip_address)
         raise NotImplementedError.new
       end

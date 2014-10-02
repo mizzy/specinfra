@@ -38,6 +38,16 @@ module SpecInfra
         cmd
       end
 
+      def check_selinux_module_installed(name)
+        cmd = "semodule -l | grep -i -- ^#{escape(name)}"
+        cmd
+      end
+
+      def check_selinux_module_enabled(name)
+        cmd = "semodule -l | grep -i -- ^#{escape(name)} | grep -vi -- Disabled$"
+        cmd
+      end
+
       def check_kernel_module_loaded(name)
         "lsmod | grep ^#{name}"
       end
@@ -56,7 +66,7 @@ module SpecInfra
         ip_address.gsub!(".", "\\.")
         "ip addr show #{interface} | grep 'inet #{ip_address}'"
       end
-      
+
       def check_ipv6_address(interface, ip_address)
         ip_address = ip_address.dup
         if ip_address =~ /\/\d+$/
