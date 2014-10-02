@@ -11,3 +11,6 @@ include Specinfra::Helper::Properties
 
 require 'specinfra/helper/set'
 include Specinfra::Helper::Set
+
+require 'specinfra/helper/host_inventory'
+include Specinfra::Helper::HostInventory
