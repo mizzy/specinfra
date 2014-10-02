@@ -258,10 +258,15 @@ module SpecInfra
           else
             { :family => 'FreeBSD', :release => nil, :arch => arch }
           end
-        elsif run_command('uname -sr').stdout =~ /Arch/i
-          { :family => 'Arch', :release => nil, :arch => arch }
         elsif run_command('uname -s').stdout =~ /OpenBSD/i
           { :family => 'OpenBSD', :release => nil, :arch => arch }
+        elsif run_command('ls /etc/os-release').success?
+          lines = run_command('cat /etc/os-release').stdout
+          if lines.include? 'Arch Linux'
+            { :family => 'Arch', :release => nil, :arch => arch }
+          else
+            { :family => 'Base', :release => nil, :arch => arch }
+          end
         else
           { :family => 'Base', :release => nil, :arch => arch }
         end
