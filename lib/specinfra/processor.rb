@@ -144,15 +144,17 @@ module Specinfra
       ret.stdout.gsub!(/\r\n/, "\n")
 
       if os[:family] == 'openbsd'
-        match = ret.stdout.match(/^(?<destination>\S+)\s+(?<gateway>\S+).*?(?<interface>\S+[0-9]+)(\s*)$/)
-	match[attr]
+        # This code does not work with Ruby 1.8.7.
+        # So commented out.
+        # match = ret.stdout.match(/^(?<destination>\S+)\s+(?<gateway>\S+).*?(?<interface>\S+[0-9]+)(\s*)$/)
+        # match[attr]
       else
         ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
-	if attr == :gateway
-	  $2 ? $2 : $4
-	elsif attr == :interface
-	  $3
-	end
+        if attr == :gateway
+          $2 ? $2 : $4
+        elsif attr == :interface
+          $3
+        end
       end
     end
   end
