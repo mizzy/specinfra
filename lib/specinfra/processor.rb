@@ -123,21 +123,12 @@ module Specinfra
 
       ret.stdout.gsub!(/\r\n/, "\n")
 
-      if os[:family] == 'openbsd'
-        match = ret.stdout.match(/^(?<destination>\S+)\s+(?<gateway>\S+).*?(?<interface>\S+[0-9]+)(\s*)$/)
-	actual_attr = {
-	  :destination => match[:destination],
-	  :gateway     => match[:gateway],
-	  :interface   => expected_attr[:interface] ? match[:interface] : nil
-	}
-      else
-        ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
-        actual_attr = {
-          :destination => $1,
-          :gateway     => $2 ? $2 : $4,
-          :interface   => expected_attr[:interface] ? $3 : nil
-        }
-      end
+      ret.stdout =~ /^(\S+)(?: via (\S+))? dev (\S+).+\n(?:default via (\S+))?/
+      actual_attr = {
+        :destination => $1,
+        :gateway     => $2 ? $2 : $4,
+        :interface   => expected_attr[:interface] ? $3 : nil
+      }
 
       expected_attr.each do |key, val|
         return false if actual_attr[key] != val
