@@ -162,6 +162,7 @@ require 'specinfra/command/openbsd/base/interface'
 require 'specinfra/command/openbsd/base/mail_alias'
 require 'specinfra/command/openbsd/base/package'
 require 'specinfra/command/openbsd/base/port'
+require 'specinfra/command/openbsd/base/routing_table'
 require 'specinfra/command/openbsd/base/service'
 require 'specinfra/command/openbsd/base/user'
 
