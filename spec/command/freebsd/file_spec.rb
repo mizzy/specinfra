@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+property[:os] = nil
 set :os, :family => 'freebsd'
 
 describe get_command(:get_file_owner_user, '/tmp') do
