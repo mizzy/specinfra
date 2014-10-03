@@ -1,5 +1,13 @@
 class Specinfra::Command::Freebsd::Base::File < Specinfra::Command::Base::File
   class << self
+    def get_owner_user(file)
+      "stat -f%Su #{escape(file)}"
+    end
+
+    def get_owner_group(file)
+      "stat -f%Sg #{escape(file)}"
+    end
+
     def check_grouped(file, group)
       regexp = "^#{group}$"
       "stat -f%Sg #{escape(file)} | grep -- #{escape(regexp)}"
