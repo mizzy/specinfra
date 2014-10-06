@@ -15,6 +15,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
     def check_is_installed_by_pkgutil(package, version=nil)
       cmd = "pkgutil --pkg-info #{package}"
       cmd = "#{cmd} | grep '^version: #{escape(version)}'" if version
+      cmd
     end
 
     def install(package, version=nil, option='')
