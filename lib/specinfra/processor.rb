@@ -1,3 +1,5 @@
+require 'specinfra/ec2_metadata'
+
 module Specinfra
   class Processor
     def self.check_service_is_running(service)
@@ -180,6 +182,10 @@ module Specinfra
         end
       end
       memory
+    end
+
+    def self.get_inventory_ec2
+      Specinfra::Ec2Metadata.new.get
     end
   end
 end
