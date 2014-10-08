@@ -1,4 +1,4 @@
-class Specinfra::Command::Linux::Base::Docker < Specinfra::Command::Base::File
+class Specinfra::Command::Linux::Base::Docker < Specinfra::Command::Base::Docker
   class << self
     def check_inspect_noerr(id)
       "docker inspect #{id} >/dev/null"
