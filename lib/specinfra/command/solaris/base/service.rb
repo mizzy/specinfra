@@ -5,7 +5,7 @@ class Specinfra::Command::Solaris::Base::Service < Specinfra::Command::Base::Ser
     end
 
     def check_is_running(service)
-      "svcs -l #{escape(service)} status 2> /dev/null | egrep '^state *online$'"
+      "svcs -H -o state #{escape(service)} 2> /dev/null | egrep '^online$'"
     end
 
     def check_has_property(svc, property)
