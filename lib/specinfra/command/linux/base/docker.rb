@@ -14,7 +14,7 @@ class Specinfra::Command::Linux::Base::Docker < Specinfra::Command::Base::Docker
     # Config_NetworkDisabled becomes .Config.NetworkDisabled
     def transform_key(key)
       return key if key =~ /^\./
-      ".#{key.tr('_','.')}"
+      ".#{key.split('_').map { |x| "#{x[0].upcase}#{x[1..-1]}" }.join('.')}"
     end
   end
 end
