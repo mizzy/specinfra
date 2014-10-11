@@ -13,7 +13,7 @@ describe 'check_host_is_reachable' do
       end
     end
   end
-  context 'port is not nill' do
+  context 'port is not nil' do
     describe get_command(:check_host_is_reachable,'localhost',53,'tcp',8) do
       it { should eq 'nc -vvvvzt localhost 53 -w 8' }
     end
