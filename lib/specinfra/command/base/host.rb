@@ -10,11 +10,19 @@ class Specinfra::Command::Base::Host < Specinfra::Command::Base
       end
     end
 
-    def check_is_reachable(host, port, proto, timeout)
+    def check_is_reachable(host, port, proto, timeout, source_address = nil)
       if port.nil?
-        "ping -w #{escape(timeout)} -c 2 -n #{escape(host)}"
+        if source_address.nil?
+          "ping -w #{escape(timeout)} -c 2 -n #{escape(host)}"
+        else
+          "ping -w #{escape(timeout)} -c 2 -n #{escape(host)} -I #{escape(source_address)}"
+        end
       else
-        "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)}"
+        if source_address.nil?
+          "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)}"
+        else
+          "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)} -s #{escape(source_address)}"
+        end
       end
     end
 
