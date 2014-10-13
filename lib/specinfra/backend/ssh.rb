@@ -33,11 +33,6 @@ module Specinfra::Backend
       run_command(Specinfra.command.get(:move_file, tmp, to))
     end
 
-    private
-    def prompt
-      'Password: '
-    end
-
     def build_command(cmd)
       cmd = super(cmd)
       user = Specinfra.configuration.ssh_options[:user]
@@ -46,6 +41,11 @@ module Specinfra::Backend
         cmd = "#{sudo} -p '#{prompt}' #{cmd}"
       end
       cmd
+    end
+
+    private
+    def prompt
+      'Password: '
     end
 
     def with_env

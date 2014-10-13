@@ -4,13 +4,13 @@ describe Specinfra::Backend::Exec do
   describe '#build_command' do
     context 'with simple command' do
       it 'should escape spaces' do
-        expect(Specinfra.backend.send(:build_command, 'test -f /etc/passwd')).to eq '/bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
     context 'with complex command' do
       it 'should escape special chars' do
-        expect(Specinfra.backend.send(:build_command, 'test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
+        expect(Specinfra.backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
       end
     end
 
@@ -24,7 +24,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom shell' do
-        expect(Specinfra.backend.send(:build_command, 'test -f /etc/passwd')).to eq '/usr/local/bin/tcsh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/usr/local/bin/tcsh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -38,7 +38,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom shell' do
-        expect(Specinfra.backend.send(:build_command, 'test -f /etc/passwd')).to eq '/usr/test\ \&\ spec/bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/usr/test\ \&\ spec/bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -52,7 +52,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(Specinfra.backend.send(:build_command, 'test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/foo/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/foo/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
 
@@ -66,7 +66,7 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should use custom path' do
-        expect(Specinfra.backend.send(:build_command, 'test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/test & spec/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq 'env PATH="/opt/bin:/opt/test & spec/bin:$PATH" /bin/sh -c test\ -f\ /etc/passwd'
       end
     end
   end
