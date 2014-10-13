@@ -21,6 +21,7 @@ module Specinfra::Backend
       end
       CommandResult.new :stdout => out, :exit_status => ret.exitstatus
     end
+
     def build_command(cmd)
       cmd
     end

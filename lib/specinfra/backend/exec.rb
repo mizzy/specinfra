@@ -25,6 +25,19 @@ module Specinfra::Backend
       FileUtils.cp(from, to)
     end
 
+    def build_command(cmd)
+      shell = Specinfra.configuration.shell || '/bin/sh'
+      cmd = cmd.shelljoin if cmd.is_a?(Array)
+      cmd = "#{shell.shellescape} -c #{cmd.shellescape}"
+
+      path = Specinfra.configuration.path
+      if path
+        cmd = %Q{env PATH="#{path}" #{cmd}}
+      end
+
+      cmd
+    end
+
     private
     def with_env
       keys = %w[BUNDLER_EDITOR BUNDLE_BIN_PATH BUNDLE_GEMFILE
@@ -48,19 +61,6 @@ module Specinfra::Backend
         key = key.to_s
         ENV[key] = ENV.delete("_SPECINFRA_#{key}");
       end
-    end
-
-    def build_command(cmd)
-      shell = Specinfra.configuration.shell || '/bin/sh'
-      cmd = cmd.shelljoin if cmd.is_a?(Array)
-      cmd = "#{shell.shellescape} -c #{cmd.shellescape}"
-
-      path = Specinfra.configuration.path
-      if path
-        cmd = %Q{env PATH="#{path}" #{cmd}}
-      end
-
-      cmd
     end
 
     def add_pre_command(cmd)
