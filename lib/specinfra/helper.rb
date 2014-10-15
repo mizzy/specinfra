@@ -9,8 +9,5 @@ require 'specinfra/helper/configuration'
 require 'specinfra/helper/properties'
 include Specinfra::Helper::Properties
 
-require 'specinfra/helper/set'
-include Specinfra::Helper::Set
-
 require 'specinfra/helper/host_inventory'
 include Specinfra::Helper::HostInventory
