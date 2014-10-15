@@ -1,6 +1,8 @@
 require 'specinfra'
 require 'rspec/mocks/standalone'
 require 'rspec/its'
+require 'specinfra/helper/set'
+include Specinfra::Helper::Set
 
 set :backend, :exec
 
