@@ -2,7 +2,7 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
   class << self
     def check_is_installed_by_gem(name, version=nil)
       regexp = "^#{name}"
-      cmd = "gem list --local | grep -w -- #{escape(regexp)}"
+      cmd = "gem list --local | grep -iw -- #{escape(regexp)}"
       cmd = %Q!#{cmd} | grep -w -- "[( ]#{escape(version)}[,)]"! if version
       cmd
     end
@@ -15,28 +15,28 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
 
     def check_is_installed_by_pecl(name, version=nil)
       regexp = "^#{name}"
-      cmd = "pecl list | grep -w -- #{escape(regexp)}"
+      cmd = "pecl list | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
 
     def check_is_installed_by_pear(name, version=nil)
       regexp = "^#{name}"
-      cmd = "pear list | grep -w -- #{escape(regexp)}"
+      cmd = "pear list | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
 
     def check_is_installed_by_pip(name, version=nil)
       regexp = "^#{name}"
-      cmd = "pip list | grep -w -- #{escape(regexp)}"
+      cmd = "pip list | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
 
     def check_is_installed_by_cpan(name, version=nil)
       regexp = "^#{name}"
-      cmd = "cpan -l | grep -w -- #{escape(regexp)}"
+      cmd = "cpan -l | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
