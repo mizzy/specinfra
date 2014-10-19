@@ -43,14 +43,14 @@ module Specinfra::Backend
 
       private
       def nsenter_exec!(command)
-        puts "nsenter_exec! #{command}"
+        pid = Specinfra.configuration.nsenter_pid
+
+        puts "nsenter_exec! #{command} #pid"
         stdout_data = ''
         stderr_data = ''
         exit_status = nil
         exit_signal = nil
         pass_prompt = Specinfra.configuration.pass_prompt || /^\[sudo\] password for/
-
-        pid = Specinfra.configuration.nsenter_pid
         
         stdout_data, stderr_data, exit_status = Open3.capture3(
                 "sudo nsenter --target #{pid} --mount --uts --ipc --net --pid -- #{command}")
