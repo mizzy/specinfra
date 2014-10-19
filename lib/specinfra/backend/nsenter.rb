@@ -44,8 +44,15 @@ module Specinfra::Backend
       private
       def nsenter_exec!(command)
         pid = Specinfra.configuration.nsenter_pid
-
-        puts "nsenter_exec! #{command} #pid"
+        if pid == nil
+           cid = Specinfra.configuration.docker_cid
+           if cid
+             pid = `docker inspect --format '{{ .State.Pid }}' #{cid}`
+           else
+            fail "nsenter_pid or docker_cid must be set"
+	   end
+        end
+        puts "nsenter_exec! #{pid} #{command}"
         stdout_data = ''
         stderr_data = ''
         exit_status = nil
