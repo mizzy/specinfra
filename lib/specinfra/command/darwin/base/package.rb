@@ -24,7 +24,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
     end
 
     def get_version(package, opts=nil)
-      "basename $(brew info mysql | grep '\*$' | awk '{print $1}')"
+      "basename $(brew info #{package} | grep '\*$' | awk '{print $1}')"
     end
   end
 end
