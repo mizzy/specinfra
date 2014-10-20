@@ -17,6 +17,8 @@ module Specinfra
         :lxc,
         :request_pty,
         :ssh_options,
+        :nsenter_pid,
+        :docker_cid,
       ].freeze
 
       def defaults
