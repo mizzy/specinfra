@@ -115,7 +115,7 @@ require 'specinfra/command/ubuntu/base'
 require 'specinfra/command/ubuntu/base/ppa'
 require 'specinfra/command/ubuntu/base/service'
 
-# Cumulus Netwoks (inherit Debian)
+# Cumulus Networks (inherit Debian)
 require 'specinfra/command/cumulus'
 require 'specinfra/command/cumulus/base'
 require 'specinfra/command/cumulus/base/ppa'
