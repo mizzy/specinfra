@@ -20,7 +20,7 @@ class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
       end
       distro ||= 'debian'
       release ||= nil
-      { :family => distro.gsub(/\p{^Alnum}/, '').downcase, :release => release }
+      { :family => distro.gsub(/[^[:alnum:]]/, '').downcase, :release => release }
     end
   end
 end
