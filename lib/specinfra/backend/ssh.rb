@@ -13,6 +13,7 @@ module Specinfra::Backend
       end
 
       ret[:stdout].gsub!(/\r\n/, "\n")
+      ret[:stdout].gsub!(/\A\n/, "") if sudo?
 
       if @example
         @example.metadata[:command] = cmd
@@ -35,9 +36,7 @@ module Specinfra::Backend
 
     def build_command(cmd)
       cmd = super(cmd)
-      user = Specinfra.configuration.ssh_options[:user]
-      disable_sudo = Specinfra.configuration.disable_sudo
-      if user != 'root' && !disable_sudo
+      if sudo?
         cmd = "#{sudo} -p '#{prompt}' #{cmd}"
       end
       cmd
@@ -155,6 +154,12 @@ module Specinfra::Backend
       end
 
       "#{sudo_path.shellescape}#{sudo_options}"
+    end
+
+    def sudo?
+      user = Specinfra.configuration.ssh_options[:user]
+      disable_sudo = Specinfra.configuration.disable_sudo
+      user != 'root' && !disable_sudo
     end
   end
 end
