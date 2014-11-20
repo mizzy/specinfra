@@ -13,6 +13,11 @@ module Specinfra::Backend
       CommandResult.new
     end
 
+    def send_file(from, to)
+      @lines << "ADD #{from} #{to}"
+      CommandResult.new
+    end
+
     def from(base)
       @lines << "FROM #{base}"
     end
