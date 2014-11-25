@@ -21,5 +21,17 @@ class Specinfra::Command::Base::Host < Specinfra::Command::Base
     def get_ipaddress(name)
       "getent hosts #{escape(name)} | awk '{print $1}'"
     end
+
+    def get_name
+      "hostname -s"
+    end
+
+    def get_domain
+      "hostname -d"
+    end
+
+    def get_fqdn
+      "hostname -f"
+    end
   end
 end
