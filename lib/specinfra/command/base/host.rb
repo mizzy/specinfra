@@ -27,7 +27,7 @@ class Specinfra::Command::Base::Host < Specinfra::Command::Base
     end
 
     def get_domain
-      "hostname -d"
+      "dnsdomainname"
     end
 
     def get_fqdn
