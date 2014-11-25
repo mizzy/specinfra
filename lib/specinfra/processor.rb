@@ -187,5 +187,20 @@ module Specinfra
     def self.get_inventory_ec2
       Specinfra::Ec2Metadata.new.get
     end
+
+    def self.get_inventory_hostname
+      cmd = Specinfra.command.get(:get_inventory_hostname)
+      Specinfra.backend.run_command(cmd).stdout.strip
+    end
+
+    def self.get_inventory_domain
+      cmd = Specinfra.command.get(:get_inventory_domain)
+      Specinfra.backend.run_command(cmd).stdout.strip
+    end
+
+    def self.get_inventory_fqdn
+      cmd = Specinfra.command.get(:get_inventory_fqdn)
+      Specinfra.backend.run_command(cmd).stdout.strip
+    end
   end
 end
