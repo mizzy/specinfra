@@ -1,5 +1,9 @@
 class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Interface
   class << self
+    def check_exists(name)
+      "ip link show #{name}"
+    end
+
     def get_speed_of(name)
       "ethtool #{name} | grep Speed | gawk '{print gensub(/Speed: ([0-9]+)Mb\\\/s/,\"\\\\1\",\"\")}'"
     end
