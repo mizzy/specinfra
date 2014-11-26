@@ -7,4 +7,5 @@ class Specinfra::Command::Linux::Base::Bridge < Specinfra::Command::Base::Bridge
     def check_has_interface(name, interface)
       "brctl show #{name} | grep -o #{interface}"
     end
+  end
 end
