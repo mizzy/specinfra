@@ -13,7 +13,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def check_is_symlink(file)
-      "test -h #{escape(file)}"
+      "test -L #{escape(file)}"
     end
 
     def check_contains(file, expected_pattern)
