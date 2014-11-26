@@ -6,6 +6,10 @@ describe get_command(:check_file_is_directory, '/tmp') do
   it { should eq 'test -d /tmp' }
 end
 
+describe get_command(:check_file_is_symlink, '/tmp') do
+  it { should eq 'test -L /tmp' }
+end
+
 describe get_command(:change_file_mode, '/tmp', '0644') do
   it { should eq 'chmod 0644 /tmp' }
 end
