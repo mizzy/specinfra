@@ -37,7 +37,7 @@ require 'specinfra/command/base/zfs'
 # Linux (inhefit Base)
 require 'specinfra/command/linux'
 require 'specinfra/command/linux/base'
-require 'specinfra/command/linux/bridge'
+require 'specinfra/command/linux/base/bridge'
 require 'specinfra/command/linux/base/file'
 require 'specinfra/command/linux/base/interface'
 require 'specinfra/command/linux/base/inventory'
