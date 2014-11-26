@@ -9,7 +9,7 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
     end
 
     def get_domain
-      'dnsdomainame'
+      'dnsdomainname'
     end
 
     def get_fqdn
