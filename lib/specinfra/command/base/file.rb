@@ -12,6 +12,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "test -S #{escape(file)}"
     end
 
+    def check_is_symlink(file)
+      "test -L #{escape(file)}"
+    end
+
     def check_contains(file, expected_pattern)
       "#{check_contains_with_regexp(file, expected_pattern)} || #{check_contains_with_fixed_strings(file, expected_pattern)}"
     end
