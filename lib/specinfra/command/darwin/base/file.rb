@@ -34,6 +34,14 @@ class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
     def get_mode(file)
       "stat -f%Lp #{escape(file)}"
     end
+
+    def get_owner_user(file)
+      "stat -f %Su #{escape(file)}"
+    end
+
+    def get_owner_group(file)
+      "stat -f %Sg #{escape(file)}"
+    end
   end
 end
 
