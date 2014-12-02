@@ -32,7 +32,7 @@ module Specinfra::Backend
     private
 
     def base_image
-      @base_image ||= ::Docker::Image.get(Specinfra.configuration.docker_image)
+      @base_image ||= ::Docker::Image.get(Specinfra.configuration.docker_img)
     end
 
     def current_image

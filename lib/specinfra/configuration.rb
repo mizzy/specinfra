@@ -12,7 +12,7 @@ module Specinfra
         :sudo_path,
         :disable_sudo,
         :sudo_options,
-        :docker_image,
+        :docker_img,
         :docker_url,
         :lxc,
         :request_pty,
