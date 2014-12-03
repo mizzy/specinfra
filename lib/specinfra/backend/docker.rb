@@ -9,6 +9,7 @@ module Specinfra::Backend
 
       @images = []
       ::Docker.url = Specinfra.configuration.docker_url
+      @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
     end
 
     def run_command(cmd, opts={})
@@ -31,12 +32,8 @@ module Specinfra::Backend
 
     private
 
-    def base_image
-      @base_image ||= ::Docker::Image.get(Specinfra.configuration.docker_image)
-    end
-
     def current_image
-      @images.last || base_image
+      @images.last || @base_image
     end
 
     def docker_run!(cmd, opts={})
