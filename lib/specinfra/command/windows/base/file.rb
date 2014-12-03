@@ -34,11 +34,11 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
         exec cmd
       end
     end
-  
+
     def get_content(file)
       %Q![Io.File]::ReadAllText("#{file}")!
     end
-  
+
     def check_is_accessible_by_user(file, user, access)
       case access
       when 'r'
@@ -73,7 +73,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
 
     def check_contains(file, pattern)
       Backend::PowerShell::Command.new do
-        exec %Q![[Io.File]::ReadAllText("#{file}") -match '#{convert_regexp(pattern)}'!
+        exec %Q![Io.File]::ReadAllText("#{file}") -match '#{convert_regexp(pattern)}'!
       end
     end
 
