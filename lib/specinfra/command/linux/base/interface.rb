@@ -15,7 +15,7 @@ class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Int
       else
         ip_address << "/"
       end
-      ip_address.gsub!(".", "\\.")
+      ip_address.gsub!(".", "\.")
       "ip addr show #{interface} | grep 'inet #{ip_address}'"
     end
 
