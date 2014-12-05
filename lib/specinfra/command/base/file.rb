@@ -8,6 +8,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "test -d #{escape(directory)}"
     end
 
+    def check_is_pipe(file)
+      "test -p #{escape(file)}"
+    end
+
     def check_is_socket(file)
       "test -S #{escape(file)}"
     end
