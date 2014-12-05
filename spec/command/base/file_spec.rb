@@ -54,6 +54,10 @@ describe get_command(:check_file_is_link, '/tmp') do
   it { should eq 'test -L /tmp' }
 end
 
+describe get_command(:check_file_is_pipe, '/tmp') do
+  it { should eq 'test -p /tmp' }
+end
+
 describe get_command(:get_file_link_target, '/tmp') do
   it { should eq 'readlink -f /tmp' }
 end
