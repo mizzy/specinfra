@@ -20,11 +20,11 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
 
     def install(package, version=nil, option='')
       # Homebrew doesn't support to install specific version.
-      cmd = "brew install #{option} '#{package}'"
+      cmd = "/usr/local/bin/brew install #{option} '#{package}'"
     end
 
     def get_version(package, opts=nil)
-      "basename $(brew info #{package} | grep '\*$' | awk '{print $1}')"
+      "basename $(/usr/local/bin/brew info #{package} | grep '\*$' | awk '{print $1}')"
     end
   end
 end
