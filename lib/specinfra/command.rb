@@ -167,6 +167,7 @@ require 'specinfra/command/freebsd/v10/package'
 # OpenBSD (inherit Base)
 require 'specinfra/command/openbsd'
 require 'specinfra/command/openbsd/base'
+require 'specinfra/command/openbsd/base/bridge'
 require 'specinfra/command/openbsd/base/file'
 require 'specinfra/command/openbsd/base/interface'
 require 'specinfra/command/openbsd/base/mail_alias'
