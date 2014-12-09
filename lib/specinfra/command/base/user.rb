@@ -52,12 +52,12 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
 
     def add(user, options)
       command = ['useradd']
-      command << '-g' << options[:gid]            if options[:gid]
-      command << '-d' << options[:home_directory] if options[:home_directory]
-      command << '-p' << options[:password]       if options[:password]
+      command << '-g' << escape(options[:gid])            if options[:gid]
+      command << '-d' << escape(options[:home_directory]) if options[:home_directory]
+      command << '-p' << escape(options[:password])       if options[:password]
       command << '-r' if options[:system_user]
-      command << '-u' << options[:uid]            if options[:uid]
-      command << user
+      command << '-u' << escape(options[:uid])            if options[:uid]
+      command << escape(user)
       command.join(' ')
     end
 

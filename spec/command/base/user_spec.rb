@@ -26,6 +26,10 @@ describe get_command(:add_user, 'foo', :home_directory => '/home/foo') do
   it { should eq 'useradd -d /home/foo foo' }
 end
 
+describe get_command(:add_user, 'bar', :password => '$6$hoge') do
+  it { should eq 'useradd -p \$6\$hoge bar' }
+end
+
 describe get_command(:update_user_encrypted_password, 'foo', 'xxxxxxxx') do
   it { should eq 'echo foo:xxxxxxxx | chpasswd -e' }
 end
