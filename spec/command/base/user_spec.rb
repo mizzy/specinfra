@@ -22,8 +22,8 @@ describe get_command(:update_user_gid, 'foo', 100) do
   it { should eq 'usermod -g 100 foo' }
 end
 
-describe get_command(:add_user, 'foo', :home_directory => '/home/foo') do
-  it { should eq 'useradd -d /home/foo foo' }
+describe get_command(:add_user, 'foo', :home_directory => '/home/foo', :password => '$6$foo/bar') do
+  it { should eq 'useradd -d /home/foo -p \$6\$foo/bar foo' }
 end
 
 describe get_command(:update_user_encrypted_password, 'foo', 'xxxxxxxx') do
