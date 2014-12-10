@@ -26,12 +26,20 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
 
     def check_is_grouped(file, group)
       regexp = "^#{group}$"
-      "stat -c %G #{escape(file)} | grep -- #{escape(regexp)}"
+      if group.is_a?(Numeric) || (group =~ /\A\d+\z/ ? true : false)
+        "stat -c %g #{escape(file)} | grep -- #{escape(regexp)}"
+      else
+        "stat -c %G #{escape(file)} | grep -- #{escape(regexp)}"
+      end
     end
 
     def check_is_owned_by(file, owner)
       regexp = "^#{owner}$"
-      "stat -c %U #{escape(file)} | grep -- #{escape(regexp)}"
+      if owner.is_a?(Numeric) || (owner =~ /\A\d+\z/ ? true : false)
+        "stat -c %u #{escape(file)} | grep -- #{escape(regexp)}"
+      else
+        "stat -c %U #{escape(file)} | grep -- #{escape(regexp)}"
+      end
     end
 
     def check_has_mode(file, mode)
