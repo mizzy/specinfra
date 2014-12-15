@@ -178,7 +178,7 @@ module Specinfra
       ret.each_line do |line|
         case line
         when /^MemTotal:\s+(\d+) (.+)$/
-          memory[:total] = "#{$1}#{$2}"
+          memory['total'] = "#{$1}#{$2}"
         end
       end
       memory
