@@ -24,7 +24,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
     end
 
     def get_version(package, opts=nil)
-      "basename $(/usr/local/bin/brew info #{package} | grep '\*$' | awk '{print $1}')"
+      "basename $((/usr/local/bin/brew info #{package} | grep '\*$' || /usr/local/bin/brew info #{package} | grep '^/usr/local/Cellar' | tail -1) | awk '{print $1}')"
     end
   end
 end
