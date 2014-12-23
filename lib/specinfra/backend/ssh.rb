@@ -24,14 +24,11 @@ module Specinfra::Backend
     end
 
     def send_file(from, to)
-      if Specinfra.configuration.scp.nil?
-        Specinfra.configuration.scp = create_scp
-      end
+      scp_upload!(from, to)
+    end
 
-      tmp = File.join('/tmp', File.basename(to))
-      scp = Specinfra.configuration.scp
-      scp.upload!(from, tmp)
-      run_command(Specinfra.command.get(:move_file, tmp, to))
+    def send_directory(from, to)
+      scp_upload!(from, to, :recursive => true)
     end
 
     def build_command(cmd)
@@ -84,7 +81,18 @@ module Specinfra::Backend
       end
       Net::SCP.new(ssh)
     end
-      
+
+    def scp_upload!(from, to, opt={})
+      if Specinfra.configuration.scp.nil?
+        Specinfra.configuration.scp = create_scp
+      end
+
+      tmp = File.join('/tmp', File.basename(to))
+      scp = Specinfra.configuration.scp
+      scp.upload!(from, tmp, opt)
+      run_command(Specinfra.command.get(:move_file, tmp, to))
+    end
+
     def ssh_exec!(command)
       stdout_data = ''
       stderr_data = ''
