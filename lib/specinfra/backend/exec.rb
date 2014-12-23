@@ -25,6 +25,10 @@ module Specinfra::Backend
       FileUtils.cp(from, to)
     end
 
+    def send_directory(from, to)
+      FileUtils.cp_r(from, to)
+    end
+
     def build_command(cmd)
       shell = Specinfra.configuration.shell || '/bin/sh'
       cmd = cmd.shelljoin if cmd.is_a?(Array)
