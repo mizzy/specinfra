@@ -18,7 +18,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
       else
         full_package = package
       end
-      "DEBIAN_FRONTEND='noninteractive' apt-get -y #{option} install #{full_package}"
+      "DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' #{option} install #{full_package}"
     end
 
     def get_version(package, opts=nil)
