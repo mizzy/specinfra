@@ -9,7 +9,7 @@ class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
     end
 
     def get_sha256sum(file)
-      "openssl sha256 #{escape(file)} | cut -d'=' -f2 | cut -c 2-"
+      "ruby -e \"require 'digest'; puts Digest::SHA256.hexdigest File.read '#{escape(file)}'\""
     end
 
     def check_is_linked_to(link, target)
