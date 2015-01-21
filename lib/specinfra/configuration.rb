@@ -37,14 +37,19 @@ module Specinfra
       def method_missing(meth, val=nil)
         key = meth.to_s
         key.gsub!(/=$/, '')
-        if ! val.nil?
-          instance_variable_set("@#{key}", val)
-          RSpec.configuration.send(:"#{key}=", val) if defined?(RSpec)
-        end
-
-        ret = instance_variable_get("@#{key}")
-        if ret.nil? && defined?(RSpec) && RSpec.configuration.respond_to?(key)
-          ret = RSpec.configuration.send(key)
+        ret = nil
+        begin
+          if ! val.nil?
+            instance_variable_set("@#{key}", val)
+            RSpec.configuration.send(:"#{key}=", val) if defined?(RSpec)
+          end
+          ret = instance_variable_get("@#{key}")
+        rescue NameError
+          ret = nil
+        ensure
+          if ret.nil? && defined?(RSpec) && RSpec.configuration.respond_to?(key)
+            ret = RSpec.configuration.send(key)
+          end
         end
         ret
       end
