@@ -7,7 +7,7 @@ module Specinfra::Backend
   class Ssh < Exec
     def run_command(cmd, opt={})
       cmd = build_command(cmd)
-     cmd = add_pre_command(cmd)
+      cmd = add_pre_command(cmd)
       ret = with_env do
         ssh_exec!(cmd)
       end
