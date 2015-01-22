@@ -48,7 +48,9 @@ class Specinfra::CommandFactory
     end
 
     def breakdown(meth)
-      types = resource_types.map {|t| t.to_snake_case }.join('|')
+      # Somtimes `selinux_module' type matches `selinux' and error occurs.
+      # Reverse sorting is needed to avoid this problem.
+      types = resource_types.map {|t| t.to_snake_case }.sort.reverse.join('|')
       md = meth.to_s.match(/^([^_]+)_(#{types})_?(.+)?$/)
       if md.nil?
         message =  "Could not break down `#{meth}' to appropriate type and method.\n"
