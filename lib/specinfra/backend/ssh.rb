@@ -7,7 +7,7 @@ module Specinfra::Backend
   class Ssh < Exec
     def run_command(cmd, opt={})
       cmd = build_command(cmd)
-      cmd = add_pre_command(cmd)
+     cmd = add_pre_command(cmd)
       ret = with_env do
         ssh_exec!(cmd)
       end
@@ -31,15 +31,15 @@ module Specinfra::Backend
       scp_upload!(from, to, :recursive => true)
     end
 
-    def build_command(cmd)
-      cmd = super(cmd)
+    private
+    def prepend_to_command
       if sudo?
-        cmd = "#{sudo} -p '#{prompt}' #{cmd}"
+        "#{sudo} -p '#{prompt}'"
+      else
+        ''
       end
-      cmd
     end
 
-    private
     def prompt
       'Password: '
     end
