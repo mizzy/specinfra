@@ -127,11 +127,11 @@ module Specinfra
 
       if os[:family] == 'openbsd'
         match = ret.stdout.match(/^(\S+)\s+(\S+).*?(\S+[0-9]+)(\s*)$/)
-	actual_attr = {
-	  :destination => $1,
-	  :gateway     => $2,
-	  :interface   => expected_attr[:interface] ? $3 : nil
-	}
+        actual_attr = {
+          :destination => $1,
+          :gateway     => $2,
+          :interface   => expected_attr[:interface] ? $3 : nil
+        }
       else
         matches = ret.stdout.scan(/^(\S+)(?: via (\S+))? dev (\S+).+\n|^(\S+).+\n|\s+nexthop via (\S+)\s+dev (\S+).+/)
         if matches.length > 1
