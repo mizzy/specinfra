@@ -1,3 +1,9 @@
+require 'specinfra/host_inventory/memory'
+require 'specinfra/host_inventory/ec2'
+require 'specinfra/host_inventory/hostname'
+require 'specinfra/host_inventory/domain'
+require 'specinfra/host_inventory/fqdn'
+
 module Specinfra
   class HostInventory
     include Singleton
@@ -10,7 +16,8 @@ module Specinfra
     def [](key)
       @inventory[key.to_sym] ||= {}
       if @inventory[key.to_sym].empty?
-        @inventory[key.to_sym] = Specinfra::Runner.send("get_inventory_#{key}")
+        inventory_class = Specinfra::HostInventory.const_get(key.to_s.to_camel_case)
+        @inventory[key.to_sym] = inventory_class.get
       end
       @inventory[key.to_sym]
     end
