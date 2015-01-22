@@ -192,37 +192,5 @@ module Specinfra
         end
       end
     end
-
-    def self.get_inventory_memory
-      cmd = Specinfra.command.get(:get_inventory_memory)
-      ret = Specinfra.backend.run_command(cmd).stdout
-      memory = {}
-      ret.each_line do |line|
-        case line
-        when /^MemTotal:\s+(\d+) (.+)$/
-          memory['total'] = "#{$1}#{$2}"
-        end
-      end
-      memory
-    end
-
-    def self.get_inventory_ec2
-      Specinfra::Ec2Metadata.new.get
-    end
-
-    def self.get_inventory_hostname
-      cmd = Specinfra.command.get(:get_inventory_hostname)
-      Specinfra.backend.run_command(cmd).stdout.strip
-    end
-
-    def self.get_inventory_domain
-      cmd = Specinfra.command.get(:get_inventory_domain)
-      Specinfra.backend.run_command(cmd).stdout.strip
-    end
-
-    def self.get_inventory_fqdn
-      cmd = Specinfra.command.get(:get_inventory_fqdn)
-      Specinfra.backend.run_command(cmd).stdout.strip
-    end
   end
 end
