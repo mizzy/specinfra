@@ -9,6 +9,7 @@ module Specinfra
         :pre_command,
         :stdout,
         :stderr,
+        :exit_status,
         :sudo_path,
         :disable_sudo,
         :sudo_options,
