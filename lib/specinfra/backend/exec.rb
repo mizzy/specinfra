@@ -31,7 +31,9 @@ module Specinfra::Backend
 
     def build_command(cmd)
       shell = Specinfra.configuration.shell || '/bin/sh'
+      prepend = prepend_to_command
       cmd = cmd.shelljoin if cmd.is_a?(Array)
+      cmd = "#{prepend} #{cmd}" if !prepend.empty?
       cmd = "#{shell.shellescape} -c #{cmd.shellescape}"
 
       path = Specinfra.configuration.path
@@ -74,6 +76,10 @@ module Specinfra::Backend
       else
         cmd
       end
+    end
+
+    def prepend_to_command
+      ''
     end
   end
 end

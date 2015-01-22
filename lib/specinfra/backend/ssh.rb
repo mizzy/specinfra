@@ -31,15 +31,15 @@ module Specinfra::Backend
       scp_upload!(from, to, :recursive => true)
     end
 
-    def build_command(cmd)
-      cmd = super(cmd)
+    private
+    def prepend_to_command
       if sudo?
-        cmd = "#{sudo} -p '#{prompt}' #{cmd}"
+        "#{sudo} -p '#{prompt}'"
+      else
+        ''
       end
-      cmd
     end
 
-    private
     def prompt
       'Password: '
     end
