@@ -7,15 +7,15 @@ module Specinfra::Backend
         fail "Docker client library is not available. Try installing `docker-api' gem."
       end
 
-      @images = []
-      ::Docker.url = Specinfra.configuration.docker_url
-      @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
+      @image = Specinfra.configuration.docker_image
     end
 
-    def run_command(cmd, opts={})
-      cmd = build_command(cmd)
-      cmd = add_pre_command(cmd)
-      docker_run!(cmd)
+    def run_command(command)
+      create_container(command)
+      start_container
+      attach_containter
+      destroy_container
+      command_result
     end
 
     def build_command(cmd)
@@ -27,38 +27,50 @@ module Specinfra::Backend
     end
 
     def send_file(from, to)
-      @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
+      current_image = @image
+      @image = @image.insert_local('localPath' => from, 'outputPath' => to)
+      current_image.remove(force: true)
     end
 
     private
 
-    def current_image
-      @images.last || @base_image
+    def command_result
+      CommandResult.new(stdout: @output[0].join, stderr: @output[1].join)
     end
 
-    def docker_run!(cmd, opts={})
-      opts = {
-        'Image' => current_image.id,
-        'Cmd' => %W{/bin/sh -c #{cmd}},
-      }.merge(opts)
+    def destroy_container
+      @container.stop
+      @container.kill
+      @container.delete(force: true)
+    end
 
+    def attach_containter
+      @output = @container.attach(
+        stdout: true,
+        stderr: true,
+        logs: true
+      )
+    end
+
+    def create_container(command)
+      @container = ::Docker::Container.create(options(command))
+    end
+
+    def start_container
+      @container.start
+    end
+
+    def options(command)
+      {
+        'Image' => @image.id,
+        'Cmd' => %W{/bin/sh -c #{command}},
+        'Env' => environment
+      }
+    end
+
+    def environment
       if path = Specinfra::configuration::path
-        (opts['Env'] ||= {})['PATH'] = path
-      end
-
-      container = ::Docker::Container.create(opts)
-      begin
-        container.start
-        begin
-          stdout, stderr = container.attach
-          result = container.wait
-          return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
-            :exit_status => result['StatusCode']
-        rescue
-          container.kill
-        end
-      ensure
-        container.delete
+        { 'PATH' => path }
       end
     end
   end

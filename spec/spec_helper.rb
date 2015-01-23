@@ -23,3 +23,7 @@ module GetCommand
 end
 
 include GetCommand
+
+RSpec.configure do |config|
+  config.filter_run_excluding :docker unless ENV['TEST_DOCKER_BACKEND']
+end
