@@ -50,7 +50,7 @@ module Specinfra::Backend
       begin
         container.start
         begin
-          stdout, stderr = container.attach
+          stdout, stderr = container.attach(:logs => true)
           result = container.wait
           return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
             :exit_status => result['StatusCode']
