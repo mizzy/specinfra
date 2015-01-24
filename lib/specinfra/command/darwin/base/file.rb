@@ -16,6 +16,10 @@ class Specinfra::Command::Darwin::Base::File < Specinfra::Command::Base::File
       "stat -f %Y #{escape(link)} | grep -- #{escape(target)}"
     end
 
+    def get_link_target(link)
+      "readlink #{escape(link)}"
+    end
+
     def check_has_mode(file, mode)
       regexp = "^#{mode}$"
       "stat -f%Lp #{escape(file)} | grep -- #{escape(regexp)}"
