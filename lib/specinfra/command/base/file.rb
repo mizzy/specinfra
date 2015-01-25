@@ -93,6 +93,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "mount | grep -- '#{escape(regexp)}'"
     end
 
+    def check_is_auto_mounted(path)
+      %Q(awk '{if($2=="#{escape(path)}")print}' /etc/fstab | egrep -v '^ *#')
+    end
+
     def get_mode(file)
       "stat -c %a #{escape(file)}"
     end
