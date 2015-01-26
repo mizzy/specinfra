@@ -117,6 +117,41 @@ module Specinfra
       end
     end
 
+    def self.check_fstab_has_entry(expected_attr)
+      return false unless expected_attr[:mount_point]
+      cmd = Specinfra.command.get(:get_fstab_entry, expected_attr[:mount_point])
+      ret = Specinfra.backend.run_command(cmd)
+      return false if ret.failure?
+
+      fstab = ret.stdout.scan(/\S+/)
+      actual_attr = {
+        :device      => fstab[0],
+        :mount_point => fstab[1],
+        :type        => fstab[2],
+        :dump        => fstab[4].to_i,
+        :pass        => fstab[5].to_i
+      }
+      fstab[3].split(',').each do |option|
+        name, val = option.split('=')
+        if val.nil?
+          actual_attr[name.to_sym] = true
+        else
+          val = val.to_i if val.match(/^\d+$/)
+          actual_attr[name.to_sym] = val
+        end
+      end
+
+      unless expected_attr[:options].nil?
+        expected_attr.merge!(expected_attr[:options])
+        expected_attr.delete(:options)
+      end
+
+      expected_attr.each do |key, val|
+        return false if actual_attr[key] != val
+      end
+      true
+    end
+
     def self.check_routing_table_has_entry(expected_attr)
       return false if ! expected_attr[:destination]
       cmd = Specinfra.command.get(:get_routing_table_entry, expected_attr[:destination])
