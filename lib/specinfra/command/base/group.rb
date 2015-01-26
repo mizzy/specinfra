@@ -13,6 +13,10 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
       "getent group #{escape(group)} | cut -f 3 -d ':'"
     end
 
+    def update_gid(group, gid)
+      "groupmod -g #{escape(gid)} #{escape(group)}"
+    end
+
     def add(group, options)
       command = ['groupadd']
       command << '-g' << escape(options[:gid])  if options[:gid]
