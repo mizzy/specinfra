@@ -8,5 +8,12 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
       regexp = "^#{group}"
       "getent group | grep -w -- #{escape(regexp)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
     end
+
+    def add(group, options)
+      command = ['groupadd']
+      command << '-g' << escape(options[:gid])  if options[:gid]
+      command << escape(group)
+      command.join(' ')
+    end
   end
 end
