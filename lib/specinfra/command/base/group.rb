@@ -9,6 +9,10 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
       "getent group | grep -w -- #{escape(regexp)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
     end
 
+    def get_gid(group)
+      "getent group #{escape(group)} | cut -f 3 -d ':'"
+    end
+
     def add(group, options)
       command = ['groupadd']
       command << '-g' << escape(options[:gid])  if options[:gid]
