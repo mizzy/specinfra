@@ -1,3 +1,5 @@
+require 'specinfra/ec2_metadata'
+
 module Specinfra
   class HostInventory
     class Ec2

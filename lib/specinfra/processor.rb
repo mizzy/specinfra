@@ -1,5 +1,3 @@
-require 'specinfra/ec2_metadata'
-
 module Specinfra
   class Processor
     def self.check_service_is_running(service)
