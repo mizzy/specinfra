@@ -15,5 +15,9 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
     def get_fqdn
       'hostname -f'
     end
+
+    def get_filesystem
+      'df -P'
+    end
   end
 end
