@@ -3,6 +3,8 @@ require 'specinfra/host_inventory/ec2'
 require 'specinfra/host_inventory/hostname'
 require 'specinfra/host_inventory/domain'
 require 'specinfra/host_inventory/fqdn'
+require 'specinfra/host_inventory/platform'
+require 'specinfra/host_inventory/platform_version'
 
 module Specinfra
   class HostInventory
