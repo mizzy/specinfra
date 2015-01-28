@@ -5,6 +5,7 @@ require 'specinfra/host_inventory/domain'
 require 'specinfra/host_inventory/fqdn'
 require 'specinfra/host_inventory/platform'
 require 'specinfra/host_inventory/platform_version'
+require 'specinfra/host_inventory/filesystem'
 
 module Specinfra
   class HostInventory
