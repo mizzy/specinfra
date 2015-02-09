@@ -50,7 +50,7 @@ module Specinfra::Backend
         container = ::Docker::Container.create(opts)
         container.start
        begin
-        stdout, stderr = container.exec(cmd.split(" "))
+        stdout, stderr = container.exec(%W{/bin/sh -c #{cmd}})
         # Retrieve the exec object info so we can get the exit code for a given command.
         ObjectSpace.each_object ::Docker::Exec do |exec_object|
           exec_info = JSON.parse(::Docker.connection.get("/exec/#{exec_object.id}/json", {}))
