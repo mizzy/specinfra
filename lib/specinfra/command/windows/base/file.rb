@@ -91,6 +91,12 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
       Backend::PowerShell::Command.new { exec cmd }
     end
 
+    def check_is_owned_by(file, owner)
+      Backend::PowerShell::Command.new do
+        exec %Q!(gci #{file}).GetAccessControl().Owner -eq '#{owner}'!
+      end
+    end
+
     private
     def item_has_attribute item, attribute
       %Q!((Get-Item -Path "#{item}" -Force).attributes.ToString() -Split ', ') -contains '#{attribute}'!
