@@ -5,7 +5,7 @@ class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Int
     end
 
     def get_speed_of(name)
-      "ethtool #{name} | grep Speed | gawk '{print gensub(/Speed: ([0-9]+)Mb\\\/s/,\"\\\\1\",\"\")}'"
+      "cat /sys/class/net/#{name}/speed"
     end
 
     def check_has_ipv4_address(interface, ip_address)
