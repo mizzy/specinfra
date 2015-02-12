@@ -5,7 +5,7 @@ class Specinfra::Command::Linux::Base::Bond < Specinfra::Command::Base::Bond
     end
 
     def check_has_interface(name, interface)
-      "awk '/Slave Interface: #{interface}/' /proc/net/bonding/#{name}"
+      "grep -o 'Slave Interface: #{interface}' /proc/net/bonding/#{name}"
     end
   end
 end
