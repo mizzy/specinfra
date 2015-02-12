@@ -4,7 +4,7 @@ class Specinfra::Command::Linux::Base::Bond < Specinfra::Command::Base::Bond
       "ip link show #{name}"
     end
 
-    def have_interface(name, interface)
+    def check_has_interface(name, interface)
       "awk '/Slave Interface: #{interface}/' /proc/net/bonding/#{name}"
     end
   end
