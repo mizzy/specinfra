@@ -70,7 +70,7 @@ module Specinfra::Backend
     def docker_run!(cmd, opts={})
       begin
         stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
-        return CommandResult.new :stdout => stdout, :stderr => stderr,
+        return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
       rescue
         @container.kill
