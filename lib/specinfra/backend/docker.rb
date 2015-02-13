@@ -10,18 +10,9 @@ module Specinfra::Backend
       @images = []
       ::Docker.url = Specinfra.configuration.docker_url
       @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
-      opts = { 'Image' => current_image.id }
+      create_and_start_container
 
-      if path = Specinfra.configuration.path
-        (opts['Env'] ||= {})['PATH'] = path
-      end
-
-      @container = ::Docker::Container.create(opts)
-      @container.start
-
-      ObjectSpace.define_finalizer(self, proc {
-        @container.stop; @container.delete
-      })
+      ObjectSpace.define_finalizer(self, proc { cleanup_container })
     end
 
     class Cleaner
@@ -50,9 +41,27 @@ module Specinfra::Backend
 
     def send_file(from, to)
       @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
+      cleanup_container
+      create_and_start_container
     end
 
     private
+
+    def create_and_start_container
+      opts = { 'Image' => current_image.id }
+
+      if path = Specinfra.configuration.path
+        (opts['Env'] ||= {})['PATH'] = path
+      end
+
+      @container = ::Docker::Container.create(opts)
+      @container.start
+    end
+
+    def cleanup_container
+      @container.stop
+      @container.delete
+    end
 
     def current_image
       @images.last || @base_image
