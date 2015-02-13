@@ -7,21 +7,17 @@ module Specinfra::Backend
         fail "Docker client library is not available. Try installing `docker-api' gem."
       end
 
-      @images = []
       ::Docker.url = Specinfra.configuration.docker_url
-      @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
-      create_and_start_container
 
-      ObjectSpace.define_finalizer(self, proc { cleanup_container })
-    end
-
-    class Cleaner
-      def initialize(container)
-        @container = container
-      end
-      def call
-        @container.stop
-        @container.delete
+      if image = Specinfra.configuration.docker_image
+        @images = []
+        @base_image = ::Docker::Image.get(image)
+        create_and_start_container
+        ObjectSpace.define_finalizer(self, proc { cleanup_container })
+      elsif container = Specinfra.configuration.docker_container
+        @container = ::Docker::Container.get(container)
+      else
+        fail 'Please specify docker_image or docker_container.'
       end
     end
 
@@ -40,6 +36,10 @@ module Specinfra::Backend
     end
 
     def send_file(from, to)
+      if @base_image.nil?
+        fail 'Cannot call send_file without docker_image.'
+      end
+
       @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
       cleanup_container
       create_and_start_container
