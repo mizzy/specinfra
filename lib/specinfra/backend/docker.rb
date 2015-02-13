@@ -39,7 +39,6 @@ module Specinfra::Backend
     def docker_run!(cmd, opts={})
       opts = {
         'Image' => current_image.id,
-        'Cmd' => %W{/bin/sh -c #{cmd}},
       }.merge(opts)
 
       if path = Specinfra::configuration::path
@@ -50,14 +49,14 @@ module Specinfra::Backend
       begin
         container.start
         begin
-          stdout, stderr = container.attach(:logs => true)
-          result = container.wait
-          return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
-            :exit_status => result['StatusCode']
+          stdout, stderr, status = container.exec(['/bin/sh', '-c', cmd])
+          return CommandResult.new :stdout => stdout, :stderr => stderr,
+            :exit_status => status
         rescue
           container.kill
         end
       ensure
+        container.stop
         container.delete
       end
     end
