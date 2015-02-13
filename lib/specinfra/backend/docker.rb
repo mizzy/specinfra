@@ -7,9 +7,18 @@ module Specinfra::Backend
         fail "Docker client library is not available. Try installing `docker-api' gem."
       end
 
-      @images = []
       ::Docker.url = Specinfra.configuration.docker_url
-      @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
+
+      if image = Specinfra.configuration.docker_image
+        @images = []
+        @base_image = ::Docker::Image.get(image)
+        create_and_start_container
+        ObjectSpace.define_finalizer(self, proc { cleanup_container })
+      elsif container = Specinfra.configuration.docker_container
+        @container = ::Docker::Container.get(container)
+      else
+        fail 'Please specify docker_image or docker_container.'
+      end
     end
 
     def run_command(cmd, opts={})
@@ -27,38 +36,44 @@ module Specinfra::Backend
     end
 
     def send_file(from, to)
+      if @base_image.nil?
+        fail 'Cannot call send_file without docker_image.'
+      end
+
       @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
+      cleanup_container
+      create_and_start_container
     end
 
     private
+
+    def create_and_start_container
+      opts = { 'Image' => current_image.id }
+
+      if path = Specinfra.configuration.path
+        (opts['Env'] ||= {})['PATH'] = path
+      end
+
+      @container = ::Docker::Container.create(opts)
+      @container.start
+    end
+
+    def cleanup_container
+      @container.stop
+      @container.delete
+    end
 
     def current_image
       @images.last || @base_image
     end
 
     def docker_run!(cmd, opts={})
-      opts = {
-        'Image' => current_image.id,
-        'Cmd' => %W{/bin/sh -c #{cmd}},
-      }.merge(opts)
-
-      if path = Specinfra::configuration::path
-        (opts['Env'] ||= {})['PATH'] = path
-      end
-
-      container = ::Docker::Container.create(opts)
       begin
-        container.start
-        begin
-          stdout, stderr = container.attach(:logs => true)
-          result = container.wait
-          return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
-            :exit_status => result['StatusCode']
-        rescue
-          container.kill
-        end
-      ensure
-        container.delete
+        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
+        return CommandResult.new :stdout => stdout, :stderr => stderr,
+        :exit_status => status
+      rescue
+        @container.kill
       end
     end
   end
