@@ -10,6 +10,28 @@ module Specinfra::Backend
       @images = []
       ::Docker.url = Specinfra.configuration.docker_url
       @base_image = ::Docker::Image.get(Specinfra.configuration.docker_image)
+      opts = { 'Image' => current_image.id }
+
+      if path = Specinfra.configuration.path
+        (opts['Env'] ||= {})['PATH'] = path
+      end
+
+      @container = ::Docker::Container.create(opts)
+      @container.start
+
+      ObjectSpace.define_finalizer(self, proc {
+        @container.stop; @container.delete
+      })
+    end
+
+    class Cleaner
+      def initialize(container)
+        @container = container
+      end
+      def call
+        @container.stop
+        @container.delete
+      end
     end
 
     def run_command(cmd, opts={})
@@ -37,27 +59,12 @@ module Specinfra::Backend
     end
 
     def docker_run!(cmd, opts={})
-      opts = {
-        'Image' => current_image.id,
-      }.merge(opts)
-
-      if path = Specinfra::configuration::path
-        (opts['Env'] ||= {})['PATH'] = path
-      end
-
-      container = ::Docker::Container.create(opts)
       begin
-        container.start
-        begin
-          stdout, stderr, status = container.exec(['/bin/sh', '-c', cmd])
-          return CommandResult.new :stdout => stdout, :stderr => stderr,
-            :exit_status => status
-        rescue
-          container.kill
-        end
-      ensure
-        container.stop
-        container.delete
+        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
+        return CommandResult.new :stdout => stdout, :stderr => stderr,
+        :exit_status => status
+      rescue
+        @container.kill
       end
     end
   end
