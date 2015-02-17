@@ -7,6 +7,13 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
       cmd
     end
 
+    def check_is_installed_by_rvm(name, version=nil)
+      regexp = "^#{name}"
+      cmd = "rvm list strings | grep -iw -- #{escape(regexp)}"
+      cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
+      cmd
+    end
+
     def check_is_installed_by_npm(name, version=nil)
       cmd = "npm ls #{escape(name)} -g"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
