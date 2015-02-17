@@ -19,6 +19,7 @@ module Specinfra
         :request_pty,
         :ssh_options,
         :dockerfile_finalizer,
+        :telnet_options,
       ].freeze
 
       def defaults
