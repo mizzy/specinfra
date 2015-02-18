@@ -19,8 +19,12 @@ module Specinfra
     def [](key)
       @inventory[key.to_sym] ||= {}
       if @inventory[key.to_sym].empty?
-        inventory_class = Specinfra::HostInventory.const_get(key.to_s.to_camel_case)
-        @inventory[key.to_sym] = inventory_class.get
+        begin
+          inventory_class = Specinfra::HostInventory.const_get(key.to_s.to_camel_case)
+          @inventory[key.to_sym] = inventory_class.get
+        rescue
+          @inventory[key.to_sym] = nil
+        end
       end
       @inventory[key.to_sym]
     end
