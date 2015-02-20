@@ -3,7 +3,7 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
     def check_is_installed(package, version=nil)
       cmd = "rpm -q #{escape(package)}"
       if version
-        cmd = "#{cmd} | grep -w -- #{escape(version)}"
+        cmd = "#{cmd} | grep -w -- #{escape(package)}-#{escape(version)}"
       end
       cmd
     end
