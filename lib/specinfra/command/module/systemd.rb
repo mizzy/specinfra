@@ -6,7 +6,7 @@ module Specinfra
           if level.to_s =~ /^\d+$/
             level = "runlevel#{level}.target"
           end
-          unless service.include?('.')
+          unless service.match(/\.(service|mount|device|socket)$/)
             service += '.service'
           end
 
