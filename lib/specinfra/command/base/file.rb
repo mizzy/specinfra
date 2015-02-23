@@ -53,7 +53,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       sed = "sed -n #{escape(from)},#{escape(to)}p #{escape(file)}"
       sed += " | sed -n 1,#{escape(to)}p" if from != '1' and to != '$'
       checker_with_regexp = check_contains_with_regexp("-", expected_pattern)
-      checker_with_fixed  = check_contains_with_fixed_strings("-", expected_pattern)
+      checker_with_fixed = check_contains_with_fixed_strings("-", expected_pattern)
       "#{sed} | #{checker_with_regexp} || #{sed} | #{checker_with_fixed}"
     end
 
@@ -85,7 +85,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def get_content(file)
-      "cat #{file} 2> /dev/null || echo -n"
+      "cat #{escape(file)} 2> /dev/null || echo -n"
     end
 
     def check_is_mounted(path)
