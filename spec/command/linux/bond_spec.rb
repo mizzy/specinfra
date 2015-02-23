@@ -8,5 +8,5 @@ describe get_command(:check_bond_exists, 'bond0') do
 end
 
 describe get_command(:check_bond_has_interface, 'br0', 'eth0') do
-  it { should eq "awk '/Slave Interface: eth0/' /proc/net/bonding/bond0" }
+  it { should eq "grep -o 'Slave Interface: eth0' /proc/net/bonding/br0" }
 end
