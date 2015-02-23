@@ -55,6 +55,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       command << '-g' << escape(options[:gid])            if options[:gid]
       command << '-d' << escape(options[:home_directory]) if options[:home_directory]
       command << '-p' << escape(options[:password])       if options[:password]
+      command << '-m' if options[:create_home]
       command << '-r' if options[:system_user]
       command << '-u' << escape(options[:uid])            if options[:uid]
       command << escape(user)
