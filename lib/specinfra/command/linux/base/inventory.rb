@@ -4,6 +4,10 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
       'cat /proc/meminfo'
     end
 
+    def get_cpu
+      'cat /proc/cpuinfo'
+    end
+
     def get_hostname
       'hostname -s'
     end
