@@ -9,6 +9,7 @@ module Specinfra
       def self.parse(cmd_ret)
         cpuinfo = {}
         cpus = cmd_ret.split(/[^^]processor/)
+        cpuinfo['total'] = cpus.length.to_s
         cpus.each_with_index do |cpu, idx|
           idx = idx.to_s
           cpuinfo[idx] = {}

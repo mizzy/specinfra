@@ -115,5 +115,9 @@ describe Specinfra::HostInventory::Cpu do
         "power_management" => "",
       )
     end
+
+    example do
+      expect(ret["total"]).to eq "2"
+    end
   end
 end
