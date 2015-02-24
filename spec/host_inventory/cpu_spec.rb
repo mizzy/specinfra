@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'json'
 
 str = <<-EOH
 processor	: 0
@@ -83,7 +82,7 @@ describe Specinfra::HostInventory::Cpu do
         "clflush_size" => "64",
         "cache_alignment" => "64",
         "address_sizes" => "39 bits physical, 48 bits virtual",
-        "power_management" => "",
+        "power_management" => ""
       )
     end
 
@@ -112,7 +111,7 @@ describe Specinfra::HostInventory::Cpu do
         "clflush_size" => "64",
         "cache_alignment" => "64",
         "address_sizes" => "39 bits physical, 48 bits virtual",
-        "power_management" => "",
+        "power_management" => ""
       )
     end
 
