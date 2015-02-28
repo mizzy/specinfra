@@ -50,8 +50,8 @@ module Specinfra::Backend
     def create_and_start_container
       opts = { 'Image' => current_image.id }
 
-     if current_image.json["Cmd"].nil?
-          opts.merge!({'Cmd' => ['/bin/sh', '-c', 'read'], 'OpenStdin' => true})
+      if current_image.json["Config"]["Cmd"].nil?
+        opts.merge!({'Cmd' => ['/bin/sh'], 'OpenStdin' => true})
       end
 
       if path = Specinfra.configuration.path
