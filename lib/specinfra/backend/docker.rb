@@ -13,7 +13,7 @@ module Specinfra::Backend
         @images = []
         @base_image = ::Docker::Image.get(image)
 
-        env = Specinfra.configuration.docker_env || {}
+        env = Specinfra.configuration.env || {}
         create_and_start_container(env)
         ObjectSpace.define_finalizer(self, proc { cleanup_container })
       elsif container = Specinfra.configuration.docker_container
