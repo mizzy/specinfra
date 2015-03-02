@@ -23,6 +23,18 @@ module Specinfra
 
     def each
       keys.each do |k|
+        yield k, self[k]
+      end
+    end
+
+    def each_key
+      keys.each do |k|
+        yield k
+      end
+    end
+
+    def each_value
+      keys.each do |k|
         yield self[k]
       end
     end
