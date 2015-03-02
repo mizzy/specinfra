@@ -68,13 +68,17 @@ module Specinfra::Backend
     end
 
     def docker_run!(cmd, opts={})
-      begin
-        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
-        return CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
-        :exit_status => status
-      rescue
-        @container.kill
-      end
+      stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
+
+      CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
+      :exit_status => status
+    rescue ::Docker::Error::DockerError => e
+      raise
+    rescue => e
+      @container.kill
+      err = stderr.nil? ? ([e.message] + e.backtrace) : stderr
+      CommandResult.new :stdout => [stdout].join, :stderr => err.join,
+      :exit_status => (status || 1)
     end
   end
 end
