@@ -13,8 +13,7 @@ module Specinfra::Backend
         @images = []
         @base_image = ::Docker::Image.get(image)
 
-        env = Specinfra.configuration.env || {}
-        create_and_start_container(env)
+        create_and_start_container
         ObjectSpace.define_finalizer(self, proc { cleanup_container })
       elsif container = Specinfra.configuration.docker_container
         @container = ::Docker::Container.get(container)
@@ -49,7 +48,7 @@ module Specinfra::Backend
 
     private
 
-    def create_and_start_container(env)
+    def create_and_start_container
       opts = { 'Image' => current_image.id }
 
       if current_image.json["Config"]["Cmd"].nil?
@@ -60,9 +59,12 @@ module Specinfra::Backend
         (opts['Env'] ||= []) << "PATH=#{path}"
       end
 
-      if env
-        opts['Env'] = (opts['Env'] || []) + env.map { |k,v| [k,v].join('=') }
+      if Specinfra.configuration.env.any?
+        env = Specinfra.configuration.env.to_a.map { |v| v.join('=') }
+        opts['Env'] = opts['Env'].to_a.concat(env)
       end
+
+      opts.merge!(Specinfra.configuration.docker_container_create_options || {})
 
       @container = ::Docker::Container.create(opts)
       @container.start
