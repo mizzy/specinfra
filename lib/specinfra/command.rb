@@ -98,6 +98,12 @@ require 'specinfra/command/aix/base/port'
 require 'specinfra/command/aix/base/service'
 require 'specinfra/command/aix/base/user'
 
+# Alpine (inherit Linux)
+require 'specinfra/command/alpine'
+require 'specinfra/command/alpine/base'
+require 'specinfra/command/alpine/base/package'
+require 'specinfra/command/alpine/base/process'
+
 # Arch (inherit Linux)
 require 'specinfra/command/arch'
 require 'specinfra/command/arch/base'
