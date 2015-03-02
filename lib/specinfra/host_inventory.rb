@@ -1,16 +1,7 @@
-require 'specinfra/host_inventory/memory'
-require 'specinfra/host_inventory/ec2'
-require 'specinfra/host_inventory/hostname'
-require 'specinfra/host_inventory/domain'
-require 'specinfra/host_inventory/fqdn'
-require 'specinfra/host_inventory/platform'
-require 'specinfra/host_inventory/platform_version'
-require 'specinfra/host_inventory/filesystem'
-require 'specinfra/host_inventory/cpu'
-
 module Specinfra
   class HostInventory
     include Singleton
+    include Enumerable
 
     def initialize
       property[:host_inventory] ||= {}
@@ -29,5 +20,29 @@ module Specinfra
       end
       @inventory[key.to_sym]
     end
+
+    def each
+      keys.each do |k|
+        yield self[k]
+      end
+    end
+
+    def keys
+      %w{
+        memory
+        ec2
+        hostname
+        domain
+        fqdn
+        platform
+        platform_version
+        filesystem
+        cpu
+      }
+    end
   end
+end
+
+Specinfra::HostInventory.instance.keys.each do |k|
+  require "specinfra/host_inventory/#{k}"
 end
