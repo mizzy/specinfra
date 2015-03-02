@@ -57,6 +57,11 @@ require 'specinfra/command/linux/base/service'
 require 'specinfra/command/linux/base/yumrepo'
 require 'specinfra/command/linux/base/zfs'
 
+# ESXi (inherit Linux)
+require 'specinfra/command/esxi'
+require 'specinfra/command/esxi/base'
+require 'specinfra/command/esxi/base/package'
+
 # RedHat (inherit Linux)
 require 'specinfra/command/redhat'
 require 'specinfra/command/redhat/base'
