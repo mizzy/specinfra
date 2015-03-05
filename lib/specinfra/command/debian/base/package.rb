@@ -24,6 +24,10 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     def get_version(package, opts=nil)
       "dpkg-query -f '${Status} ${Version}' -W #{package} | sed -n 's/^install ok installed //p'"
     end
+
+    def remove(package, option='')
+      "DEBIAN_FRONTEND='noninteractive' apt-get -y #{option} remove #{package}"
+    end
   end
 end
 

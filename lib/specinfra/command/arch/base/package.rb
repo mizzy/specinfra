@@ -22,5 +22,9 @@ class Specinfra::Command::Arch::Base::Package < Specinfra::Command::Linux::Base:
     def sync_repos
       "pacman -Syy"
     end
+
+    def remove(package, option='')
+      "pacman -R --noconfirm #{option} #{package}"
+    end
   end
 end
