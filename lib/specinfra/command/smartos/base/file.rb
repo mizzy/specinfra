@@ -4,7 +4,7 @@ class Specinfra::Command::Smartos::Base::File < Specinfra::Command::Solaris::Bas
       "digest -a md5 -v #{escape(file)} | cut -d '=' -f 2 |  cut -c 2-"
     end
     
-    def get_sha256sum((file)
+    def get_sha256sum(file)
       "digest -a sha256 -v #{escape(file)} | cut -d '=' -f 2 |  cut -c 2-"
     end
   end
