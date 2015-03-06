@@ -14,6 +14,10 @@ describe get_command(:get_user_home_directory, 'foo') do
   it { should eq "getent passwd foo | awk -F: '{ print $6 }'" }
 end
 
+describe get_command(:update_user_home_directory, 'user', 'dir') do
+  it { should eq "usermod -d dir user" }
+end
+
 describe get_command(:update_user_uid, 'foo', 100) do
   it { should eq 'usermod -u 100 foo' }
 end
