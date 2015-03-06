@@ -22,6 +22,10 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
       end
       cmd = "yum -y #{option} install #{full_package}"
     end
+
+    def remove(package, option='')
+      "yum -y #{option} remove #{package}"
+    end
   end
 end
 
