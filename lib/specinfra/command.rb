@@ -220,6 +220,7 @@ require 'specinfra/command/solaris/v10/user'
 # SmartOS (inherit Solaris)
 require 'specinfra/command/smartos'
 require 'specinfra/command/smartos/base'
+require 'specinfra/command/smartos/base/file'
 require 'specinfra/command/smartos/base/package'
 require 'specinfra/command/smartos/base/service'
 
