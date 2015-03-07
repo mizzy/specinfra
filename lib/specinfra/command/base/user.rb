@@ -42,6 +42,10 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       "getent passwd #{escape(user)} | awk -F: '{ print $6 }'"
     end
 
+    def update_home_directory(user, directory)
+      "usermod -d #{escape(directory)} #{escape(user)}"
+    end
+
     def update_uid(user, uid)
       "usermod -u #{escape(uid)} #{escape(user)}"
     end
