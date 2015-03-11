@@ -19,8 +19,6 @@ module Specinfra
           @metadata[key] = inventory_class.get
         rescue LoadError
           @metadata[key] = nil
-        rescue
-          @metadata[key] = nil
         end
       end
 
