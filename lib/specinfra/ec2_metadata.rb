@@ -59,7 +59,7 @@ module Specinfra
     def get_metadata(path='')
       metadata = {}
 
-      keys = Specinfra::Runner.run_command("curl #{@base_uri}#{path}").stdout.split("\n")
+      keys = Specinfra::Runner.run_command("curl -s #{@base_uri}#{path}").stdout.split("\n")
 
       keys.each do |key|
         if key =~ %r{/$}
@@ -79,7 +79,7 @@ module Specinfra
     end
 
     def get_endpoint(path)
-      ret = Specinfra::Runner.run_command("curl #{@base_uri}#{path}")
+      ret = Specinfra::Runner.run_command("curl -s #{@base_uri}#{path}")
       if ret.success?
         ret.stdout
       else
