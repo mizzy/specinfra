@@ -3,9 +3,8 @@ class Specinfra::Helper::DetectOs::Esxi < Specinfra::Helper::DetectOs
     if run_command('vmware -v').success?
       line = run_command('vmware -v').stdout
       if line =~ /VMware ESXi (.*)/
-        release = $1
+        { :family => 'esxi', :release => $1 }
       end
-      { :family => 'esxi', :release => release }
     end
   end
 end
