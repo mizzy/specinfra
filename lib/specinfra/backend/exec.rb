@@ -32,7 +32,7 @@ module Specinfra::Backend
     def build_command(cmd)
       shell = Specinfra.configuration.shell || '/bin/sh'
       cmd = cmd.shelljoin if cmd.is_a?(Array)
-      cmd = "#{shell.shellescape} -c #{cmd.shellescape}"
+      cmd = "#{shell.shellescape} -c #{cmd.to_s.shellescape}"
 
       path = Specinfra.configuration.path
       if path
