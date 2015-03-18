@@ -15,7 +15,7 @@ module Specinfra
       if @metadata[key].nil?
         begin
           require "specinfra/ec2_metadata/#{key}"
-          inventory_class = Specinfra::Ec2Metadata.const_get(key.to_camel_case)
+          inventory_class = Specinfra::Ec2Metadata.const_get(key.to_s.to_camel_case)
           @metadata[key] = inventory_class.get
         rescue LoadError
           @metadata[key] = nil
