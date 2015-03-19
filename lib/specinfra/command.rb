@@ -112,6 +112,11 @@ require 'specinfra/command/arch/base/file'
 require 'specinfra/command/arch/base/service'
 require 'specinfra/command/arch/base/package'
 
+# CoreOS (inherit Linux)
+require 'specinfra/command/coreos'
+require 'specinfra/command/coreos/base'
+require 'specinfra/command/coreos/base/service'
+
 # Darwin (inherit Base)
 require 'specinfra/command/darwin'
 require 'specinfra/command/darwin/base'
