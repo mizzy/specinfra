@@ -9,6 +9,7 @@ end
 require 'specinfra/helper/detect_os/aix'
 require 'specinfra/helper/detect_os/alpine'
 require 'specinfra/helper/detect_os/arch'
+require 'specinfra/helper/detect_os/coreos'
 require 'specinfra/helper/detect_os/darwin'
 require 'specinfra/helper/detect_os/debian'
 require 'specinfra/helper/detect_os/esxi'
