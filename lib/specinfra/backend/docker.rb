@@ -59,10 +59,8 @@ module Specinfra::Backend
         (opts['Env'] ||= []) << "PATH=#{path}"
       end
 
-      if Specinfra.configuration.env.any?
-        env = Specinfra.configuration.env.to_a.map { |v| v.join('=') }
-        opts['Env'] = opts['Env'].to_a.concat(env)
-      end
+      env = Specinfra.configuration.env.to_a.map { |v| v.join('=') }
+      opts['Env'] = opts['Env'].to_a.concat(env)
 
       opts.merge!(Specinfra.configuration.docker_container_create_options || {})
 
