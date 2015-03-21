@@ -11,4 +11,8 @@ module Specinfra::Command::Module::Zfs
     end
     commands.join(' && ')
   end
+
+  def get_property(zfs)
+    "zfs get -Hp -o property,value all #{escape(zfs)}"
+  end
 end
