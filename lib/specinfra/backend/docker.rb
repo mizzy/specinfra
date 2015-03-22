@@ -46,6 +46,10 @@ module Specinfra::Backend
       create_and_start_container
     end
 
+    def commit_container
+      @container.commit
+    end
+
     private
 
     def create_and_start_container
