@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Plamo < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /usr/lib/setup/Plamo-*').success?
       { :family => 'plamo', :release => nil }
     end
