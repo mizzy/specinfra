@@ -11,7 +11,7 @@ module Specinfra::Backend
 
       if image = Specinfra.configuration.docker_image
         @images = []
-        @base_image = ::Docker::Image.get(image)
+        @base_image = get_or_pull_image(image)
 
         create_and_start_container
         ObjectSpace.define_finalizer(self, proc { cleanup_container })
@@ -89,6 +89,14 @@ module Specinfra::Backend
       err = stderr.nil? ? ([e.message] + e.backtrace) : stderr
       CommandResult.new :stdout => [stdout].join, :stderr => err.join,
       :exit_status => (status || 1)
+    end
+
+    def get_or_pull_image(name)
+      begin
+        ::Docker::Image.get(name)
+      rescue ::Docker::Error::NotFoundError
+        ::Docker::Image.create('fromImage' => name)
+      end
     end
   end
 end
