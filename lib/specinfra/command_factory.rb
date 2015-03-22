@@ -1,7 +1,7 @@
 class Specinfra::CommandFactory
   @@types = nil
 
-  def self.get(meth, *args)
+  def self.instance
     self.new(os)
   end
 

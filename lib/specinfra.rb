@@ -17,7 +17,7 @@ module Specinfra
     end
 
     def command
-      Specinfra::CommandFactory
+      Specinfra::CommandFactory.instance
     end
 
     def backend
