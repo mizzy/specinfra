@@ -19,6 +19,21 @@ module Specinfra::Backend
       @config[key] = value
     end
 
+    def os_info
+      return @os_info if @os_info
+
+      Specinfra::Helper::DetectOs.subclasses.each do |klass|
+        if @os_info = klass.new(self).detect
+          @os_info[:arch] ||= self.run_command('uname -m').stdout.strip
+          return @os_info
+        end
+      end
+    end
+
+    def command
+      CommandFactory.new(os_info)
+    end
+
     def set_example(e)
       @example = e
     end
