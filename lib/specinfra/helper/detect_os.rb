@@ -5,7 +5,7 @@ module Specinfra::Helper
     end
 
     def initialize(backend)
-      @backend
+      @backend = backend
     end
 
     def run_command(cmd)
