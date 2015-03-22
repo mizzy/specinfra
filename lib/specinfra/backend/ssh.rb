@@ -84,7 +84,7 @@ module Specinfra::Backend
 
     def scp_upload!(from, to, opt={})
       if get_config(:scp).nil?
-        get_config(:scp) = create_scp
+        set_config(:scp, create_scp)
       end
 
       tmp = File.join('/tmp', File.basename(to))
@@ -101,7 +101,7 @@ module Specinfra::Backend
       retry_prompt = /^Sorry, try again/
 
       if get_config(:ssh).nil?
-        get_config(:ssh) = create_ssh
+        set_config(:ssh, create_ssh)
       end
 
       ssh = get_config(:ssh)

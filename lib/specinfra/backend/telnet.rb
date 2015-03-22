@@ -62,7 +62,7 @@ module Specinfra::Backend
       exit_signal = nil
       retry_prompt = /^Login: /
       if get_config(:telnet).nil?
-        get_config(:telnet) = create_telnet
+        set_config(:telnet, create_telnet)
       end
       telnet = get_config(:telnet)
       re = [] 
