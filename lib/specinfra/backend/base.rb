@@ -12,7 +12,7 @@ module Specinfra::Backend
     end
 
     def get_config(key)
-      @config[key] || Specinfra.configuration.public_send(key)
+      @config[key] || Specinfra.configuration.send(key)
     end
 
     def set_config(key, value)
