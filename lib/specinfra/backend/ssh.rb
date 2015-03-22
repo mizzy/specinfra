@@ -129,7 +129,7 @@ module Specinfra::Backend
             end
 
             if data.match /^sudo: no tty present and no askpass program specified/
-              abort 'Please set sudo password to get_config(:sudo_password).'
+              abort 'Please set sudo password to Specinfra.configuration.sudo_password.'
             else
               stderr_data += data
             end
