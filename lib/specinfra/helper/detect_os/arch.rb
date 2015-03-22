@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Arch < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /etc/arch-release').success?
       { :family => 'arch', :release => nil }
     end

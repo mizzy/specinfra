@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Freebsd < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if ( uname = run_command('uname -sr').stdout ) && uname =~ /FreeBSD/i
       if uname =~ /10./
         { :family => 'freebsd', :release => 10 }

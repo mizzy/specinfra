@@ -6,7 +6,7 @@ module Specinfra
       include PowerShell::ScriptHelper
 
       def run_command(cmd, opts={})
-        Specinfra.configuration.os = { :family => 'windows' }
+        set_config(:os, { :family => 'windows' })
         script = create_script(cmd)
         result = execute_script %Q{#{powershell} -encodedCommand #{encode_script(script)}}
 
@@ -39,7 +39,7 @@ module Specinfra
       private
 
       def powershell
-        architecture = @example.metadata[:architecture] || Specinfra.configuration.architecture
+        architecture = @example.metadata[:architecture] || get_config(:architecture)
 
         case architecture
         when :i386 then x86_powershell

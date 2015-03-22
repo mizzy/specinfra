@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Suse < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /etc/SuSE-release').success?
       line = run_command('cat /etc/SuSE-release').stdout
       if line =~ /SUSE Linux Enterprise Server (\d+)/

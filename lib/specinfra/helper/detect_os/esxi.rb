@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Esxi < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('vmware -v').success?
       line = run_command('vmware -v').stdout
       if line =~ /VMware ESXi (.*)/

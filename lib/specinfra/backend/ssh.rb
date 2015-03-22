@@ -45,10 +45,10 @@ module Specinfra::Backend
     end
 
     def with_env
-      env = Specinfra.configuration.env || {}
+      env = get_config(:env) || {}
       env[:LANG] ||= 'C'
 
-      ssh_options = Specinfra.configuration.ssh_options || {}
+      ssh_options = get_config(:ssh_options) || {}
       ssh_options[:send_env] ||= []
 
       env.each do |key, value|
@@ -68,14 +68,14 @@ module Specinfra::Backend
 
     def create_ssh
       Net::SSH.start(
-        Specinfra.configuration.host,
-        Specinfra.configuration.ssh_options[:user],
-        Specinfra.configuration.ssh_options
+        get_config(:host),
+        get_config(:ssh_options)[:user],
+        get_config(:ssh_options)
       )
     end
 
     def create_scp
-      ssh = Specinfra.configuration.ssh
+      ssh = get_config(:ssh)
       if ssh.nil?
         ssh = create_ssh
       end
@@ -83,12 +83,12 @@ module Specinfra::Backend
     end
 
     def scp_upload!(from, to, opt={})
-      if Specinfra.configuration.scp.nil?
-        Specinfra.configuration.scp = create_scp
+      if get_config(:scp).nil?
+        set_config(:scp, create_scp)
       end
 
       tmp = File.join('/tmp', File.basename(to))
-      scp = Specinfra.configuration.scp
+      scp = get_config(:scp)
       scp.upload!(from, tmp, opt)
       run_command(Specinfra.command.get(:move_file, tmp, to))
     end
@@ -100,13 +100,13 @@ module Specinfra::Backend
       exit_signal = nil
       retry_prompt = /^Sorry, try again/
 
-      if Specinfra.configuration.ssh.nil?
-        Specinfra.configuration.ssh = create_ssh
+      if get_config(:ssh).nil?
+        set_config(:ssh, create_ssh)
       end
 
-      ssh = Specinfra.configuration.ssh
+      ssh = get_config(:ssh)
       ssh.open_channel do |channel|
-        if Specinfra.configuration.sudo_password or Specinfra.configuration.request_pty
+        if get_config(:sudo_password) or get_config(:request_pty)
           channel.request_pty do |ch, success|
             abort "Could not obtain pty " if !success
           end
@@ -117,7 +117,7 @@ module Specinfra::Backend
             if data.match retry_prompt
               abort 'Wrong sudo password! Please confirm your password.'
             elsif data.match /^#{prompt}/
-              channel.send_data "#{Specinfra.configuration.sudo_password}\n"
+              channel.send_data "#{get_config(:sudo_password)}\n"
             else
               stdout_data += data
             end
@@ -149,13 +149,13 @@ module Specinfra::Backend
     end
 
     def sudo
-      if sudo_path = Specinfra.configuration.sudo_path
+      if sudo_path = get_config(:sudo_path)
         sudo_path += '/sudo'
       else
         sudo_path = 'sudo'
       end
 
-      sudo_options = Specinfra.configuration.sudo_options
+      sudo_options = get_config(:sudo_options)
       if sudo_options
         sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
         sudo_options = ' ' + sudo_options
@@ -165,8 +165,8 @@ module Specinfra::Backend
     end
 
     def sudo?
-      user = Specinfra.configuration.ssh_options[:user]
-      disable_sudo = Specinfra.configuration.disable_sudo
+      user = get_config(:ssh_options)[:user]
+      disable_sudo = get_config(:disable_sudo)
       user != 'root' && !disable_sudo
     end
   end

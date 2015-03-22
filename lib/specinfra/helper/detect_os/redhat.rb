@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Redhat < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     # Fedora also has an /etc/redhat-release so the Fedora check must
     # come before the RedHat check
     if run_command('ls /etc/fedora-release').success?
