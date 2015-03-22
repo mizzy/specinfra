@@ -7,15 +7,15 @@ module Specinfra::Backend
         fail "Docker client library is not available. Try installing `docker-api' gem."
       end
 
-      ::Docker.url = Specinfra.configuration.docker_url
+      ::Docker.url = get_config(:docker_url)
 
-      if image = Specinfra.configuration.docker_image
+      if image = get_config(:docker_image)
         @images = []
         @base_image = get_or_pull_image(image)
 
         create_and_start_container
         ObjectSpace.define_finalizer(self, proc { cleanup_container })
-      elsif container = Specinfra.configuration.docker_container
+      elsif container = get_config(:docker_container)
         @container = ::Docker::Container.get(container)
       else
         fail 'Please specify docker_image or docker_container.'
@@ -61,14 +61,14 @@ module Specinfra::Backend
 
       opts.merge!({'OpenStdin' => true})
 
-      if path = Specinfra.configuration.path
+      if path = get_config(:path)
         (opts['Env'] ||= []) << "PATH=#{path}"
       end
 
-      env = Specinfra.configuration.env.to_a.map { |v| v.join('=') }
+      env = get_config(:env).to_a.map { |v| v.join('=') }
       opts['Env'] = opts['Env'].to_a.concat(env)
 
-      opts.merge!(Specinfra.configuration.docker_container_create_options || {})
+      opts.merge!(get_config(:docker_container_create_options) || {})
 
       @container = ::Docker::Container.create(opts)
       @container.start

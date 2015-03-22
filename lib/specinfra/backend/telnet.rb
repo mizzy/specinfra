@@ -29,7 +29,7 @@ module Specinfra::Backend
     end
 
     def with_env
-      env = Specinfra.configuration.env || {}
+      env = get_config(:env) || {}
       env[:LANG] ||= 'C'
 
       env.each do |key, value|
@@ -47,8 +47,8 @@ module Specinfra::Backend
     end
 
     def add_pre_command(cmd)
-      if Specinfra.configuration.pre_command
-        pre_cmd = build_command(Specinfra.configuration.pre_command)
+      if get_config(:pre_command)
+        pre_cmd = build_command(get_config(:pre_command))
         "#{pre_cmd} && #{cmd}"
       else
         cmd
@@ -61,10 +61,10 @@ module Specinfra::Backend
       exit_status = nil
       exit_signal = nil
       retry_prompt = /^Login: /
-      if Specinfra.configuration.telnet.nil?
-        Specinfra.configuration.telnet = create_telnet
+      if get_config(:telnet).nil?
+        get_config(:telnet) = create_telnet
       end
-      telnet = Specinfra.configuration.telnet
+      telnet = get_config(:telnet)
       re = [] 
       unless telnet.nil?
         re = telnet.cmd( "#{command}; echo $?" ).split("\n")[0..-2]
@@ -75,10 +75,10 @@ module Specinfra::Backend
     end
  
     def create_telnet
-      tel = Net::Telnet.new( "Host" => Specinfra.configuration.host )
+      tel = Net::Telnet.new( "Host" => get_config(:host) )
       tel.login( 
-        "Name" => Specinfra.configuration.telnet_options[:user], 
-        "Password" => Specinfra.configuration.telnet_options[:pass]
+        "Name" => get_config(:telnet_options)[:user], 
+        "Password" => get_config(:telnet_options)[:pass]
       )
       tel
     rescue
@@ -86,13 +86,13 @@ module Specinfra::Backend
     end
 
     def sudo
-      if sudo_path = Specinfra.configuration.sudo_path
+      if sudo_path = get_config(:sudo_path)
         sudo_path += '/sudo'
       else
         sudo_path = 'sudo'
       end
 
-      sudo_options = Specinfra.configuration.sudo_options
+      sudo_options = get_config(:sudo_options)
       if sudo_options
         sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
         sudo_options = ' ' + sudo_options
