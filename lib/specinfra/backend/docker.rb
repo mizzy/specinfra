@@ -56,8 +56,10 @@ module Specinfra::Backend
       opts = { 'Image' => current_image.id }
 
       if current_image.json["Config"]["Cmd"].nil?
-        opts.merge!({'Cmd' => ['/bin/sh'], 'OpenStdin' => true})
+        opts.merge!({'Cmd' => ['/bin/sh']})
       end
+
+      opts.merge!({'OpenStdin' => true})
 
       if path = Specinfra.configuration.path
         (opts['Env'] ||= []) << "PATH=#{path}"
