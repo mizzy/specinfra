@@ -23,6 +23,10 @@ module Specinfra
     def backend
       type = Specinfra.configuration.backend
       if type.nil?
+        if Specinfra.configuration.error_on_missing_backend_type
+          raise "No backend type is specified."
+        end
+
         warn "No backend type is specified. Fall back to :exec type."
         type = :exec
       end
