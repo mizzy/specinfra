@@ -1,8 +1,8 @@
 module Specinfra
   class HostInventory
-    class PlatformVersion
-      def self.get
-        os[:release]
+    class PlatformVersion < Base
+      def get
+        backend.os_info[:release]
       end
     end
   end

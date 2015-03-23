@@ -1,9 +1,9 @@
 module Specinfra
   class HostInventory
-    class Hostname
-      def self.get
-        cmd = Specinfra.command.get(:get_inventory_hostname)
-        Specinfra.backend.run_command(cmd).stdout.strip
+    class Hostname < Base
+      def get
+        cmd = backend.command.get(:get_inventory_hostname)
+        backend.run_command(cmd).stdout.strip
       end
     end
   end

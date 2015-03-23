@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Coreos < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /etc/coreos/update.conf').success?
       distro  = nil
       release = nil

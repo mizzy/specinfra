@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 module Specinfra
   class Ec2Metadata
-    def initialize
+    def initialize(host_inventory)
+      @host_inventory = host_inventory
+
       @base_uri = 'http://169.254.169.254/latest/meta-data/'
       @metadata = {}
     end
@@ -16,7 +18,7 @@ module Specinfra
         begin
           require "specinfra/ec2_metadata/#{key}"
           inventory_class = Specinfra::Ec2Metadata.const_get(key.to_s.to_camel_case)
-          @metadata[key] = inventory_class.get
+          @metadata[key] = inventory_class.new(@host_inventory).get
         rescue LoadError
           @metadata[key] = nil
         end
@@ -59,7 +61,7 @@ module Specinfra
     def get_metadata(path='')
       metadata = {}
 
-      keys = Specinfra::Runner.run_command("curl -s #{@base_uri}#{path}").stdout.split("\n")
+      keys = @host_inventory.backend.run_command("curl -s #{@base_uri}#{path}").stdout.split("\n")
 
       keys.each do |key|
         if key =~ %r{/$}
@@ -79,7 +81,7 @@ module Specinfra
     end
 
     def get_endpoint(path)
-      ret = Specinfra::Runner.run_command("curl -s #{@base_uri}#{path}")
+      ret = @host_inventory.backend.run_command("curl -s #{@base_uri}#{path}")
       if ret.success?
         ret.stdout
       else

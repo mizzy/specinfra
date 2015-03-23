@@ -4,10 +4,10 @@ module Specinfra::Backend
     def initialize
       @lines = []
       ObjectSpace.define_finalizer(self) {
-        if Specinfra.configuration.dockerfile_finalizer.nil?
+        if get_config(:dockerfile_finalizer).nil?
           puts @lines
         else
-          Specinfra.configuration.dockerfile_finalizer.call(@lines)
+          get_config(:dockerfile_finalizer).call(@lines)
         end
       }
     end

@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /etc/debian_version').success?
       distro  = nil
       release = nil

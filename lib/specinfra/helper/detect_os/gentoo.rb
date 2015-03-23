@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Gentoo < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if run_command('ls /etc/gentoo-release').success?
       { :family => 'gentoo', :release => nil }
     end

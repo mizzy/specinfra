@@ -3,9 +3,9 @@ module Specinfra::Backend
     include PowerShell::ScriptHelper
 
     def run_command(cmd, opts={})
-      set :os, :family => 'windows'
+      set_config(:os, {:family => 'windows'})
       script = create_script(cmd)
-      winrm = Specinfra.configuration.winrm
+      winrm = get_config(:winrm)
 
       result = winrm.powershell(script)
       stdout, stderr = [:stdout, :stderr].map do |s|

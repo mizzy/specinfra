@@ -1,5 +1,5 @@
 class Specinfra::Helper::DetectOs::Solaris < Specinfra::Helper::DetectOs
-  def self.detect
+  def detect
     if ( uname = run_command('uname -sr').stdout) && uname =~ /SunOS/i
       if uname =~ /5.10/
         { :family => 'solaris', :release => 10 }

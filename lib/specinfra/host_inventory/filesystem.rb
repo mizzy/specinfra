@@ -1,10 +1,10 @@
 module Specinfra
   class HostInventory
-    class Filesystem
-      def self.get
-        cmd = Specinfra.command.get(:get_inventory_filesystem)
+    class Filesystem < Base
+      def get
+        cmd = backend.command.get(:get_inventory_filesystem)
         filesystem = {}
-        Specinfra.backend.run_command(cmd).stdout.lines do |line|
+        backend.run_command(cmd).stdout.lines do |line|
           next if line =~ /^Filesystem\s+/
           if line =~ /^(.+?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+\%)\s+(.+)$/
             device = $1

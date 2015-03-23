@@ -35,7 +35,7 @@ module Specinfra::Backend
     end
 
     def ct
-      @ct ||= ::LXC::Container.new(Specinfra.configuration.lxc)
+      @ct ||= ::LXC::Container.new(get_config(:lxc))
     end
   end
 end

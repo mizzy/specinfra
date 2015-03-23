@@ -30,11 +30,11 @@ module Specinfra::Backend
     end
 
     def build_command(cmd)
-      shell = Specinfra.configuration.shell || '/bin/sh'
+      shell = get_config(:shell) || '/bin/sh'
       cmd = cmd.shelljoin if cmd.is_a?(Array)
       cmd = "#{shell.shellescape} -c #{cmd.to_s.shellescape}"
 
-      path = Specinfra.configuration.path
+      path = get_config(:path)
       if path
         cmd = %Q{env PATH="#{path}" #{cmd}}
       end
@@ -49,7 +49,7 @@ module Specinfra::Backend
 
       keys.each { |key| ENV["_SPECINFRA_#{key}"] = ENV[key] ; ENV.delete(key) }
 
-      env = Specinfra.configuration.env || {}
+      env = get_config(:env) || {}
       env[:LANG] ||= 'C'
 
       env.each do |key, value|
@@ -68,8 +68,8 @@ module Specinfra::Backend
     end
 
     def add_pre_command(cmd)
-      if Specinfra.configuration.pre_command
-        pre_cmd = build_command(Specinfra.configuration.pre_command)
+      if get_config(:pre_command)
+        pre_cmd = build_command(get_config(:pre_command))
         "#{pre_cmd} && #{cmd}"
       else
         cmd
