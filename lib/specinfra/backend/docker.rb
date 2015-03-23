@@ -1,6 +1,8 @@
 module Specinfra::Backend
   class Docker < Exec
     def initialize
+      super
+
       begin
         require 'docker' unless defined?(::Docker)
       rescue LoadError
