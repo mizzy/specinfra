@@ -16,5 +16,9 @@ class Specinfra::Command::Solaris::Base::Service < Specinfra::Command::Base::Ser
       end
       commands.join(' && ')
     end
+
+    def get_property(service)
+      "svcprop -a #{escape(service)}"
+    end
   end
 end
