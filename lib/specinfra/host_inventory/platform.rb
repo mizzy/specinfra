@@ -1,8 +1,8 @@
 module Specinfra
   class HostInventory
-    class Platform
-      def self.get
-        os[:family]
+    class Platform < Base
+      def get
+        backend.os_info[:family]
       end
     end
   end

@@ -1,11 +1,29 @@
 module Specinfra
   class HostInventory
-    include Singleton
+    KEYS = %w{
+      memory
+      ec2
+      hostname
+      domain
+      fqdn
+      platform
+      platform_version
+      filesystem
+      cpu
+    }
+
     include Enumerable
 
-    def initialize
+    attr_reader :backend
+
+    def self.instance
       property[:host_inventory] ||= {}
-      @inventory = property[:host_inventory]
+      self.new(Specinfra.backend, property[:host_inventory])
+    end
+
+    def initialize(backend, inventory = {})
+      @backend = backend
+      @inventory = inventory
     end
 
     def [](key)
@@ -13,7 +31,7 @@ module Specinfra
       if @inventory[key.to_sym].empty?
         begin
           inventory_class = Specinfra::HostInventory.const_get(key.to_s.to_camel_case)
-          @inventory[key.to_sym] = inventory_class.get
+          @inventory[key.to_sym] = inventory_class.new(self).get
         rescue
           @inventory[key.to_sym] = nil
         end
@@ -22,39 +40,27 @@ module Specinfra
     end
 
     def each
-      keys.each do |k|
+      KEYS.each do |k|
         yield k, self[k]
       end
     end
 
     def each_key
-      keys.each do |k|
+      KEYS.each do |k|
         yield k
       end
     end
 
     def each_value
-      keys.each do |k|
+      KEYS.each do |k|
         yield self[k]
       end
     end
 
-    def keys
-      %w{
-        memory
-        ec2
-        hostname
-        domain
-        fqdn
-        platform
-        platform_version
-        filesystem
-        cpu
-      }
-    end
   end
 end
 
-Specinfra::HostInventory.instance.keys.each do |k|
+require "specinfra/host_inventory/base"
+Specinfra::HostInventory::KEYS.each do |k|
   require "specinfra/host_inventory/#{k}"
 end

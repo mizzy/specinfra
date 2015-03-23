@@ -2,9 +2,9 @@ require 'specinfra/ec2_metadata'
 
 module Specinfra
   class HostInventory
-    class Ec2
-      def self.get
-        Specinfra::Ec2Metadata.new.get
+    class Ec2 < Base
+      def get
+        Specinfra::Ec2Metadata.new(@host_inventory).get
       end
     end
   end

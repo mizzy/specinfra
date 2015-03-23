@@ -34,6 +34,10 @@ module Specinfra::Backend
       CommandFactory.new(os_info)
     end
 
+    def host_inventory
+      @inventory ||= HostInventory.new(self)
+    end
+
     def set_example(e)
       @example = e
     end

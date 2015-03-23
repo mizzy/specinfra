@@ -90,7 +90,7 @@ module Specinfra::Backend
       tmp = File.join('/tmp', File.basename(to))
       scp = get_config(:scp)
       scp.upload!(from, tmp, opt)
-      run_command(Specinfra.command.get(:move_file, tmp, to))
+      run_command(command.get(:move_file, tmp, to))
     end
 
     def ssh_exec!(command)
