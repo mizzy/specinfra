@@ -55,8 +55,9 @@ power management:
 EOH
 
 describe Specinfra::HostInventory::Cpu do
+  let(:host_inventory) { nil }
   describe 'Example of Ubuntu 14.04.1 LTS Kernel version 3.13.11' do
-    ret = Specinfra::HostInventory::Cpu.parse(str)
+    ret = Specinfra::HostInventory::Cpu.new(host_inventory).parse(str)
     example do
       expect(ret["0"]).to include(
         "vendor_id" => "GenuineIntel",
