@@ -1,9 +1,9 @@
 module Specinfra
   class HostInventory
-    class Memory
-      def self.get
-        cmd = Specinfra.command.get(:get_inventory_memory)
-        ret = Specinfra.backend.run_command(cmd).stdout
+    class Memory < Base
+      def get
+        cmd = backend.command.get(:get_inventory_memory)
+        ret = backend.run_command(cmd).stdout
         memory = { 'swap' => {} }
         ret.each_line do |line|
           case line

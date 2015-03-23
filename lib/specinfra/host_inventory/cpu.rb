@@ -1,12 +1,12 @@
 module Specinfra
   class HostInventory
-    class Cpu
-      def self.get
-        cmd = Specinfra.command.get(:get_inventory_cpu)
-        ret = Specinfra.backend.run_command(cmd).stdout
+    class Cpu < Base
+      def get
+        cmd = backend.command.get(:get_inventory_cpu)
+        ret = backend.run_command(cmd).stdout
         parse(ret)
       end
-      def self.parse(cmd_ret)
+      def parse(cmd_ret)
         cpuinfo = {}
         cpus = cmd_ret.split(/[^^]processor/)
         cpuinfo['total'] = cpus.length.to_s
