@@ -2,7 +2,9 @@ require 'singleton'
 
 module Specinfra::Backend
   class ShellScript < Base
-    def initialize
+    def initialize(config = {})
+      super
+
       @lines = [ "#!/bin/sh", "" ]
       ObjectSpace.define_finalizer(self, Writer.new(@lines))
     end
