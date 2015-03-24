@@ -1,6 +1,6 @@
 module Specinfra::Backend
   class Docker < Exec
-    def initialize
+    def initialize(config = {})
       super
 
       begin

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 module Specinfra::Backend
   class Dockerfile < Specinfra::Backend::Base
-    def initialize
+    def initialize(config = {})
+      super
+
       @lines = []
       ObjectSpace.define_finalizer(self) {
         if get_config(:dockerfile_finalizer).nil?

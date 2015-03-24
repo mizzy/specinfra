@@ -1,6 +1,8 @@
 module Specinfra::Backend
   class Lxc < Exec
-    def initialize
+    def initialize(config = {})
+      super
+
       begin
         require 'lxc/extra' unless defined?(::LXC::Extra)
       rescue LoadError
