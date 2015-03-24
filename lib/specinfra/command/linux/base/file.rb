@@ -11,5 +11,9 @@ class Specinfra::Command::Linux::Base::File < Specinfra::Command::Base::File
     def check_attribute(file, attribute)
       "lsattr -d #{escape(file)} 2>&1 | awk '$1~/^-*#{escape(attribute)}-*$/ {exit 0} {exit 1}'"
     end
+
+    def get_selinuxlabel(file)
+      "stat -c %C #{escape(file)}"
+    end
   end
 end
