@@ -1,4 +1,7 @@
-module Specinfra::Command; end
+module Specinfra
+  module Command
+  end
+end
 
 # Module
 require 'specinfra/command/module'

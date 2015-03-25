@@ -1,19 +1,21 @@
-module Specinfra::Helper
-  class DetectOs
-    def self.detect
-      self.new(Specinfra.backend).detect
-    end
+module Specinfra
+  module Helper
+    class DetectOs
+      def self.detect
+        self.new(Specinfra.backend).detect
+      end
 
-    def initialize(backend)
-      @backend = backend
-    end
+      def initialize(backend)
+        @backend = backend
+      end
 
-    def run_command(cmd)
-      @backend.run_command(cmd)
-    end
+      def run_command(cmd)
+        @backend.run_command(cmd)
+      end
 
-    def detect
-      raise NotImplementedError
+      def detect
+        raise NotImplementedError
+      end
     end
   end
 end
