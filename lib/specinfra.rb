@@ -1,6 +1,9 @@
 require 'specinfra/core'
 
 include Specinfra
+include Specinfra::Helper::Os
+include Specinfra::Helper::Properties
+include Specinfra::Helper::HostInventory
 
 module Specinfra
   class << self
