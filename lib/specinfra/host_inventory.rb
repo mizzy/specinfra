@@ -10,6 +10,7 @@ module Specinfra
       platform_version
       filesystem
       cpu
+      virtualization
     }
 
     include Enumerable
