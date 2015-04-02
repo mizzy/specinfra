@@ -11,6 +11,7 @@ module Specinfra
       filesystem
       cpu
       virtualization
+      kernel
     }
 
     include Enumerable
