@@ -5,7 +5,7 @@ class Specinfra::Command::Redhat::Base::Yumrepo < Specinfra::Command::Linux::Bas
     end
 
     def check_is_enabled(repository)
-      "yum repolist all -C | grep ^#{escape(repository)} | grep enabled"
+      "yum repolist enabled -C | grep -qs \"^[\\!\\*]\\?#{escape(repository)}\""
     end
   end
 end
