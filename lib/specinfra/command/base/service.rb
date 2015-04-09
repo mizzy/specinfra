@@ -20,6 +20,10 @@ class Specinfra::Command::Base::Service < Specinfra::Command::Base
       "sv status #{escape(service)} | grep -E '^run: '"
     end
 
+    def check_is_running_under_systemd(service)
+      "systemctl status #{escape(service)} | grep -E '^\s+Active:(\s|\w)+ \(running\)'"
+    end
+
     def check_is_monitored_by_monit(service)
       "monit status"
     end
