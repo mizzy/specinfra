@@ -36,7 +36,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
     end
 
     def get_content(file)
-      %Q![Io.File]::ReadAllText("#{file}")!
+      %Q!Get-Content("#{file}") | Out-String!
     end
 
     def check_is_accessible_by_user(file, user, access)
@@ -73,7 +73,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
 
     def check_contains(file, pattern)
       Backend::PowerShell::Command.new do
-        exec %Q![Io.File]::ReadAllText("#{file}") -match '#{convert_regexp(pattern)}'!
+        exec %Q!(Get-Content("#{file}") | Out-String) -match '#{convert_regexp(pattern)}'!
       end
     end
 
@@ -82,7 +82,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
       to ||= '$'
       Backend::PowerShell::Command.new do
         using 'crop_text.ps1'
-        exec %Q!(CropText -text ([Io.File]::ReadAllText("#{file}")) -fromPattern '#{convert_regexp(from)}' -toPattern '#{convert_regexp(to)}') -match '#{pattern}'!
+        exec %Q!(CropText -text (Get-Content("#{file}") | Out-String) -fromPattern '#{convert_regexp(from)}' -toPattern '#{convert_regexp(to)}') -match '#{pattern}'!
       end
     end
 
