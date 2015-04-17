@@ -5,10 +5,6 @@ include Specinfra::Helper::Os
 include Specinfra::Helper::Properties
 include Specinfra::Helper::HostInventory
 
-if defined?(Chef)
-  abort 'Good bye, Chef. See https://github.com/serverspec/specinfra/issues/367 .'
-end
-
 module Specinfra
   class << self
     def command
