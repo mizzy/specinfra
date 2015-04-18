@@ -26,8 +26,8 @@ describe get_command(:update_user_gid, 'foo', 100) do
   it { should eq 'usermod -g 100 foo' }
 end
 
-describe get_command(:add_user, 'foo', :home_directory => '/home/foo', :password => '$6$foo/bar', :create_home => true) do
-  it { should eq 'useradd -d /home/foo -p \$6\$foo/bar -m foo' }
+describe get_command(:add_user, 'foo', :home_directory => '/home/foo', :password => '$6$foo/bar', :shell => '/bin/tcsh', :create_home => true) do
+  it { should eq 'useradd -d /home/foo -p \$6\$foo/bar -s /bin/tcsh -m foo' }
 end
 
 describe get_command(:update_user_encrypted_password, 'foo', 'xxxxxxxx') do
@@ -38,3 +38,14 @@ describe get_command(:get_user_encrypted_password, 'foo') do
   it { should eq "getent shadow foo | awk -F: '{ print $2 }'" }
 end
 
+describe get_command(:check_user_has_login_shell, 'foo', '/bin/sh') do
+  it { should eq "getent passwd foo | cut -f 7 -d ':' | grep -w -- /bin/sh" }
+end
+
+describe get_command(:get_user_login_shell, 'foo') do
+  it { should eq "getent passwd foo | cut -f 7 -d ':'" }
+end
+
+describe get_command(:update_user_login_shell, 'foo', '/bin/bash') do
+  it { should eq 'usermod -s /bin/bash foo' }
+end
