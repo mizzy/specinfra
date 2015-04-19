@@ -42,8 +42,16 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       "getent passwd #{escape(user)} | awk -F: '{ print $6 }'"
     end
 
+    def get_login_shell(user)
+      "getent passwd #{escape(user)} | cut -f 7 -d ':'"
+    end
+
     def update_home_directory(user, directory)
       "usermod -d #{escape(directory)} #{escape(user)}"
+    end
+
+    def update_login_shell(user, shell)
+      "usermod -s #{escape(shell)} #{escape(user)}"
     end
 
     def update_uid(user, uid)
@@ -59,6 +67,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       command << '-g' << escape(options[:gid])            if options[:gid]
       command << '-d' << escape(options[:home_directory]) if options[:home_directory]
       command << '-p' << escape(options[:password])       if options[:password]
+      command << '-s' << escape(options[:shell])          if options[:shell]
       command << '-m' if options[:create_home]
       command << '-r' if options[:system_user]
       command << '-u' << escape(options[:uid])            if options[:uid]
