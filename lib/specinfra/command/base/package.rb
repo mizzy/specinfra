@@ -29,7 +29,7 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
 
     def check_is_installed_by_pear(name, version=nil)
       regexp = "^#{name}"
-      cmd = "pear list | grep -iw -- #{escape(regexp)}"
+      cmd = "pear list -a | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
