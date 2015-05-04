@@ -42,6 +42,14 @@ describe get_command(:check_user_has_login_shell, 'foo', '/bin/sh') do
   it { should eq "getent passwd foo | cut -f 7 -d ':' | grep -w -- /bin/sh" }
 end
 
+describe get_command(:check_user_minimum_password_change_days, 'foo', 10) do
+  it { should eq "chage -l foo | grep '^Minimum.*: 10$'" }
+end
+
+describe get_command(:check_user_maximum_password_change_days, 'foo', 20) do
+  it { should eq "chage -l foo | grep '^Maximum.*: 20$'" }
+end
+
 describe get_command(:get_user_login_shell, 'foo') do
   it { should eq "getent passwd foo | cut -f 7 -d ':'" }
 end
