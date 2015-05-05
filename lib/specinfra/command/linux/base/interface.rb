@@ -30,9 +30,8 @@ class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Int
       "ip addr show #{interface} | grep 'inet6 #{ip_address}'"
     end
 
-    def check_is_up(name)
-      state = "cat /sys/class/net/#{name}/operstate"
-      state.strip == 'up'
+    def get_link_state(name)
+      "cat /sys/class/net/#{name}/operstate"
     end
   end
 end
