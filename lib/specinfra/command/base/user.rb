@@ -30,6 +30,14 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       "grep -w -- #{escape(key)} ~#{escape(user)}/.ssh/authorized_keys"
     end
 
+    def get_minimum_days_between_password_change(user)
+      "chage -l #{escape(user)} | grep '^Minimum.*:' | awk -F ': ' '{print $2}'"
+    end
+
+    def get_maximum_days_between_password_change(user)
+      "chage -l #{escape(user)} | grep '^Maximum.*:' | awk -F ': ' '{print $2}'"
+    end
+
     def get_uid(user)
       "id -u #{escape(user)}"
     end
