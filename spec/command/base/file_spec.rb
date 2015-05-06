@@ -46,7 +46,7 @@ describe get_command(:link_file_to, '/link', '/target') do
   it { should eq 'ln -s /target /link' }
 end
 
-describe get_command(:link_file_to, '/link', '/target', force: true) do
+describe get_command(:link_file_to, '/link', '/target', :force => true) do
   it { should eq 'ln -sf /target /link' }
 end
 
