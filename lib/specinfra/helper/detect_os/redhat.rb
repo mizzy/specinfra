@@ -16,7 +16,12 @@ class Specinfra::Helper::DetectOs::Redhat < Specinfra::Helper::DetectOs
 
       { :family => 'redhat', :release => release }
     elsif run_command('ls /etc/system-release').success?
-      { :family => 'redhat', :release => nil  } # Amazon Linux
+#      { :family => 'redhat', :release => nil  } # Amazon Linux
+      line = run_command('cat /etc/system-release').stdout
+      if line =~ /release (\d[\d.]*)/
+        release = $1
+      end
+      { :family => 'amazon', :release => release }
     end
   end
 end
