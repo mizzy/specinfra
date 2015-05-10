@@ -145,6 +145,10 @@ require 'specinfra/command/debian/base/package'
 require 'specinfra/command/debian/base/ppa'
 require 'specinfra/command/debian/base/service'
 
+# Debian V8 (inherit Debian)
+require 'specinfra/command/debian/v8'
+require 'specinfra/command/debian/v8/service'
+
 # Ubuntu (inherit Debian)
 require 'specinfra/command/ubuntu'
 require 'specinfra/command/ubuntu/base'

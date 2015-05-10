@@ -150,8 +150,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "mv #{escape(src)} #{escape(dest)}"
     end
 
-    def link_to(link, target)
-      "ln -s #{escape(target)} #{escape(link)}"
+    def link_to(link, target, options = {})
+      option = '-s'
+      option << 'f' if options[:force]
+      "ln #{option} #{escape(target)} #{escape(link)}"
     end
 
     def remove(file)
