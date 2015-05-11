@@ -128,6 +128,7 @@ require 'specinfra/command/darwin/base/host'
 require 'specinfra/command/darwin/base/service'
 require 'specinfra/command/darwin/base/package'
 require 'specinfra/command/darwin/base/port'
+require 'specinfra/command/darwin/base/user'
 
 # Debian (inherit Linux)
 require 'specinfra/command/debian'
