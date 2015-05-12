@@ -76,6 +76,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "grep -qFs -- #{escape(expected_pattern)} #{escape(file)}"
     end
 
+    def check_exists(file)
+      "test -e #{escape(file)}"
+    end
+
     def get_md5sum(file)
       "md5sum #{escape(file)} | cut -d ' ' -f 1"
     end

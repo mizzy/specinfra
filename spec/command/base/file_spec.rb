@@ -66,3 +66,6 @@ describe get_command(:get_file_link_target, '/tmp') do
   it { should eq 'readlink -f /tmp' }
 end
 
+describe get_command(:check_file_exists, '/tmp') do
+  it { should eq 'test -e /tmp' }
+end
