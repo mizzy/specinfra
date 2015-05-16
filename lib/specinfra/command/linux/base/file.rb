@@ -15,9 +15,5 @@ class Specinfra::Command::Linux::Base::File < Specinfra::Command::Base::File
     def get_selinuxlabel(file)
       "stat -c %C #{escape(file)}"
     end
-
-    def get_link_target(link)
-      "readlink #{escape(link)}"
-    end
   end
 end

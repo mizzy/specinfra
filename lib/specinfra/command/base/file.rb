@@ -118,7 +118,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def get_link_target(link)
-      "readlink -f #{escape(link)}"
+      "readlink #{escape(link)}"
     end
 
     def get_mtime(file)
