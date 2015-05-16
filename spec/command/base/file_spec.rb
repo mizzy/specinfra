@@ -63,7 +63,7 @@ describe get_command(:check_file_is_pipe, '/tmp') do
 end
 
 describe get_command(:get_file_link_target, '/tmp') do
-  it { should eq 'readlink -f /tmp' }
+  it { should eq 'readlink /tmp' }
 end
 
 describe get_command(:check_file_exists, '/tmp') do
