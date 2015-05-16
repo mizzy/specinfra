@@ -6,3 +6,7 @@ set :os, :family => 'linux'
 describe get_command(:get_file_selinuxlabel, 'some_file') do
   it { should eq 'stat -c %C some_file' }
 end
+
+describe get_command(:get_file_link_target, 'some_file') do
+  it { should eq 'readlink some_file' }
+end
