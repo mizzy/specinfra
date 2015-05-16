@@ -12,6 +12,16 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
 
     alias :check_is_installed_by_homebrew :check_is_installed
 
+    def check_is_installed_by_homebrew_cask(package, version=nil)
+      escaped_package = escape(package)
+      if version
+        cmd = "/usr/local/bin/brew cask info #{escaped_package} | grep -E '^\/opt\/homebrew-cask\/Caskroom\/#{escaped_package}\/#{escape(version)}'"
+      else
+        cmd = "/usr/local/bin/brew cask list -1 | grep -E '^#{escaped_package}$'"
+      end
+      cmd
+    end
+
     def check_is_installed_by_pkgutil(package, version=nil)
       cmd = "pkgutil --pkg-info #{package}"
       cmd = "#{cmd} | grep '^version: #{escape(version)}'" if version
