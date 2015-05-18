@@ -1,31 +1,15 @@
 class Specinfra::Command::Base::Service < Specinfra::Command::Base
   class << self
-    def check_is_running(service)
-      "service #{escape(service)} status"
-    end
+    include Specinfra::Command::Module::Service::Init
+    include Specinfra::Command::Module::Service::Systemd
+    include Specinfra::Command::Module::Service::Daemontools
+    include Specinfra::Command::Module::Service::Supervisor
+    include Specinfra::Command::Module::Service::Upstart
+    include Specinfra::Command::Module::Service::Runit
+    include Specinfra::Command::Module::Service::Monit
+    include Specinfra::Command::Module::Service::God
+    extend  Specinfra::Command::Module::Service::Delegator
 
-    def check_is_running_under_supervisor(service)
-      "supervisorctl status #{escape(service)} | grep RUNNING"
-    end
-
-    def check_is_running_under_upstart(service)
-      "initctl status #{escape(service)} | grep running"
-    end
-
-    def check_is_running_under_daemontools(service)
-      "svstat /service/#{escape(service)} | grep -E 'up \\(pid [0-9]+\\)'"
-    end
-
-    def check_is_running_under_runit(service)
-      "sv status #{escape(service)} | grep -E '^run: '"
-    end
-
-    def check_is_monitored_by_monit(service)
-      "monit status"
-    end
-
-    def check_is_monitored_by_god(service)
-      "god status #{escape(service)}"
-    end
+    def_delegator_service_under :init
   end
 end

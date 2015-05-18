@@ -5,6 +5,16 @@ end
 
 # Module
 require 'specinfra/command/module'
+require 'specinfra/command/module/service/init'
+require 'specinfra/command/module/service/systemd'
+require 'specinfra/command/module/service/daemontools'
+require 'specinfra/command/module/service/supervisor'
+require 'specinfra/command/module/service/upstart'
+require 'specinfra/command/module/service/runit'
+require 'specinfra/command/module/service/monit'
+require 'specinfra/command/module/service/monit'
+require 'specinfra/command/module/service/god'
+require 'specinfra/command/module/service/delegator'
 require 'specinfra/command/module/systemd'
 require 'specinfra/command/module/zfs'
 

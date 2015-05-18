@@ -2,44 +2,9 @@ module Specinfra
   module Command
     module Module
       module Systemd
-        def check_is_enabled(service, level="multi-user.target")
-          if level.to_s =~ /^\d+$/
-            level = "runlevel#{level}.target"
-          end
-          unless service.match(/\.(service|mount|device|socket)$/)
-            service += '.service'
-          end
-
-          "systemctl --plain list-dependencies #{level} | grep '\\(^\\| \\)#{escape(service)}$'"
-        end
-
-        def check_is_running(service)
-          "systemctl is-active #{escape(service)}"
-        end
-
-        def enable(service)
-          "systemctl enable #{escape(service)}"
-        end
-
-        def disable(service)
-          "systemctl disable #{escape(service)}"
-        end
-
-        def start(service)
-          "systemctl start #{escape(service)}"
-        end
-
-        def stop(service)
-          "systemctl stop #{escape(service)}"
-        end
-
-        def restart(service)
-          "systemctl restart #{escape(service)}"
-        end
-
-        def reload(service)
-          "systemctl reload #{escape(service)}"
-        end
+        include Specinfra::Command::Module::Service::Systemd
+        extend  Specinfra::Command::Module::Service::Delegator
+        def_delegator_service_under :systemd
       end
     end
   end
