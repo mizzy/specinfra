@@ -16,7 +16,7 @@ module Specinfra
           end
 
           def disable_under_daemontools(service)
-            "( cd /service/#{escape(service)} && rm -f /service/#{escape(service)} && svc -dx . && [ -d log ] && svc -dx log )"
+            "( cd /service/#{escape(service)} && rm -f /service/#{escape(service)} && svc -dx . log )"
           end
 
           def start_under_daemontools(service)
