@@ -110,7 +110,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def check_is_linked_to(link, target)
-      "stat -c %N #{escape(link)} | egrep -e \"-> .#{escape(target)}.\""
+      "stat -c %N #{escape(link)} | egrep -e \"-> #{escape(target)}\""
     end
 
     def check_is_link(link)
