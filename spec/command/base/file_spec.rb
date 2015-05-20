@@ -69,3 +69,7 @@ end
 describe get_command(:check_file_exists, '/tmp') do
   it { should eq 'test -e /tmp' }
 end
+
+describe get_command(:check_file_is_linked_to, '/tmp', '/var/tmp') do
+  it { should eq 'stat -c %N /tmp | egrep -e "-> /var/tmp"' }
+end
