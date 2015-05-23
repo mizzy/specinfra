@@ -9,8 +9,13 @@ module Specinfra
       def run_command(cmd, opt={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        ret = with_env do
-          ssh_exec!(cmd)
+
+        if get_config(:ssh_without_env)
+          ret = ssh_exec!(cmd)
+        else
+          ret = with_env do
+            ssh_exec!(cmd)
+          end
         end
 
         ret[:stdout].gsub!(/\r\n/, "\n")

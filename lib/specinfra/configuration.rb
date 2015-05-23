@@ -19,6 +19,7 @@ module Specinfra
         :lxc,
         :request_pty,
         :ssh_options,
+        :ssh_without_env,
         :dockerfile_finalizer,
         :telnet_options,
       ].freeze
