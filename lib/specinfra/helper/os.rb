@@ -21,6 +21,7 @@ module Specinfra
             return res
           end
         end
+        raise NotImplementedError, "Specinfra failed os detection."
       end
     end
   end
