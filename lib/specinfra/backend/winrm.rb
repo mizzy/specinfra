@@ -3,8 +3,12 @@ module Specinfra
     class Winrm < Base
       include PowerShell::ScriptHelper
 
+      def initialize(config={})
+        super(config)
+        set_config(:os, { :family => 'windows' })
+      end
+
       def run_command(cmd, opts={})
-        set_config(:os, {:family => 'windows'})
         script = create_script(cmd)
         winrm = get_config(:winrm)
 
