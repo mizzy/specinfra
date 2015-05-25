@@ -21,6 +21,7 @@ module Specinfra
             return res
           end
         end
+        raise NotImplementedError, "Specinfra failed os detection. You should set os family to spec_helper. (or implement by own and create pull request)."
       end
     end
   end
