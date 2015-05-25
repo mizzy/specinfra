@@ -5,8 +5,12 @@ module Specinfra
     class Cmd < Base
       include PowerShell::ScriptHelper
 
-      def run_command(cmd, opts={})
+      def initialize(config={})
+        super(config)
         set_config(:os, { :family => 'windows' })
+      end
+
+      def run_command(cmd, opts={})
         script = create_script(cmd)
         result = execute_script %Q{#{powershell} -encodedCommand #{encode_script(script)}}
 
