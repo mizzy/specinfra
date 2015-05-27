@@ -3,11 +3,8 @@ module Specinfra
     class Winrm < Base
       include PowerShell::ScriptHelper
 
-      def os_info
-        { :family => 'windows', :release => nil, :arch => nil }
-      end
-
       def run_command(cmd, opts={})
+        set_config(:os, {:family => 'windows'})
         script = create_script(cmd)
         winrm = get_config(:winrm)
 
