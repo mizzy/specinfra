@@ -39,6 +39,14 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
       %Q!Get-Content("#{file}") | Out-String!
     end
 
+    def get_md5sum(file)
+      <<-EOT
+      $md5 = New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+      $sum = [System.BitConverter]::ToString($md5.ComputeHash([System.IO.File]::ReadAllBytes("#{file}")))
+      echo $sum.ToLower().Replace("-","")
+      EOT
+    end
+
     def check_is_accessible_by_user(file, user, access)
       case access
       when 'r'
