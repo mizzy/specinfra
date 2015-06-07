@@ -30,5 +30,13 @@ class Specinfra::Command::Freebsd::Base::File < Specinfra::Command::Base::File
     def get_size(file)
       "stat -f%z #{escape(file)}"
     end
+
+    def get_sha256sum(file)
+        "sha256 #{escape(file)} | cut -d ' ' -f 4"
+    end
+
+    def get_md5sum(file)
+        "md5 #{escape(file)} | cut -d ' ' -f 4"
+    end
   end
 end
