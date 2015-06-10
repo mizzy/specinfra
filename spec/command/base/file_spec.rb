@@ -62,6 +62,14 @@ describe get_command(:check_file_is_pipe, '/tmp') do
   it { should eq 'test -p /tmp' }
 end
 
+describe get_command(:check_file_is_block_device, '/tmp') do
+  it { should eq 'test -b /tmp' }
+end
+
+describe get_command(:check_file_is_character_device, '/tmp') do
+  it { should eq 'test -c /tmp' }
+end
+
 describe get_command(:get_file_link_target, '/tmp') do
   it { should eq 'readlink /tmp' }
 end
