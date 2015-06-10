@@ -16,6 +16,14 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "test -S #{escape(file)}"
     end
 
+    def check_is_block_device(file)
+      "test -b #{escape(file)}"
+    end
+
+    def check_is_character_device(file)
+      "test -c #{escape(file)}"
+    end
+
     def check_is_symlink(file)
       "test -L #{escape(file)}"
     end
