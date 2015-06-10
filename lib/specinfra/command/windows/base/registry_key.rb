@@ -15,7 +15,7 @@ class Specinfra::Command::Windows::Base::RegistryKey < Specinfra::Command::Windo
     end
 
     def check_has_property(key_name, key_property)
-      cmd = "(Get-Item 'Registry::#{key_name}').GetValueKind('#{key_property[:name]}') -eq '#{get_key_type}'"
+      cmd = "(Get-Item 'Registry::#{key_name}').GetValueKind('#{key_property[:name]}') -eq '#{get_key_type([key_property[:type]])}'"
       Backend::PowerShell::Command.new { exec cmd }
     end
 
@@ -26,16 +26,16 @@ class Specinfra::Command::Windows::Base::RegistryKey < Specinfra::Command::Windo
     end
 
     private
-    def do_not_convert?
-       key_property[:type].to_s =~ /_converted/i
+    def do_not_convert?(key_type)
+      key_type.to_s =~ /_converted/i
     end
 
-    def get_key_type
-       REGISTRY_KEY_TYPES[key_property[:type].to_s.gsub("_converted").to_sym]
+    def get_key_type(key_type)
+       REGISTRY_KEY_TYPES[key_type.to_s.gsub("_converted").to_sym]
     end
 
     def convert_key_property_value property
-      return property if do_not_convert?
+      return property if do_not_convert? property[:type]
       case property[:type]
       when :type_binary
         byte_array = [property[:value]].pack('H*').bytes.to_a
