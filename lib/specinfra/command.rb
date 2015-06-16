@@ -100,6 +100,10 @@ require 'specinfra/command/fedora/base/service'
 require 'specinfra/command/fedora/v15'
 require 'specinfra/command/fedora/v15/service'
 
+# Amazon Linux (inherit RedHat)
+require 'specinfra/command/amazon'
+require 'specinfra/command/amazon/base'
+
 # AIX (inherit Base)
 require 'specinfra/command/aix'
 require 'specinfra/command/aix/base'
