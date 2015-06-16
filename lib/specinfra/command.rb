@@ -83,6 +83,15 @@ require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/service'
 require 'specinfra/command/redhat/base/yumrepo'
 
+# Amazon Linux (inherit Linux)
+require 'specinfra/command/amazon'
+require 'specinfra/command/amazon/base'
+require 'specinfra/command/amazon/base/file'
+require 'specinfra/command/amazon/base/iptables'
+require 'specinfra/command/amazon/base/package'
+require 'specinfra/command/amazon/base/service'
+require 'specinfra/command/amazon/base/yumrepo'
+
 # RedHat V5 (inherit RedHat)
 require 'specinfra/command/redhat/v5'
 require 'specinfra/command/redhat/v5/iptables'
