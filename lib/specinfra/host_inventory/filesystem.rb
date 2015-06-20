@@ -10,7 +10,7 @@ module Specinfra
           nil
         end
       end
-      def parse(ret)
+      def parse(ret) 
         filesystem = {}
         ret.each_line do |line|
           next if line =~ /^Filesystem\s+/
