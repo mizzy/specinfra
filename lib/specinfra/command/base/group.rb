@@ -5,8 +5,7 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
     end
 
     def check_has_gid(group, gid)
-      regexp = "^#{group}"
-      "getent group | grep -w -- #{escape(regexp)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
+      "getent group #{escape(group)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
     end
 
     def get_gid(group)
