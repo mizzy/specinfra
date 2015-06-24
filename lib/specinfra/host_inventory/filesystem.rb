@@ -3,12 +3,16 @@ module Specinfra
     class Filesystem < Base
       def get
         cmd = backend.command.get(:get_inventory_filesystem)
-        ret = backend.run_command(cmd).stdout.lines
-        parse(ret)
+        ret = backend.run_command(cmd)
+        if ret.exit_status == 0
+          parse(ret.stdout)
+        else
+          nil
+        end
       end
       def parse(ret)
         filesystem = {}
-        ret.each do |line|
+        ret.each_line do |line|
           next if line =~ /^Filesystem\s+/
           if line =~ /^(.+?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+\%)\s+(.+)$/
             device = $1

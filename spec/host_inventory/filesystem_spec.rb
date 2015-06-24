@@ -12,7 +12,7 @@ EOH
 describe Specinfra::HostInventory::Filesystem do
   let(:host_inventory) { nil }
   describe 'Example of CentOS 6.6 Kernel version 2.6.32-504.23.4.el6.i686' do
-    ret = Specinfra::HostInventory::Filesystem.new(host_inventory).parse(str.split(/\n/))
+    ret = Specinfra::HostInventory::Filesystem.new(host_inventory).parse(str)
     example do
       expect(ret["/dev/mapper/vg_idefix-lv_root"]).to include(
         "kb_used"      => "8840540",
