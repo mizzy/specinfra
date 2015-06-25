@@ -3,7 +3,14 @@ module Specinfra
     class Memory < Base
       def get
         cmd = backend.command.get(:get_inventory_memory)
-        ret = backend.run_command(cmd).stdout
+        ret = backend.run_command(cmd)
+        if ret.exit_status == 0
+          parse(ret.stdout)
+        else
+          nil
+        end
+      end
+      def parse(ret)
         memory = { 'swap' => {} }
         ret.each_line do |line|
           case line

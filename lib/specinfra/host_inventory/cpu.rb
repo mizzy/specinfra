@@ -3,8 +3,12 @@ module Specinfra
     class Cpu < Base
       def get
         cmd = backend.command.get(:get_inventory_cpu)
-        ret = backend.run_command(cmd).stdout
-        parse(ret)
+        ret = backend.run_command(cmd)
+        if ret.exit_status == 0
+           parse(ret.stdout)
+        else
+           nil
+        end
       end
       def parse(cmd_ret)
         cpuinfo = {}
