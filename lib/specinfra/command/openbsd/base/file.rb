@@ -35,5 +35,13 @@ class Specinfra::Command::Openbsd::Base::File < Specinfra::Command::Base::File
     def get_mode(file)
       "stat -f%Lp #{escape(file)}"
     end
+
+    def get_mtime(file)
+      "stat -f %m #{escape(file)}"
+    end
+
+    def get_size(file)
+      "stat -f %z #{escape(file)}"
+    end
   end
 end

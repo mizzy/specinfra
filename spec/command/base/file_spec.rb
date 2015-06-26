@@ -77,3 +77,11 @@ end
 describe get_command(:check_file_exists, '/tmp') do
   it { should eq 'test -e /tmp' }
 end
+
+describe get_command(:get_file_mtime, '/tmp') do
+  it { should eq 'stat -c %Y /tmp' }
+end
+
+describe get_command(:get_file_size, '/tmp') do
+  it { should eq 'stat -c %s /tmp' }
+end
