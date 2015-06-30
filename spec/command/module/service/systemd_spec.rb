@@ -5,7 +5,7 @@ describe Specinfra::Command::Module::Service::Systemd do
     extend Specinfra::Command::Module::Service::Systemd
   end
   let(:klass) { Specinfra::Command::Module::Service::Systemd::Test }
-  it { expect(klass.check_is_enabled_under_systemd('httpd')).to eq "systemctl --plain list-dependencies multi-user.target | grep '\\(^\\| \\)httpd.service$'" }
+  it { expect(klass.check_is_enabled_under_systemd('httpd')).to eq "systemctl --quiet is-enabled httpd" }
   it { expect(klass.check_is_running_under_systemd('httpd')).to eq 'systemctl is-active httpd' }
   it { expect(klass.enable_under_systemd('httpd')).to  eq 'systemctl enable httpd' }
   it { expect(klass.disable_under_systemd('httpd')).to eq 'systemctl disable httpd' }
