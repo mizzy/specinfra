@@ -3,15 +3,8 @@ module Specinfra
     module Module
       module Service
         module Systemd
-          def check_is_enabled_under_systemd(service, level="multi-user.target")
-            if level.to_s =~ /^\d+$/
-              level = "runlevel#{level}.target"
-            end
-            unless service.match(/\.(service|mount|device|socket)$/)
-              service += '.service'
-            end
-
-            "systemctl --plain list-dependencies #{level} | grep '\\(^\\| \\)#{escape(service)}$'"
+          def check_is_enabled_under_systemd(service, level=nil)
+            "systemctl --quiet is-enabled #{escape(service)}"
           end
 
           def check_is_running_under_systemd(service)
