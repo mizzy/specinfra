@@ -210,6 +210,7 @@ require 'specinfra/command/freebsd/base/package'
 require 'specinfra/command/freebsd/base/port'
 require 'specinfra/command/freebsd/base/service'
 require 'specinfra/command/freebsd/base/routing_table'
+require 'specinfra/command/freebsd/base/user'
 
 # FreeBSD V10 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v10'

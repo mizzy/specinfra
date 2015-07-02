@@ -1,6 +1,5 @@
 class Specinfra::Command::Freebsd::Base::User < Specinfra::Command::Base::User
   class << self
-
     def get_minimum_days_between_password_change(user)
       "0"
     end
