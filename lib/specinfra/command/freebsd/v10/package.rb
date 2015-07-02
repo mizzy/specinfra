@@ -8,6 +8,18 @@ class Specinfra::Command::Freebsd::V10::Package < Specinfra::Command::Freebsd::B
       end
     end
 
+    alias :check_is_installed_by_pkg :check_is_installed
+
+    def check_is_installed_by_rpm(package, version=nil)
+      cmd = "rpm -q #{escape(package)}"
+      if version
+        cmd = "#{cmd} | grep -w -- #{escape(package)}-#{escape(version)}"
+      end
+      cmd
+    end
+
+    alias :check_is_installed_by_yum :check_is_installed_by_rpm
+
     def install(package, version=nil, option='')
       "pkg install -y #{option} #{package}"
     end
