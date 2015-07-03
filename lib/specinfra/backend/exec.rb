@@ -9,7 +9,7 @@ module Specinfra
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
         stdout = with_env do
-          `#{build_command(cmd)} 2>&1`
+          `#{cmd} 2>&1`
         end
         # In ruby 1.9, it is possible to use Open3.capture3, but not in 1.8
         # stdout, stderr, status = Open3.capture3(cmd)
