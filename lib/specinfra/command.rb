@@ -212,13 +212,13 @@ require 'specinfra/command/freebsd/base/service'
 require 'specinfra/command/freebsd/base/routing_table'
 require 'specinfra/command/freebsd/base/user'
 
-# FreeBSD V10 (inherit FreeBSD)
-require 'specinfra/command/freebsd/v10'
-require 'specinfra/command/freebsd/v10/package'
-
 # FreeBSD V6 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v6'
 require 'specinfra/command/freebsd/v6/user'
+
+# FreeBSD V10 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v10'
+require 'specinfra/command/freebsd/v10/package'
 
 # OpenBSD (inherit Base)
 require 'specinfra/command/openbsd'
