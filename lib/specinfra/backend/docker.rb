@@ -58,7 +58,7 @@ module Specinfra
       def create_and_start_container
         opts = { 'Image' => current_image.id }
 
-        if current_image.json["Config"]["Cmd"].nil?
+        if current_image.json["Config"]["Cmd"].nil? && current_image.json["Config"]["Entrypoint"].nil?
           opts.merge!({'Cmd' => ['/bin/sh']})
         end
 
