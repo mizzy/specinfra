@@ -90,7 +90,7 @@ module Specinfra
           rescue Errno::EPIPE
           end
         ensure
-          quit_w.close
+          quit_w.close unless quit_w.closed?
         end
 
         return stdout, stderr, stats.exitstatus
