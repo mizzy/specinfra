@@ -89,6 +89,8 @@ module Specinfra
             quit_w.syswrite 1
           rescue Errno::EPIPE
           end
+
+          th.value # wait
         ensure
           quit_w.close unless quit_w.closed?
         end
