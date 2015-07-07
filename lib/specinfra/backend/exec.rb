@@ -1,7 +1,7 @@
 require 'singleton'
 require 'fileutils'
 require 'shellwords'
-require 'posix-spawn'
+require 'sfl'
 
 module Specinfra
   module Backend
@@ -78,7 +78,7 @@ module Specinfra
 
           th.abort_on_exception = true
 
-          pid = POSIX::Spawn::spawn(cmd, :out => out_w, :err => err_w)
+          pid = spawn(cmd, :out => out_w, :err => err_w)
 
           out_w.close
           err_w.close
