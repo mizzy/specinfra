@@ -57,11 +57,15 @@ module Specinfra
                 readable_ios, = IO.select([quit_r, out_r, err_r])
 
                 if readable_ios.include?(out_r)
-                  stdout += out_r.read_nonblock(1000)
+                  out = out_r.read_nonblock(1000)
+                  stdout += out
+                  puts out if get_config(:display_stdout)
                 end
 
                 if readable_ios.include?(err_r)
-                  stderr +=  err_r.read_nonblock(1000)
+                  err = err_r.read_nonblock(1000)
+                  stderr += err
+                  puts err if get_config(:display_stderr)
                 end
 
                 if readable_ios.include?(quit_r)
