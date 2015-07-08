@@ -42,12 +42,12 @@ describe Specinfra::Helper::DetectOs::Aix do
       :arch    => 'powerpc'
     )
   end
-  it 'Should return aix when AIX is installed.' do
+  it 'Should return aix nil nil when AIX FooBar is installed.' do
     allow(aix).to receive(:run_command).with('uname -s') {
       CommandResult.new(:stdout => 'AIX', :exit_status => 0)
     }
     allow(aix).to receive(:run_command).with('uname -rvp') {
-      CommandResult.new(:stdout => '', :exit_status => 1)
+      CommandResult.new(:stdout => 'Foo Bar batz', :exit_status => 1)
     }
     expect(aix.detect).to include(
       :family  => 'aix',
