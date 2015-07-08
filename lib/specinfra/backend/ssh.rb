@@ -126,6 +126,7 @@ module Specinfra
                 channel.send_data "#{get_config(:sudo_password)}\n"
               else
                 stdout_data += data
+                @stdout_handler.call(data) if @stdout_handler
               end
             end
 
@@ -138,6 +139,7 @@ module Specinfra
                 abort 'Please set sudo password to Specinfra.configuration.sudo_password.'
               else
                 stderr_data += data
+                @stderr_handler.call(data) if @stderr_handler
               end
             end
 
