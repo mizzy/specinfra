@@ -43,11 +43,11 @@ module Specinfra
         @example = e
       end
 
-      def set_stdout_handler(&block)
+      def stdout_handler=(block)
         @stdout_handler = block
       end
 
-      def set_stderr_handler(&block)
+      def stderr_handler=(block)
         @stderr_handler = block
       end
     end
