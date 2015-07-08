@@ -42,6 +42,14 @@ module Specinfra
       def set_example(e)
         @example = e
       end
+
+      def set_stdout_handler(&block)
+        @stdout_handler = block
+      end
+
+      def set_stderr_handler(&block)
+        @stderr_handler = block
+      end
     end
   end
 end
