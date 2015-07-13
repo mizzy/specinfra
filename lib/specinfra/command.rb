@@ -16,8 +16,7 @@ require 'specinfra/command/module/service/god'
 require 'specinfra/command/module/service/delegator'
 require 'specinfra/command/module/systemd'
 require 'specinfra/command/module/zfs'
-require 'specinfra/command/module/iproute'
-require 'specinfra/command/module/iproute/port'
+require 'specinfra/command/module/ss'
 
 # Base
 require 'specinfra/command/base'
