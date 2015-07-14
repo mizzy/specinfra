@@ -16,6 +16,7 @@ require 'specinfra/command/module/service/god'
 require 'specinfra/command/module/service/delegator'
 require 'specinfra/command/module/systemd'
 require 'specinfra/command/module/zfs'
+require 'specinfra/command/module/ss'
 
 # Base
 require 'specinfra/command/base'
@@ -90,6 +91,7 @@ require 'specinfra/command/redhat/v5/iptables'
 # RedHat V7 (inherit RedHat)
 require 'specinfra/command/redhat/v7'
 require 'specinfra/command/redhat/v7/service'
+require 'specinfra/command/redhat/v7/port'
 
 # Fedora (inherit RedhHat)
 require 'specinfra/command/fedora'
