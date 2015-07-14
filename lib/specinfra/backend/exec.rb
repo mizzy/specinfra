@@ -45,35 +45,48 @@ module Specinfra
       private
       def spawn_command(cmd)
         stdout, stderr = '', ''
-
         begin
           quit_r, quit_w = IO.pipe
           out_r,  out_w  = IO.pipe
           err_r,  err_w  = IO.pipe
 
           th = Thread.new do
+            output = {
+              quit_r => "",
+              out_r => "",
+              err_r => ""
+            }
+
+            handlers = {
+              quit_r => nil,
+              out_r => @stdout_handler,
+              err_r => @stderr_handler
+            }
+
             begin
               loop do
-                readable_ios, = IO.select([quit_r, out_r, err_r])
+                readable_ios, = IO.select(output.keys)
 
-                if readable_ios.include?(out_r)
-                  out = out_r.read_nonblock(4096)
-                  stdout += out
-                  @stdout_handler.call(out) if @stdout_handler
+                readable_ios.each do |fd|
+                  loop do
+                    begin
+                      out = fd.read_nonblock(4096)
+                      output[fd] << out
+
+                      handlers[fd].call(out) if handlers[fd]
+                    rescue Errno::EAGAIN
+                      # Ruby 2.2 has more specific exception class IO::EAGAINWaitReadable
+                      break
+                    end
+                  end
                 end
 
-                if readable_ios.include?(err_r)
-                  err = err_r.read_nonblock(4096)
-                  stderr += err
-                  @stderr_handler.call(err) if @stderr_handler
-                end
-
-                if readable_ios.include?(quit_r)
-                  break
-                end
+                break unless output[quit_r].empty?
               end
             rescue EOFError
             ensure
+              stdout = output[out_r]
+              stderr = output[err_r]
               quit_r.close unless quit_r.closed?
               out_r.close  unless out_r.closed?
               err_r.close  unless err_r.closed?
