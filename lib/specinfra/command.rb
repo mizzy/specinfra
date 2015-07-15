@@ -79,6 +79,7 @@ require 'specinfra/command/esxi/base/package'
 require 'specinfra/command/redhat'
 require 'specinfra/command/redhat/base'
 require 'specinfra/command/redhat/base/file'
+require 'specinfra/command/redhat/base/host'
 require 'specinfra/command/redhat/base/iptables'
 require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/service'
@@ -90,6 +91,7 @@ require 'specinfra/command/redhat/v5/iptables'
 
 # RedHat V7 (inherit RedHat)
 require 'specinfra/command/redhat/v7'
+require 'specinfra/command/redhat/v7/host'
 require 'specinfra/command/redhat/v7/service'
 require 'specinfra/command/redhat/v7/port'
 
