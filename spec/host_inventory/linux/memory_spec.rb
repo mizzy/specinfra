@@ -38,8 +38,9 @@ Committed_AS:    2517964 kB
 VmallocTotal:     122880 kB
 VmallocUsed:       11204 kB
 VmallocChunk:      95432 kB
-HugePages_Total:       0
-HugePages_Free:        0
+AnonHugePages:     92160 kB
+HugePages_Total:   189440
+HugePages_Free:    189440
 HugePages_Rsvd:        0
 HugePages_Surp:        0
 Hugepagesize:       2048 kB
@@ -121,6 +122,24 @@ describe Specinfra::HostInventory::Memory do
     end
     example "writeback" do
       expect(ret["writeback"]).to include("0kB")
+    end
+    example "annon_huge_pages" do
+      expect(ret["annon_huge_pages"]).to include("92160kB")
+    end
+    example "huge_pages_total" do
+      expect(ret["huge_pages_total"]).to include("189440")
+    end
+    example "huge_pages_free" do
+      expect(ret["huge_pages_free"]).to include("189440")
+    end
+    example "huge_pages_rsvd" do
+      expect(ret["huge_pages_rsvd"]).to include("0")
+    end
+    example "huge_pages_surp" do
+      expect(ret["huge_pages_surp"]).to include("0")
+    end
+    example "huge_page_size" do
+      expect(ret["huge_page_size"]).to include("2048kB")
     end
   end
 end

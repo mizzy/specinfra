@@ -62,6 +62,18 @@ module Specinfra
             memory['vmalloc_used'] = "#{$1}#{$2}"
           when /^VmallocChunk:\s+(\d+) (.+)$/
             memory['vmalloc_chunk'] = "#{$1}#{$2}"
+          when /^AnonHugePages:\s+(\d+) (.+)$/
+            memory['annon_huge_pages'] = "#{$1}#{$2}"
+          when /^HugePages_Total:\s+(\d+)$/
+            memory['huge_pages_total'] = "#{$1}"
+          when /^HugePages_Free:\s+(\d+)$/
+            memory['huge_pages_free'] = "#{$1}"
+          when /^HugePages_Rsvd:\s+(\d+)$/
+            memory['huge_pages_rsvd'] = "#{$1}"
+          when /^HugePages_Surp:\s+(\d+)$/
+            memory['huge_pages_surp'] = "#{$1}"
+          when /^Hugepagesize:\s+(\d+) (.+)$/
+            memory['huge_page_size'] = "#{$1}#{$2}"
           end
         end
         memory
