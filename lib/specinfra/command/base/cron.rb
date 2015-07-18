@@ -9,5 +9,9 @@ class Specinfra::Command::Base::Cron < Specinfra::Command::Base
         "crontab -u #{escape(user)} -l | #{grep_command}"
       end
     end
+
+    def get_table
+      'crontab -l'
+    end
   end
 end
