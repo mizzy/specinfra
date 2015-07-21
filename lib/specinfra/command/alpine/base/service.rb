@@ -9,10 +9,3 @@ class Specinfra::Command::Alpine::Base::Service < Specinfra::Command::Linux::Bas
     end
   end
 end
-
-
-
-
-
-
-
