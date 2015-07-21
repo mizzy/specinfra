@@ -125,6 +125,7 @@ require 'specinfra/command/alpine'
 require 'specinfra/command/alpine/base'
 require 'specinfra/command/alpine/base/package'
 require 'specinfra/command/alpine/base/process'
+require 'specinfra/command/alpine/base/service'
 
 # Arch (inherit Linux)
 require 'specinfra/command/arch'
