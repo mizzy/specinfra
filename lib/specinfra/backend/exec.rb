@@ -2,6 +2,7 @@ require 'singleton'
 require 'fileutils'
 require 'shellwords'
 require 'sfl'
+require 'open3'
 
 module Specinfra
   module Backend
@@ -44,75 +45,42 @@ module Specinfra
 
       private
       def spawn_command(cmd)
-        stdout, stderr = '', ''
-        begin
-          quit_r, quit_w = IO.pipe
-          out_r,  out_w  = IO.pipe
-          err_r,  err_w  = IO.pipe
+        r_out, r_err = '', ''
+        exit_status = nil
 
-          th = Thread.new do
-            output = {
-              quit_r => "",
-              out_r => "",
-              err_r => ""
-            }
+        Open3.popen3(ENV, cmd) do |stdin, stdout, stderr, wait_thr|
+          output = {
+            stdout => "",
+            stderr => ""
+          }
 
-            handlers = {
-              quit_r => nil,
-              out_r => @stdout_handler,
-              err_r => @stderr_handler
-            }
-
-            begin
-              loop do
-                readable_ios, = IO.select(output.keys)
-
-                readable_ios.each do |fd|
-                  loop do
-                    begin
-                      out = fd.read_nonblock(4096)
-                      output[fd] << out
-
-                      handlers[fd].call(out) if handlers[fd]
-                    rescue Errno::EAGAIN
-                      # Ruby 2.2 has more specific exception class IO::EAGAINWaitReadable
-                      break
-                    end
-                  end
-                end
-
-                break unless output[quit_r].empty?
-              end
-            rescue EOFError
-            ensure
-              stdout = output[out_r]
-              stderr = output[err_r]
-              quit_r.close unless quit_r.closed?
-              out_r.close  unless out_r.closed?
-              err_r.close  unless err_r.closed?
-            end
-          end
-
-          th.abort_on_exception = true
-
-          pid = spawn(cmd, :out => out_w, :err => err_w)
-
-          out_w.close
-          err_w.close
-
-          pid, stats = Process.waitpid2(pid)
+          handlers = {
+            stdout => @stdout_handler,
+            stderr => @stderr_handler
+          }
 
           begin
-            quit_w.syswrite 1
-          rescue Errno::EPIPE
+            until output.keys.find { |f| !f.eof }.nil? do
+              readable_ios, = IO.select(output.keys)
+              readable_ios.each do |fd|
+                begin
+                  out = fd.read_nonblock(4096)
+                  output[fd] << out
+                  handlers[fs].call(out) if handlers[fd]
+                rescue Errno::EAGAIN
+                  break
+                end
+              end
+            end
+
+          rescue EOFError
+          ensure
+            r_out = output[stdout]
+            r_err = output[stderr]
           end
-
-          th.value # wait
-        ensure
-          quit_w.close unless quit_w.closed?
+          exit_status = wait_thr.value
         end
-
-        return stdout, stderr, stats.exitstatus
+        return r_out, r_err, exit_status
       end
 
       def with_env
