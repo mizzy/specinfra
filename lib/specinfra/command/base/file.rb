@@ -171,5 +171,9 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def remove(file)
       "rm -rf #{escape(file)}"
     end
+
+    def download(src, dest)
+      "curl -sSL #{escape(src)} -o #{escape(dest)}"
+    end
   end
 end

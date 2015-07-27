@@ -85,3 +85,7 @@ end
 describe get_command(:get_file_size, '/tmp') do
   it { should eq 'stat -c %s /tmp' }
 end
+
+describe get_command(:download_file, 'http://example.com/sample_file', '/tmp/sample_file') do
+  it { should eq 'curl -sSL http://example.com/sample_file -o /tmp/sample_file' }
+end
