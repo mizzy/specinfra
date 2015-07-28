@@ -23,5 +23,9 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
     def get_filesystem
       'df -P'
     end
+
+    def get_kernel
+      'uname -s -r'
+    end
   end
 end

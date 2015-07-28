@@ -9,3 +9,7 @@ end
 describe get_command(:get_inventory_cpu) do
   it { should eq 'cat /proc/cpuinfo' }
 end
+
+describe get_command(:get_inventory_kernel) do
+  it { should eq 'uname -s -r' }
+end
