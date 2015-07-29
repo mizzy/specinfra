@@ -24,10 +24,18 @@ module Specinfra
 
         def command_options(protocol)
           case protocol
-          when /\Atcp/
-            "-tnl"
+            when /\Atcp/
+              if protocol == 'tcp'
+                "-tnl4"
+              else
+                "-tnl6"
+              end
           when /\Audp/
-            "-unl"
+            if protocol == 'udp'
+              "-unl4"
+            else
+              "-unl6"
+            end
           else
             "-tunl"
           end
