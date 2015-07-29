@@ -37,7 +37,7 @@ if defined?(RSpec)
     end
 
     RSpec::Core::RakeTask.new(:host_inventory) do |t|
-      t.pattern = "spec/host_inventory/*_spec.rb"
+      t.pattern = "spec/host_inventory/**/*_spec.rb"
     end
   end
 end
