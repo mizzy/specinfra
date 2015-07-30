@@ -23,21 +23,14 @@ module Specinfra
         end
 
         def command_options(protocol)
-          case protocol
-            when /\Atcp/
-              if protocol == 'tcp'
-                "-tnl4"
-              else
-                "-tnl6"
-              end
-          when /\Audp/
-            if protocol == 'udp'
-              "-unl4"
-            else
-              "-unl6"
-            end
+          case protocol.to_s
+          when 'tcp'  then "-tnl4"
+          when 'tcp6' then "-tnl6"
+          when 'udp'  then "-unl4"
+          when 'udp6' then "-unl6"
+          when ''     then "-tunl"
           else
-            "-tunl"
+            raise ArgumentError, "Unknown protocol [#{protocol}]"
           end
         end
       end
