@@ -31,5 +31,21 @@ class Specinfra::Command::Freebsd::Base::Interface < Specinfra::Command::Base::I
       end
       "ifconfig #{interface} inet6 | grep 'inet6 #{ip_address}'"
     end
+
+    def get_link_state(interface)
+      str = %Q{ ifconfig #{interface} link | \
+            awk '/flags/{ \
+                   split($0,line,/ /) ; \
+                   split(line[2],flags,/[,<>]/); \
+                   for (idx in flags) { \
+                     if (flags[idx] == "UP"){ \
+                       print "up"; \
+                       exit 0 ; \
+                     } \
+                   }; \
+                   print "down"; \
+                 }'}
+      str
+    end
   end
 end
