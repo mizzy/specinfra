@@ -290,3 +290,11 @@ require 'specinfra/command/windows/base/service'
 require 'specinfra/command/windows/base/user'
 require 'specinfra/command/windows/base/registry_key'
 require 'specinfra/command/windows/base/scheduled_task'
+
+# Poky (inherit Linux)
+require 'specinfra/command/poky'
+require 'specinfra/command/poky/base'
+require 'specinfra/command/poky/base/interface'
+require 'specinfra/command/poky/base/inventory'
+require 'specinfra/command/poky/base/package'
+require 'specinfra/command/poky/base/service'
