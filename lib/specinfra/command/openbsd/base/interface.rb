@@ -36,5 +36,12 @@ class Specinfra::Command::Openbsd::Base::Interface < Specinfra::Command::Base::I
       "ifconfig #{interface} inet6 | grep 'inet6 #{ip_address}'"
     end
 
+    def get_link_state(interface)
+      # Checks if interfaces is administratively up by parsing the options.
+      # L1 check via status. Virtual interfaces like tapX missing the status will report up.
+      # Emulates operstate in linux with exception of the unknown status. 
+      %Q{ifconfig #{interface} 2>&1 | awk -v s=down -F '[:<>,]' } +
+      %Q{'NR == 1 && $3 == "UP" { s="up" }; /status:/ && $2 != " active" { s="down" }; END{ print s }'}
+    end
   end
 end
