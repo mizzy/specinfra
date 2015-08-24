@@ -1,12 +1,5 @@
-class Specinfra::Command::Freebsd::Base::Host < Specinfra::Command::Base::Host
+class Specinfra::Command::Openbsd::Base::Host < Specinfra::Command::Base::Host
   class << self
-    def check_is_reachable(host, port, proto, timeout)
-      if port.nil?
-        "ping -t #{escape(timeout)} -c 2 -n #{escape(host)}"
-      else
-        "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)}"
-      end
-    end
     def get_ipaddress(name)
       # getent hosts will return both the ipv6 and ipv4 record.
       # this will only pick the first one. (Linux behavior)

@@ -14,12 +14,23 @@ class Specinfra::Command::Base::Host < Specinfra::Command::Base
       if port.nil?
         "ping -w #{escape(timeout)} -c 2 -n #{escape(host)}"
       else
-        "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)}"
+        "nc -w #{escape(timeout)} -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)}"
       end
     end
 
+    # getent hosts on a dualstack machine will most likely 
+    # return the ipv6 address to ensure one can more cleary
+    # define the outcome the ipv{4,6}_address are used. 
     def get_ipaddress(name)
       "getent hosts #{escape(name)} | awk '{print $1}'"
+    end
+    def get_ipv4_address(name)
+      # Will return multiple values pick the first and exit
+      "getent ahostsv4 #{escape(name)} | awk '{print $1; exit}'"
+    end
+    def get_ipv6_address(name)
+      # Will return multiple values pick the first and exit
+      "getent ahostsv6 #{escape(name)} | awk '{print $1; exit}'"
     end
   end
 end
