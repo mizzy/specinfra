@@ -244,6 +244,10 @@ require 'specinfra/command/openbsd/base/routing_table'
 require 'specinfra/command/openbsd/base/service'
 require 'specinfra/command/openbsd/base/user'
 
+# OpenBSD >= V5.7 (inherit OpenBSD)
+require 'specinfra/command/openbsd/v57'
+require 'specinfra/command/openbsd/v57/service'
+
 # Solaris (inherit Base)
 require 'specinfra/command/solaris'
 require 'specinfra/command/solaris/base'
