@@ -3,7 +3,7 @@ class Specinfra::Command::Darwin::Base::Host < Specinfra::Command::Base::Host
     def check_is_resolvable(name, type)
       if type == "dns"
         ## try to resolve either A or AAAA record; grep is used to return the appropriate exit code
-        %Q{dig +short +time=1 -q #{escape(name)} a #{escape(name)} aaaa | grep -qie '^[0-9a-f:.]*$'}
+        %Q{dig +search +short +time=1 -q #{escape(name)} a #{escape(name)} aaaa | grep -qie '^[0-9a-f:.]*$'}
       elsif type == "hosts"
         "sed 's/#.*$//' /etc/hosts | grep -w -- #{escape(name)}"
       else
