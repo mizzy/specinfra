@@ -149,6 +149,7 @@ require 'specinfra/command/darwin/base/inventory'
 require 'specinfra/command/darwin/base/service'
 require 'specinfra/command/darwin/base/package'
 require 'specinfra/command/darwin/base/port'
+require 'specinfra/command/darwin/base/process'
 require 'specinfra/command/darwin/base/user'
 
 # Debian (inherit Linux)
