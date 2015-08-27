@@ -12,6 +12,10 @@ describe Specinfra::Backend::Exec do
       it 'should escape special chars' do
         expect(Specinfra.backend.build_command('test ! -f /etc/selinux/config || (getenforce | grep -i -- disabled && grep -i -- ^SELINUX=disabled$ /etc/selinux/config)')).to eq '/bin/sh -c test\ \!\ -f\ /etc/selinux/config\ \|\|\ \(getenforce\ \|\ grep\ -i\ --\ disabled\ \&\&\ grep\ -i\ --\ \^SELINUX\=disabled\$\ /etc/selinux/config\)'
       end
+
+      it 'should escape quotes' do
+        expect(Specinfra.backend.build_command(%Q{find /etc/apt/ -name \*.list | xargs grep -o -E "^deb +[\\"']?http://ppa.launchpad.net/gluster/glusterfs-3.7"})).to eq('/bin/sh -c find\ /etc/apt/\ -name\ \*.list\ \|\ xargs\ grep\ -o\ -E\ \"\^deb\ \+\[\\\\\"\\\'\]\?http://ppa.launchpad.net/gluster/glusterfs-3.7\"')
+      end
     end
 
     context 'with custom shell' do
