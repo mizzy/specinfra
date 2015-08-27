@@ -4,7 +4,7 @@ property[:os] = nil
 set :os, :family => 'darwin'
 
 describe get_command(:check_host_is_resolvable, 'pink.unicorn.com', 'dns') do 
-  it { should eq "dig +short +time=1 -q pink.unicorn.com a pink.unicorn.com aaaa | grep -qie '^[0-9a-f:.]*$'" } 
+  it { should eq "dig +search +short +time=1 -q pink.unicorn.com a pink.unicorn.com aaaa | grep -qie '^[0-9a-f:.]*$'" } 
 end
 
 describe get_command(:check_host_is_resolvable, 'pink.unicorn.com', 'hosts') do 
