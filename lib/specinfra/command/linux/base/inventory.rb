@@ -31,6 +31,18 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
     def get_block_device
       block_device_dirs = '/sys/block/*/{size,removable,device/{model,rev,state,timeout,vendor},queue/rotational}'
       "for f in $(ls #{block_device_dirs}); do echo -e \"${f}\t$(cat ${f})\"; done"
+    end 
+
+    def get_interfaces
+      'ip addr show'
+    end
+
+    def get_ipv4_routing_table
+      'ip -4 route show' 
+    end
+
+    def get_ipv6_routing_table
+      'ip -6 route show' 
     end
 
     def get_system_product_name
