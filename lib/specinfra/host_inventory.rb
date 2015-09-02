@@ -12,6 +12,7 @@ module Specinfra
       cpu
       virtualization
       kernel
+      block_device
     }
 
     include Enumerable
