@@ -118,7 +118,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     end
 
     def check_is_linked_to(link, target)
-      "stat -c %N #{escape(link)} | egrep -e \"-> .#{escape(target)}.\""
+      %Q|test x"$(readlink #{escape(link)})" = x"#{escape(target)}"|
     end
 
     def check_is_link(link)
