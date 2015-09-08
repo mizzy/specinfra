@@ -9,8 +9,8 @@ module Specinfra
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        stdout, stderr, exit_status = with_env do
-          spawn_command(cmd)
+        stdout = with_env do
+          `#{cmd} 2>&1`
         end
 
         if @example
@@ -18,7 +18,7 @@ module Specinfra
           @example.metadata[:stdout]  = stdout
         end
 
-        CommandResult.new :stdout => stdout, :stderr => stderr, :exit_status => exit_status
+        CommandResult.new :stdout => stdout, :exit_status => $?.exitstatus
       end
 
       def send_file(from, to)
