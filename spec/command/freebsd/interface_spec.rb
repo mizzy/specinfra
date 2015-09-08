@@ -26,3 +26,7 @@ end
 describe get_command(:check_interface_has_ipv4_address, 'vtnet0', '192.168.0.123/24') do
   it { should eq "ifconfig vtnet0 inet | grep 'inet 192\\.168\\.0\\.123 '" }
 end
+
+describe get_command(:get_interface_link_state, 'vtnet0') do
+  it { should eq %Q{ifconfig -u vtnet0 2>&1 | awk -v s=up '/status:/ && $2 != "active" { s="down" }; END {print s}'} }
+end

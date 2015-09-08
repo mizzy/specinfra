@@ -33,19 +33,10 @@ class Specinfra::Command::Freebsd::Base::Interface < Specinfra::Command::Base::I
     end
 
     def get_link_state(interface)
-      str = %Q{ ifconfig #{interface} link | \
-            awk '/flags/{ \
-                   split($0,line,/ /) ; \
-                   split(line[2],flags,/[,<>]/); \
-                   for (idx in flags) { \
-                     if (flags[idx] == "UP"){ \
-                       print "up"; \
-                       exit 0 ; \
-                     } \
-                   }; \
-                   print "down"; \
-                 }'}
-      str
+      # Checks if interfaces is administratively up with the -u arg.
+      # L1 check via status. Virtual interfaces like tapX missing the status will report up.
+      # Emulates operstate in linux with exception of the unknown status.
+      %Q{ifconfig -u #{interface} 2>&1 | awk -v s=up '/status:/ && $2 != "active" { s="down" }; END {print s}'}
     end
   end
 end
