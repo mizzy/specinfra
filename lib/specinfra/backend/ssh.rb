@@ -121,7 +121,7 @@ module Specinfra
             abort "FAILED: couldn't execute command (ssh.channel.exec)" if !success
             channel.on_data do |ch, data|
               if data.match retry_prompt
-                abort 'Wrong sudo password! Please confirm your password.'
+                abort "Wrong sudo password! Please confirm your password on #{get_config(:host)}."
               elsif data.match /^#{prompt}/
                 channel.send_data "#{get_config(:sudo_password)}\n"
               else
