@@ -27,5 +27,10 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
     def get_kernel
       'uname -s -r'
     end
+
+    def get_block_device
+      block_device_dirs = '/sys/block/*/{size,removable,device/{model,rev,state,timeout,vendor},queue/rotational}'
+      "for f in $(ls #{block_device_dirs}); do echo -e \"${f}\t$(cat ${f})\"; done"
+    end
   end
 end
