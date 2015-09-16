@@ -51,7 +51,11 @@ class Specinfra::CommandFactory
       command_class = base_class.const_get(resource_type.to_camel_case)
     end
 
-    command_class.create
+    begin
+      command_class.create(@os_info)
+    rescue ArgumentError
+      command_class.create
+    end
   end
 
   def breakdown(meth)

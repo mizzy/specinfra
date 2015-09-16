@@ -1,7 +1,7 @@
 class Specinfra::Command::Freebsd::Base::User < Specinfra::Command::Base::User
   class << self
-    def create
-      if os[:release].to_i < 7
+    def create(os_info=nil)
+      if (os_info || os)[:release].to_i < 7
         Specinfra::Command::Freebsd::V6::User
       else
         self
