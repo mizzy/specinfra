@@ -4,7 +4,7 @@ class Specinfra::Command::Freebsd::V10::Package < Specinfra::Command::Freebsd::B
       if version
         "pkg query %v #{escape(package)} | grep -- #{escape(version)}"
       else
-        "pkg info #{escape(package)}"
+        "pkg info -e #{escape(package)}"
       end
     end
 
