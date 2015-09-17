@@ -5,9 +5,17 @@ class Specinfra::Command::Freebsd::Base::File < Specinfra::Command::Base::File
       "stat -f%Sg #{escape(file)} | grep -- #{escape(regexp)}"
     end
 
+    def get_owner_group(file)
+      "stat -f%Sg #{escape(file)}"
+    end
+
     def check_is_owned_by(file, owner)
       regexp = "^#{owner}$"
       "stat -f%Su #{escape(file)} | grep -- #{escape(regexp)}"
+    end
+
+    def get_owner_user(file)
+      "stat -f%Su #{escape(file)}"
     end
 
     def check_has_mode(file, mode)
