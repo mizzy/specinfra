@@ -22,7 +22,7 @@ module Specinfra
           when Regexp
             target.source
           else
-            target.to_s.gsub '/', ''
+            target.to_s.gsub '(^\/|\/$)', ''
           end
         end
 
