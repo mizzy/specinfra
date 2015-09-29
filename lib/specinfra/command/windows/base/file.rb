@@ -1,5 +1,12 @@
 class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Base
   class << self
+    def check_exists(file)
+      cmd = %Q!Test-Path -Path "#{file}"!
+      Backend::PowerShell::Command.new do
+        exec cmd
+      end
+    end
+
     def check_is_file(file)
       cmd = item_has_attribute file, 'Archive'
       Backend::PowerShell::Command.new do
