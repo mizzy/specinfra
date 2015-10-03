@@ -28,7 +28,7 @@ module Specinfra
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
         cmd = add_pre_command(cmd)
-        docker_run!(cmd)
+        docker_run!(cmd, opts)
       end
 
       def build_command(cmd)
@@ -87,7 +87,7 @@ module Specinfra
       end
 
       def docker_run!(cmd, opts={})
-        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd])
+        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd], opts)
 
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
