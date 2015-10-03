@@ -44,6 +44,7 @@ module Specinfra
           fail 'Cannot call send_file without docker_image.'
         end
 
+        @images << commit_container if @container
         @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
         cleanup_container
         create_and_start_container
