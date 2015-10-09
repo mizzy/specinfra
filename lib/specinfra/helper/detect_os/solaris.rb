@@ -5,6 +5,8 @@ class Specinfra::Helper::DetectOs::Solaris < Specinfra::Helper::DetectOs
         { :family => 'solaris', :release => 10 }
       elsif run_command('grep -q "Oracle Solaris 11" /etc/release').success?
         { :family => 'solaris', :release => 11 }
+      elsif run_command('grep -q "OpenIndiana" /etc/release').success?
+        { :family => 'solaris', :release => 11 }
       elsif run_command('grep -q SmartOS /etc/release').success?
         { :family => 'smartos', :release => nil }
       else

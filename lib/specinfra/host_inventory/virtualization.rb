@@ -3,37 +3,43 @@ module Specinfra
     class Virtualization < Base
       def get
         res = {}
+        ## docker 
         if backend.run_command('ls /.dockerinit').success?
           res[:system] = 'docker'
           return res
         end
 
-        if backend.run_command('ls /usr/sbin/dmidecode').success?
-          ret = backend.run_command('dmidecode')
-          if ret.exit_status == 0
-            case ret.stdout
-            when /Manufacturer: VMware/
-              if ret.stdout =~ /Product Name: VMware Virtual Platform/
-                res[:system] = 'vmware'
-              end
-            when /Manufacturer: Oracle Corporation/
-              if ret.stdout =~ /Product Name: VirtualBox/
-                res[:system] = 'vbox'
-              end
-            when /Product Name: KVM/
-              res[:system] = 'kvm'
-            when /Product Name: OpenStack/
-              res[:system] = 'openstack'
-            else
-              nil
-            end
-          else
-            nil
-          end
+        ## OpenVZ on Linux 
+        if backend.run_command('test -d /proc/vz -a ! -d /proc/bc').success?
+          res[:system] = 'openvz'
+          return res
         end
 
-        res
+        cmd = backend.command.get(:get_inventory_system_product_name)
+        ret = backend.run_command(cmd)
+        if ret.exit_status == 0
+           res[:system] = parse_system_product_name(ret.stdout)   
+        end 
+
+        res 
+      end 
+
+      def parse_system_product_name(ret)
+        product_name = case ret
+          when /.*VMware Virtual Platform/
+            'vmware'
+          when /.*VirtualBox/
+            'vbox'
+          when /.*KVM/
+            'kvm'
+          when /.*OpenStack/
+            'openstack'
+          else
+            nil
+        end
+        product_name
       end
+
     end
   end
 end
