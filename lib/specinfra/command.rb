@@ -163,6 +163,9 @@ require 'specinfra/command/debian/base/service'
 require 'specinfra/command/debian/v8'
 require 'specinfra/command/debian/v8/service'
 
+# Raspbian (inherit Debian)
+require 'specinfra/command/raspbian'
+
 # Ubuntu (inherit Debian)
 require 'specinfra/command/ubuntu'
 require 'specinfra/command/ubuntu/base'
