@@ -33,5 +33,10 @@ class Specinfra::Command::Solaris::Base::Inventory < Specinfra::Command::Base::I
       # e.g. swap0, swap1 and so on.
       %Q{df -k | nawk -v i=0 '$1 == "swap" { $1=$1i; i++ }; NF == 1 { printf($1); next }; { print }'}
     end
+
+    def get_system_product_name
+      "prtdiag | grep 'System Configuration'"
+    end 
+
   end
 end
