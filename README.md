@@ -20,6 +20,16 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+----
+
+## Maintenance policy of Serverspec/Specinfra
+
+* The person who found a bug should fix the bug by themself.
+* If you find a bug and cannot fix it by yourself, send a pull request and attache test code to reproduce the bug, please.
+* The person who want a new feature should implement it by themself.
+* For above reasons, I accept pull requests only and disable issues.
+* If you'd like to discuss about a new feature before implement it, make a empty commit and send a [WIP pull request](http://ben.straub.cc/2015/04/02/wip-pull-request/). But It is better that the WIP PR has some code than an empty commit.
+
 ## Contributing
 
 1. Fork it
