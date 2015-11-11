@@ -29,7 +29,6 @@ TODO: Write usage instructions here
 * The person who want a new feature should implement it by themself.
 * For above reasons, I accept pull requests only and disable issues.
 * If you'd like to discuss about a new feature before implement it, make an empty commit and send [a WIP pull request](http://ben.straub.cc/2015/04/02/wip-pull-request/). But It is better that the WIP PR has some code than an empty commit.
-* If a pull request does not mach my policy, I will reject it.
 
 ## Contributing
 
