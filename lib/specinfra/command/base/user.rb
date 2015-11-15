@@ -5,7 +5,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def check_belongs_to_group(user, group)
-      "id #{escape(user)} | awk '{print $3}' | grep -- #{escape(group)}"
+      "id #{escape(user)} | sed 's/ context=.*//g' |awk -F= '{print $4}' | grep -- #{escape(group)}"
     end
 
     def check_belongs_to_primary_group(user, group)
