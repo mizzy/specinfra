@@ -124,7 +124,10 @@ module Specinfra
                 abort "Wrong sudo password! Please confirm your password on #{get_config(:host)}."
               elsif data.match /^#{prompt}/
                 channel.send_data "#{get_config(:sudo_password)}\n"
-              else
+              # When pty is allocated and host name is not set,
+              # This error is injected into stdout.
+              # So exclude this error message.
+              elsif ! data.match /^sudo: unable to resolve host/
                 stdout_data += data
                 @stdout_handler.call(data) if @stdout_handler
               end
