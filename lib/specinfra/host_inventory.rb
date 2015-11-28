@@ -13,7 +13,9 @@ module Specinfra
       virtualization
       kernel
       block_device
-      network
+      default_interface
+      interface
+      route
     }
 
     include Enumerable

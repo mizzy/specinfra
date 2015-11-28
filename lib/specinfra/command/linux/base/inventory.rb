@@ -45,6 +45,14 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
       'ip -6 route show' 
     end
 
+    def get_ipv4_default_interface
+      'ip -4 route show default'
+    end 
+
+    def get_ipv6_default_interface
+      'ip -6 route show default'
+    end 
+
     def get_system_product_name
       "dmidecode -s system-product-name"
     end 

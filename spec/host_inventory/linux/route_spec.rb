@@ -1,7 +1,19 @@
 require 'spec_helper'
 
 str = {}
-
+srt[:ubuntu_14] = <<-EOH
+2a02:168:6611::/64 dev eth0  proto kernel  metric 256  expires 86395sec mtu 1480
+2a02:168:6611::/64 dev wlan1  proto kernel  metric 256  expires 86395sec mtu 1480
+2a02:168:6611::/64 dev wlan2  proto kernel  metric 256  expires 86395sec mtu 1480
+fd00::/64 dev fhumbi  proto kernel  metric 256 
+fe80::/64 dev eth0  proto kernel  metric 256  mtu 1480
+fe80::/64 dev nrtap  proto kernel  metric 256 
+fe80::/64 dev wlan1  proto kernel  metric 256  mtu 1480
+fe80::/64 dev wlan2  proto kernel  metric 256  mtu 1480
+default via fe80::126f:3fff:fe81:2464 dev eth0  proto ra  metric 1024  expires 25sec hoplimit 64
+default via fe80::126f:3fff:fe81:2464 dev wlan1  proto ra  metric 1024  expires 25sec mtu 1480 hoplimit 64
+default via fe80::126f:3fff:fe81:2464 dev wlan2  proto ra  metric 1024  expires 25sec mtu 1480 hoplimit 64
+EOH
 ## Output from 'ip -oneline addr show'
 str[:interfaces] = <<-EOH
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN 
