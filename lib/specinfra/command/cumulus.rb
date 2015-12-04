@@ -1,4 +1,4 @@
-class Specinfra::Command::Cumulusnetworks; end
+class Specinfra::Command::Cumuluslinux; end
 
 
 

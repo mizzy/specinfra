@@ -1,2 +1,2 @@
-class Specinfra::Command::Cumulusnetworks::Base < Specinfra::Command::Debian::Base
+class Specinfra::Command::Cumuluslinux::Base < Specinfra::Command::Debian::Base
 end
