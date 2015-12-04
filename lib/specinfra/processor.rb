@@ -6,8 +6,8 @@ module Specinfra
 
       # In Ubuntu, some services are under upstart and "service foo status" returns
       # exit status 0 even though they are stopped.
-      # So return false if stdout contains "stopped/waiting".
-      return false if ret.stdout =~ /stopped\/waiting/
+      # So return false if stdout contains "stopped/waiting" or "stop/waiting".
+      return false if ret.stdout =~ /stop(ped)?\/waiting/
 
       # If the service is not registered, check by ps command
       if ret.exit_status == 1
