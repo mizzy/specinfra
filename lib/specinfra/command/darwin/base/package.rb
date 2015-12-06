@@ -5,7 +5,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       if version
         cmd = %Q[brew info #{escaped_package} | grep -E "^$(brew --prefix)/Cellar/#{escaped_package}/#{escape(version)}"]
       else
-        cmd = "brew list -1 | grep -E '^#{escaped_package}$'"
+        cmd = "#{brew_list} | grep -E '^#{escaped_package}$'"
       end
       cmd
     end
@@ -17,7 +17,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       if version
         cmd = "brew cask info #{escaped_package} | grep -E '^/opt/homebrew-cask/Caskroom/#{escaped_package}/#{escape(version)}'"
       else
-        cmd = "brew cask list -1 | grep -E '^#{escaped_package}$'"
+        cmd = "#{brew_cask_list} | grep -E '^#{escaped_package}$'"
       end
       cmd
     end
@@ -34,7 +34,17 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
     end
 
     def get_version(package, opts=nil)
-      %Q[basename $((brew info #{package} | grep '\*$' || brew info #{package} | grep "^$(brew --prefix)/Cellar" | tail -1) | awk '{print $1}')]
+      %Q[ls -1 "$(brew --prefix)/Cellar/#{package}/" | tail -1]
+    end
+
+    def brew_list
+      # Since `brew list` is slow, directly check Cellar directory
+      'ls -1 "$(brew --prefix)/Cellar/"'
+    end
+
+    def brew_cask_list
+      # Since `brew cask list` is slow, directly check Caskroom directory
+      "ls -1 /opt/homebrew-cask/Caskroom/"
     end
   end
 end
