@@ -15,3 +15,6 @@ class Specinfra::Command::Cumuluslinux::Base::Ppa < Specinfra::Command::Debian::
     end
   end
 end
+
+class Specinfra::Command::Cumulusnetworks::Base::Ppa < Specinfra::Command::Cumuluslinux::Base::Ppa
+end

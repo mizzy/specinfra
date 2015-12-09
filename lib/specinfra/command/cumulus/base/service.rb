@@ -5,3 +5,6 @@ class Specinfra::Command::Cumuluslinux::Base::Service < Specinfra::Command::Debi
     end
   end
 end
+
+class Specinfra::Command::Cumulusnetworks::Base::Service < Specinfra::Command::Cumuluslinux::Base::Service
+end
