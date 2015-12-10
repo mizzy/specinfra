@@ -166,6 +166,12 @@ require 'specinfra/command/debian/v8/service'
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
 
+# Linux Mint (inherit Debian)
+require 'specinfra/command/linuxmint'
+require 'specinfra/command/linuxmint/base'
+require 'specinfra/command/linuxmint/base/ppa'
+require 'specinfra/command/linuxmint/base/service'
+
 # Ubuntu (inherit Debian)
 require 'specinfra/command/ubuntu'
 require 'specinfra/command/ubuntu/base'
