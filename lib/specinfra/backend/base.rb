@@ -8,6 +8,10 @@ module Specinfra
         @instance ||= self.new
       end
 
+      def self.clear
+        @instance = nil
+      end
+
       def initialize(config = {})
         @config = config
       end
