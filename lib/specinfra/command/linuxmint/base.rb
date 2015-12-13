@@ -1,2 +1,2 @@
-class Specinfra::Command::Linuxmint::Base < Specinfra::Command::Debian::Base
+class Specinfra::Command::Linuxmint::Base < Specinfra::Command::Ubuntu::Base
 end
