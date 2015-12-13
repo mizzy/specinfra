@@ -33,7 +33,7 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       cmd = "brew install #{option} '#{package}'"
     end
 
-    def remove(package, version=nil, option='')
+    def remove(package, option='')
       cmd = "brew uninstall #{option} '#{package}'"
     end
 
