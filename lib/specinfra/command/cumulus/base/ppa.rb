@@ -1,4 +1,4 @@
-class Specinfra::Command::Cumulusnetworks::Base::Ppa < Specinfra::Command::Debian::Base::Ppa
+class Specinfra::Command::Cumuluslinux::Base::Ppa < Specinfra::Command::Debian::Base::Ppa
   class << self
     def check_exists(package)
       %Q{find /etc/apt/ -name \*.list | xargs grep -o "deb +http://repo.cumulusnetworks.com/#{to_apt_line_uri(package)}"}
@@ -14,4 +14,7 @@ class Specinfra::Command::Cumulusnetworks::Base::Ppa < Specinfra::Command::Debia
       escape(repo.gsub(/^ppa:/,''))
     end
   end
+end
+
+class Specinfra::Command::Cumulusnetworks::Base::Ppa < Specinfra::Command::Cumuluslinux::Base::Ppa
 end
