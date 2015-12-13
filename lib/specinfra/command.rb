@@ -166,12 +166,6 @@ require 'specinfra/command/debian/v8/service'
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
 
-# Linux Mint (inherit Debian)
-require 'specinfra/command/linuxmint'
-require 'specinfra/command/linuxmint/base'
-require 'specinfra/command/linuxmint/base/ppa'
-require 'specinfra/command/linuxmint/base/service'
-
 # Ubuntu (inherit Debian)
 require 'specinfra/command/ubuntu'
 require 'specinfra/command/ubuntu/base'
@@ -181,6 +175,10 @@ require 'specinfra/command/ubuntu/base/service'
 # Ubuntu v15.xx (inherit Ubuntu)
 require 'specinfra/command/ubuntu/v15'
 require 'specinfra/command/ubuntu/v15/service'
+
+# Linux Mint (inherit Ubuntu)
+require 'specinfra/command/linuxmint'
+require 'specinfra/command/linuxmint/base'
 
 # Cumulus Networks (inherit Debian)
 require 'specinfra/command/cumulus'
