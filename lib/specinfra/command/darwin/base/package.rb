@@ -33,6 +33,10 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
       cmd = "brew install #{option} '#{package}'"
     end
 
+    def remove(package, option='')
+      cmd = "brew uninstall #{option} '#{package}'"
+    end
+
     def get_version(package, opts=nil)
       %Q[ls -1 "$(brew --prefix)/Cellar/#{package}/" | tail -1]
     end
