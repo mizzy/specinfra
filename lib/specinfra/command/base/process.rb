@@ -4,6 +4,10 @@ class Specinfra::Command::Base::Process < Specinfra::Command::Base
       "ps -C #{escape(process)} -o #{opts[:format]} | head -1"
     end
 
+    def count(process)
+      "ps aux | grep -w -- #{escape(process)} | grep -v grep | wc -l"
+    end
+
     def check_is_running(process)
       "ps aux | grep -w -- #{escape(process)} | grep -qv grep"
     end
