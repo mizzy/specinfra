@@ -33,6 +33,9 @@ module Specinfra
         shell = get_config(:shell) || '/bin/sh'
         cmd = cmd.shelljoin if cmd.is_a?(Array)
         cmd = "#{shell.shellescape} -c #{cmd.to_s.shellescape}"
+        if sudo?
+          cmd = "#{sudo} #{cmd}"
+        end
 
         path = get_config(:path)
         if path
@@ -146,6 +149,28 @@ module Specinfra
         else
           cmd
         end
+      end
+
+      def sudo
+        if sudo_path = get_config(:sudo_path)
+          sudo_path += '/sudo'
+        else
+          sudo_path = 'sudo'
+        end
+
+        sudo_options = get_config(:sudo_options)
+        if sudo_options
+          sudo_options = sudo_options.shelljoin if sudo_options.is_a?(Array)
+          sudo_options = ' ' + sudo_options
+        end
+
+        "#{sudo_path.shellescape}#{sudo_options}"
+      end
+
+      def sudo?
+        uid = ENV['UID']
+        disable_sudo = get_config(:disable_sudo)
+        uid != '0' && !disable_sudo
       end
     end
   end
