@@ -20,7 +20,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "net-scp"
-  spec.add_runtime_dependency "net-ssh", ">= 2.7", "< 3.1"
+  if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.0.0')
+    # net-ssh 3.x dropped Ruby 1.8 and 1.9 support.
+    spec.add_runtime_dependency "net-ssh", "~> 2.7"
+  else
+    spec.add_runtime_dependency "net-ssh", ">= 2.7", "< 3.1"
+  end
   spec.add_runtime_dependency "net-telnet"
   spec.add_runtime_dependency "sfl"
 
