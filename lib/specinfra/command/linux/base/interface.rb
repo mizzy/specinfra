@@ -8,6 +8,10 @@ class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Int
       "cat /sys/class/net/#{name}/speed"
     end
 
+    def get_mtu_of(name)
+      "cat /sys/class/net/#{name}/mtu"
+    end
+
     def check_has_ipv4_address(interface, ip_address)
       ip_address = ip_address.dup
       if ip_address =~ /\/\d+$/
