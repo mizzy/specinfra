@@ -22,3 +22,7 @@ end
 describe get_command(:get_interface_link_state, 'eth0') do
   it { should eq "cat /sys/class/net/eth0/operstate" }
 end
+
+describe get_command(:get_interface_mtu_of, 'eth0') do
+  it { should eq "cat /sys/class/net/eth0/mtu" }
+end
