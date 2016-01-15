@@ -19,11 +19,11 @@ class Specinfra::Command::Freebsd::Base::File < Specinfra::Command::Base::File
     end
 
     def check_has_mode(file, mode)
-      "test `stat -f%Mp%Lp #{escape(file)}` -eq #{escape(mode)}"
+      "test `stat -f%Mp%Lp #{escape(file)} | sed 's/^0*//'` -eq #{escape(mode)}"
     end
 
     def get_mode(file)
-      "stat -f%M%Lp #{escape(file)}".oct.to_s(8) # to remove leading 0
+      "stat -f%Mp%Lp #{escape(file)} | sed 's/^0*//'"
     end
 
     def check_is_linked_to(link, target)
