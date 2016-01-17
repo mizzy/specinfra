@@ -9,12 +9,50 @@ class Specinfra::Command::Freebsd::Base::User < Specinfra::Command::Base::User
     end
 
     def get_minimum_days_between_password_change(user)
-      "0"
+      "echo 0"
     end
 
     def get_maximum_days_between_password_change(user)
       "pw usershow -n #{escape(user)} | cut -d':' -f 6"
     end
 
+    def update_home_directory(user, directory)
+      "pw user mod #{escape(user)} -d #{escape(directory)}"
+    end
+
+    def update_login_shell(user, shell)
+      "pw user mod #{escape(user)} -s #{escape(shell)}"
+    end
+
+    def update_uid(user, uid)
+      "pw user mod #{escape(user)} -u #{escape(uid)}"
+    end
+
+    def update_gid(user, gid)
+      "pw user mod #{escape(user)} -g #{escape(gid)}"
+    end
+
+    def add(user, options)
+      if options[:password] then
+        command = ['echo',"\'#{escape(options[:password])}\'",'|','pw','user','add',escape(user),'-H','0']
+      else
+        command = ['pw','user','add',escape(user)]
+      end
+      command << '-g' << escape(options[:gid])            if options[:gid]
+      command << '-d' << escape(options[:home_directory]) if options[:home_directory]
+      command << '-s' << escape(options[:shell])          if options[:shell]
+      command << '-m' if options[:create_home]
+      command << '-r' if options[:system_user]
+      command << '-u' << escape(options[:uid])            if options[:uid]
+      command.join(' ')
+    end
+
+    def update_encrypted_password(user, encrypted_password)
+        "echo \'#{escape(encrypted_password)}\' | sudo pw user mod #{escape(user)} -H 0"
+    end
+
+    def get_encrypted_password(user)
+      "getent passwd #{escape(user)} | awk -F: '{ print $2 }'"
+    end
   end
 end
