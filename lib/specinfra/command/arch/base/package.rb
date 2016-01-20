@@ -5,7 +5,7 @@ class Specinfra::Command::Arch::Base::Package < Specinfra::Command::Linux::Base:
         grep = version.include?('-') ? "^#{escape(version)}$" : "^#{escape(version)}-"
         "pacman -Q #{escape(package)} | awk '{print $2}' | grep '#{grep}'"
       else
-        "pacman -Q #{escape(package)}"
+        "pacman -Q #{escape(package)} || pacman -Qg #{escape(package)}"
       end
     end
 
