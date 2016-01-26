@@ -41,13 +41,13 @@ class Specinfra::Command::Freebsd::Base::User < Specinfra::Command::Base::User
       command << '-r' if options[:system_user]
       command << '-u' << escape(options[:uid])            if options[:uid]
       if options[:password]
-        command.concat(['&&', 'chpass', '-p', "\'#{escape(options[:password])}\'", escape(user)])
+        command.concat(['&&', 'chpass', '-p', "\'#{options[:password]}\'", escape(user)])
       end
       command.join(' ')
     end
 
     def update_encrypted_password(user, encrypted_password)
-      "chpass -p \'#{escape(encrypted_password)}\' #{escape(user)}"
+      "chpass -p \'#{encrypted_password}\' #{escape(user)}"
     end
 
     def get_encrypted_password(user)
