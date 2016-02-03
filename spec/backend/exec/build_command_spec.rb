@@ -46,6 +46,20 @@ describe Specinfra::Backend::Exec do
       end
     end
 
+    context 'with an interactive shell' do
+      before do
+        RSpec.configure {|c| c.interactive_shell = true }
+      end
+
+      after do
+        RSpec.configure {|c| c.interactive_shell = nil }
+      end
+
+      it 'should emulate an interactive shell' do
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -i -c test\ -f\ /etc/passwd'
+      end
+    end
+
     context 'with custom path' do
       before do
         RSpec.configure {|c| c.path = '/opt/bin:/opt/foo/bin:$PATH' }
