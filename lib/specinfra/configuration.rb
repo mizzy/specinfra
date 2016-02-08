@@ -6,6 +6,7 @@ module Specinfra
         :env,
         :path,
         :shell,
+        :interactive_shell,
         :pre_command,
         :stdout,
         :stderr,
