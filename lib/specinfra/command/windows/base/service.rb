@@ -29,7 +29,6 @@ class Specinfra::Command::Windows::Base::Service < Specinfra::Command::Windows::
     end
       
     def check_has_property(service, property)
-        print property.keys
         command = []
         property.keys.each do |key|
           value= property[key]
