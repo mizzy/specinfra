@@ -27,5 +27,26 @@ class Specinfra::Command::Windows::Base::Service < Specinfra::Command::Windows::
         exec "(FindService -name '#{service}').State -eq 'Running'"
       end
     end
+      
+    def check_has_property(service, property)
+        print property.keys
+        command = []
+        property.keys.each do |key|
+          value= property[key]
+          command <<"(FindService -name '#{service}').#{key} -eq '#{value}'"
+        end
+        executable = command.join(' -and ')
+        Backend::PowerShell::Command.new do
+          using 'find_service.ps1'
+          exec executable
+        end
+    end
+    
+    def get_property(service)
+      Backend::PowerShell::Command.new do
+        using 'find_service.ps1'
+        exec "(FindService -name '#{service}') | Select-Object *"
+      end
+    end
   end
 end
