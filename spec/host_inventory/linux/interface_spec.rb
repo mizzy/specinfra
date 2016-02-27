@@ -145,6 +145,30 @@ str[:interfaces] = <<-EOH
     link/ether 02:80:37:ec:02:00 brd ff:ff:ff:ff:ff:ff
 EOH
 
+str[:rhel6] = <<-EOH
+Kernel 2.6.32-573.8.1.el6.x86_64
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP> mtu 1500 qdisc mq master bond0 state UP qlen 1000
+    link/ether 33:44:55:96:70:1c brd ff:ff:ff:ff:ff:ff
+3: eth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+    link/ether 33:44:55:96:70:1d brd ff:ff:ff:ff:ff:ff
+4: eth2: <BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP> mtu 1500 qdisc mq master bond0 state UP qlen 1000
+    link/ether 33:44:55:96:70:1c brd ff:ff:ff:ff:ff:ff
+5: eth3: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN qlen 1000
+    link/ether 33:44:55:96:70:1f brd ff:ff:ff:ff:ff:ff
+6: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP
+    link/ether 31:44:55:96:70:1c brd ff:ff:ff:ff:ff:ff
+    inet 10.3.5.172/26 brd 10.3.5.191 scope global bond0
+   inet6 fe80::56:44:55ff:fe96:701c/64 scope link
+       valid_lft forever preferred_lft forever
+EOH
+
+
 describe Specinfra::HostInventory::Network do
   let(:host_inventory) { nil }
   describe 'Example of CentOS 6.7 Kernel version 2.6.32-573.1.1.el6.i686' do

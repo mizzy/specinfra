@@ -20,6 +20,7 @@ module Specinfra
                       <([A-Z\d_,]+)>\s+
                       mtu\s+(\d+?)\s+
                       qdisc\s+([\d\w]+?)\s+
+                      (?:master\s+([\d\w]+?)\s+)?
                       state\s+([A-Z]+)\s+
                       (?:qlen\s+(\d+)\s+)?
                       .*?
@@ -29,8 +30,9 @@ module Specinfra
             interfaces[@device]        ||= {}
             interfaces[@device][:mtu]    = $3
             interfaces[@device][:qdisc]  = $4
-            interfaces[@device][:state]  = $5.to_s.downcase
-            interfaces[@device][:qlen]   = $6 if $6 != nil 
+            interfaces[@device][:master] = $5
+            interfaces[@device][:state]  = $6.to_s.downcase
+            interfaces[@device][:qlen]   = $7 if $7 != nil
             ## must process at end the result is skewed!
             interfaces[@device][:flags]  = $2.to_s.split(',') 
 
