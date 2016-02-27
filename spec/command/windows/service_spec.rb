@@ -1,9 +1,12 @@
 require 'spec_helper'
 
-property[:os] = nil
-set :os, :family => 'windows'
 RSpec.describe Specinfra::Command::Windows::Base::Service do
-    let(:service_name) { "Power" }
+  before :all do
+    property[:os] = nil
+    set :os, :family => 'windows'
+  end
+  
+  let(:service_name) { "Power" }
     let(:property_map) {{"StartName"=>"Local System","State"=>"Running","StartMode"=>"Auto"}}
     describe "#check_service_is_running" do
         it "" do
