@@ -32,7 +32,7 @@ class Specinfra::Command::Windows::Base::Service < Specinfra::Command::Windows::
         command = []
         property.keys.each do |key|
           value= property[key]
-          command <<"(FindService -name '#{service}').#{key} -eq '#{value}'"
+          command << "(FindService -name '#{service}').#{key} -eq '#{value}'"
         end
         executable = command.join(' -and ')
         Backend::PowerShell::Command.new do
