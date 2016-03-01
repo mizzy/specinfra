@@ -38,6 +38,10 @@ module Specinfra
           shell << " -i"
         end
 
+        if get_config(:login_shell)
+          shell << " -l"
+        end
+
         cmd = "#{shell} -c #{cmd.to_s.shellescape}"
 
         path = get_config(:path)

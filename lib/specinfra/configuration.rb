@@ -7,6 +7,7 @@ module Specinfra
         :path,
         :shell,
         :interactive_shell,
+        :login_shell,
         :pre_command,
         :stdout,
         :stderr,

@@ -60,6 +60,20 @@ describe Specinfra::Backend::Exec do
       end
     end
 
+    context 'with an login shell' do
+      before do
+        RSpec.configure {|c| c.login_shell = true }
+      end
+
+      after do
+        RSpec.configure {|c| c.login_shell = nil }
+      end
+
+      it 'should emulate an login shell' do
+        expect(Specinfra.backend.build_command('test -f /etc/passwd')).to eq '/bin/sh -l -c test\ -f\ /etc/passwd'
+      end
+    end
+
     context 'with custom path' do
       before do
         RSpec.configure {|c| c.path = '/opt/bin:/opt/foo/bin:$PATH' }
