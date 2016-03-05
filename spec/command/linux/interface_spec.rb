@@ -19,6 +19,14 @@ describe get_command(:check_interface_has_ipv4_address, 'eth0', '192.168.0.123/2
   it { should eq "ip -4 addr show eth0 | grep 'inet 192\\.168\\.0\\.123/24 '" }
 end
 
+describe get_command(:get_interface_ipv4_address, 'eth0') do
+  it { should eq "ip -4 addr show eth0 | grep eth0$ | awk '{print $2}'" }
+end
+
+describe get_command(:get_interface_ipv6_address, 'eth0') do
+  it { should eq "ip -6 addr show eth0 | grep inet6 | awk '{print $2}'" }
+end
+
 describe get_command(:get_interface_link_state, 'eth0') do
   it { should eq "cat /sys/class/net/eth0/operstate" }
 end
