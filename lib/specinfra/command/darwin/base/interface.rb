@@ -32,6 +32,15 @@ class Specinfra::Command::Darwin::Base::Interface < Specinfra::Command::Base::In
       "ifconfig #{interface} inet6 | grep 'inet6 #{ip_address}'"
     end
 
+    def get_ipv4_address(interface)
+      "ifconfig #{interface} inet | grep inet | awk '{print $2}'"
+    end
+
+    def get_ipv6_address(interface)
+      # Awk refuses to print '/' even with using escapes or hex so workaround with sed employed here.
+      "ifconfig #{interface} inet6 | grep inet6 | awk '{print $2$3$4}' | sed 's/prefixlen/\//'; exit"
+    end
+
     def get_link_state(interface)
       # Checks if interfaces is administratively up with the -u arg.
       # L1 check via status. Virtual interfaces like tapX missing the status will report up.

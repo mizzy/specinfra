@@ -34,9 +34,16 @@ class Specinfra::Command::Linux::Base::Interface < Specinfra::Command::Base::Int
       "ip -6 addr show #{interface} | grep 'inet6 #{ip_address}'"
     end
 
+    def get_ipv4_address(interface)
+      "ip -4 addr show #{interface} | grep #{interface}$ | awk '{print $2}'"
+    end
+
+    def get_ipv6_address(interface)
+      "ip -6 addr show #{interface} | grep inet6 | awk '{print $2}'"
+    end
+
     def get_link_state(name)
       "cat /sys/class/net/#{name}/operstate"
     end
   end
 end
-
