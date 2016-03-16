@@ -10,8 +10,3 @@ class Specinfra::Helper::DetectOs::Eos < Specinfra::Helper::DetectOs
     end
   end
 end
-
-
-
-
-
