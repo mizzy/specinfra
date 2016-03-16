@@ -1,10 +1,7 @@
 require 'spec_helper'
 require 'specinfra/helper/detect_os/eos'
 
-# if run_command('ls /etc/Eos-release').success?
-# line = run_command('cat /etc/Eos-release').stdout
 describe Specinfra::Helper::DetectOs::Eos do
-  #eos_ls = Specinfra::Helper::DetectOs::Eos.new(:exec)
   eos = Specinfra::Helper::DetectOs::Eos.new(:exec)
   it 'Should return eos family and the correct version.' do
     allow(eos).to receive(:run_command).with('ls /etc/Eos-release') {
@@ -30,9 +27,5 @@ describe Specinfra::Helper::DetectOs::Eos do
       :family  => 'eos',
       :release => nil
     )
-  #  expect(openbsd.detect).to include(
-  #    :family  => 'openbsd',
-  #    :release => nil
-  #  )
   end
 end
