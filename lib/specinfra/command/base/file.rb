@@ -154,8 +154,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "mkdir -p #{escape(file)}"
     end
 
-    def copy(src, dest)
-      "cp #{escape(src)} #{escape(dest)}"
+    def copy(src, dest, options = {})
+      option = '-p'
+      option << 'R' if options[:recursive]
+      "cp #{option} #{escape(src)} #{escape(dest)}"
     end
 
     def move(src, dest)

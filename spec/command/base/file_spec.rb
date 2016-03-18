@@ -38,6 +38,14 @@ describe get_command(:get_file_owner_group, '/tmp') do
   it { should eq 'stat -c %G /tmp' }
 end
 
+describe get_command(:copy_file, '/src', '/dest') do
+  it { should eq 'cp -p /src /dest' }
+end
+
+describe get_command(:copy_file, '/src', '/dest', :recursive => true) do
+  it { should eq 'cp -pR /src /dest' }
+end
+
 describe get_command(:move_file, '/src', '/dest') do
   it { should eq 'mv /src /dest' }
 end
