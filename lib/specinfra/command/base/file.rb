@@ -137,17 +137,20 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "stat -c %s #{escape(file)}"
     end
 
-    def change_mode(file, mode)
-      "chmod #{mode} #{escape(file)}"
+    def change_mode(file, mode, options = {})
+      option = '-R' if options[:recursive]
+      "chmod #{option} #{mode} #{escape(file)}".squeeze(' ')
     end
 
-    def change_owner(file, owner, group=nil)
+    def change_owner(file, owner, group=nil, options = {})
+      option = '-R' if options[:recursive]
       owner = "#{owner}:#{group}" if group
-      "chown #{owner} #{escape(file)}"
+      "chown #{option} #{owner} #{escape(file)}".squeeze(' ')
     end
 
-    def change_group(file, group)
-      "chgrp #{group} #{escape(file)}"
+    def change_group(file, group, options = {})
+      option = '-R' if options[:recursive]
+      "chgrp #{option} #{group} #{escape(file)}".squeeze(' ')
     end
 
     def create_as_directory(file)
