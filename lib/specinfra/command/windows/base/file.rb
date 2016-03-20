@@ -108,7 +108,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
 
     def check_is_owned_by(file, owner)
       Backend::PowerShell::Command.new do
-        exec "$(if((Get-Item '#{file}').GetAccessControl().Owner -match '#{owner}' -or ((Get-Item '#{file}').GetAccessControl().Owner -match '#{owner}').Length -gt 0){ 0 } else { 1 })"
+        exec "$(if((Get-Item '#{file}').GetAccessControl().Owner -match '#{owner}' -or ((Get-Item '#{file}').GetAccessControl().Owner -match '#{owner}').Length -gt 0){ $TRUE } else { $FALSE })"
       end
     end
 
