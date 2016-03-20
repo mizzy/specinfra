@@ -14,6 +14,10 @@ describe get_command(:change_file_mode, '/tmp', '0644') do
   it { should eq 'chmod 0644 /tmp' }
 end
 
+describe get_command(:change_file_mode, '/tmp', '0644', :recursive => true) do
+  it { should eq 'chmod -R 0644 /tmp' }
+end
+
 describe get_command(:change_file_owner, '/tmp', 'root') do
   it { should eq 'chown root /tmp' }
 end
@@ -22,8 +26,16 @@ describe get_command(:change_file_owner, '/tmp', 'root', 'root') do
   it { should eq 'chown root:root /tmp' }
 end
 
+describe get_command(:change_file_owner, '/tmp', 'root', 'root', :recursive => true) do
+  it { should eq 'chown -R root:root /tmp' }
+end
+
 describe get_command(:change_file_group, '/tmp', 'root') do
   it { should eq 'chgrp root /tmp' }
+end
+
+describe get_command(:change_file_group, '/tmp', 'root', :recursive => true) do
+  it { should eq 'chgrp -R root /tmp' }
 end
 
 describe get_command(:create_file_as_directory, '/tmp') do
@@ -36,6 +48,14 @@ end
 
 describe get_command(:get_file_owner_group, '/tmp') do
   it { should eq 'stat -c %G /tmp' }
+end
+
+describe get_command(:copy_file, '/src', '/dest') do
+  it { should eq 'cp -p /src /dest' }
+end
+
+describe get_command(:copy_file, '/src', '/dest', :recursive => true) do
+  it { should eq 'cp -pR /src /dest' }
 end
 
 describe get_command(:move_file, '/src', '/dest') do
