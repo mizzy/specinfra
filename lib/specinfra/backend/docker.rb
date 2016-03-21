@@ -40,14 +40,17 @@ module Specinfra
       end
 
       def send_file(from, to)
-        if @base_image.nil?
-          fail 'Cannot call send_file without docker_image.'
+        if @base_image
+          @images << commit_container if @container
+          @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
+          cleanup_container
+          create_and_start_container
+        elsif @container
+          # This needs Docker >= 1.8
+          @container.archive_in(from, to)
+        else
+          fail 'Cannot call send_file without docker_image or docker_container.'
         end
-
-        @images << commit_container if @container
-        @images << current_image.insert_local('localPath' => from, 'outputPath' => to)
-        cleanup_container
-        create_and_start_container
       end
 
       def commit_container
