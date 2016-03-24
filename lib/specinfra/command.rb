@@ -215,6 +215,12 @@ require 'specinfra/command/opensuse'
 require 'specinfra/command/opensuse/base'
 require 'specinfra/command/opensuse/base/service'
 
+# SLES (inherit SuSE)
+require 'specinfra/command/sles'
+require 'specinfra/command/sles/base'
+require 'specinfra/command/sles/v12'
+require 'specinfra/command/sles/v12/service'
+
 # FreeBSD (inherit Base)
 require 'specinfra/command/freebsd'
 require 'specinfra/command/freebsd/base'
