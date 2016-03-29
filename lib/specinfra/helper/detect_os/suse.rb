@@ -4,7 +4,7 @@ class Specinfra::Helper::DetectOs::Suse < Specinfra::Helper::DetectOs
       line = run_command('cat /etc/SuSE-release').stdout
       if line =~ /SUSE Linux Enterprise Server (\d+)/
         release = $1
-        family = 'suse'
+        family = 'sles'
       elsif line =~ /openSUSE (\d+\.\d+|\d+)/
         release = $1
         family = 'opensuse'
