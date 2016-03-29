@@ -43,7 +43,7 @@ class Specinfra::Command::Windows::Base::File < Specinfra::Command::Windows::Bas
     end
 
     def get_content(file)
-      %Q!Get-Content("#{file}") | Out-String!
+      %Q!Get-Content("#{file}") | Write-Host!
     end
 
     def get_md5sum(file)
