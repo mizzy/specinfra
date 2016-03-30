@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "net-scp"
-  spec.add_runtime_dependency "net-ssh", ">= 2.7", (RUBY_VERSION >= "2.0" ? "< 3.1" : "< 2.10")
+  spec.add_runtime_dependency "net-ssh", ">= 2.7", "< 4.0"
   spec.add_runtime_dependency "net-telnet"
   spec.add_runtime_dependency "sfl"
 
