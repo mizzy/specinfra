@@ -56,7 +56,7 @@ $exitCode = 1
 $ProgressPreference = "SilentlyContinue"
 try {
   #{ps_functions.join("\n")}
-  $success = (#{script})
+  $success = $(#{script})
   if ($success -is [Boolean] -and $success) { $exitCode = 0 }
 } catch {
   Write-Output $_.Exception.Message
