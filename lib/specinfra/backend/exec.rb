@@ -95,6 +95,21 @@ module Specinfra
               end
             rescue EOFError
             ensure
+              # Consume remained stdout and stderr from buffer
+              output.keys.each do |fd|
+                loop do
+                  begin
+                    out = fd.read_nonblock(4096)
+                    output[fd] << out
+
+                    handlers[fd].call(out) if handlers[fd]
+                  rescue Errno::EAGAIN, EOFError
+                    # Ruby 2.2 has more specific exception class IO::EAGAINWaitReadable
+                    break
+                  end
+                end
+              end
+
               stdout = output[out_r]
               stderr = output[err_r]
               quit_r.close unless quit_r.closed?
