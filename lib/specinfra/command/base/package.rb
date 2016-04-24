@@ -7,6 +7,13 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
       cmd
     end
 
+    def check_is_installed_by_td_agent_gem(name, version=nil)
+      regexp = "^#{name}"
+      cmd = "/usr/sbin/td-agent-gem list --local | grep -iw -- #{escape(regexp)}"
+      cmd = %Q!#{cmd} | grep -w -- "[( ]#{escape(version)}[,)]"! if version
+      cmd
+    end
+
     def check_is_installed_by_rvm(name, version=nil)
       regexp = "^#{name}"
       cmd = "rvm list strings | grep -iw -- #{escape(regexp)}"
