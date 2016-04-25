@@ -1,10 +1,11 @@
 class Specinfra::Command::Base::Package < Specinfra::Command::Base
   class << self
     def check_is_installed_by_gem(name, version=nil)
-      regexp = "^#{name}"
-      cmd = "gem list --local | grep -iw -- #{escape(regexp)}"
-      cmd = %Q!#{cmd} | grep -w -- "[( ]#{escape(version)}[,)]"! if version
-      cmd
+      gem_installed_command("gem", name, version)
+    end
+
+    def check_is_installed_by_td_agent_gem(name, version=nil)
+      gem_installed_command("/usr/sbin/td-agent-gem", name, version)
     end
 
     def check_is_installed_by_rvm(name, version=nil)
@@ -45,6 +46,15 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
       regexp = "^#{name}"
       cmd = "cpan -l | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
+      cmd
+    end
+
+    private
+
+    def gem_installed_command(gem_binary, name, version=nil)
+      regexp = "^#{name}"
+      cmd = "#{gem_binary} list --local | grep -iw -- #{escape(regexp)}"
+      cmd = %Q!#{cmd} | grep -w -- "[( ]#{escape(version)}[,)]"! if version
       cmd
     end
   end
