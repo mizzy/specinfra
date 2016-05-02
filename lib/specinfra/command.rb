@@ -176,6 +176,10 @@ require 'specinfra/command/ubuntu/base/service'
 require 'specinfra/command/ubuntu/v15'
 require 'specinfra/command/ubuntu/v15/service'
 
+# Ubuntu v16.xx (inherit Ubuntu)
+require 'specinfra/command/ubuntu/v16'
+require 'specinfra/command/ubuntu/v16/service'
+
 # Linux Mint (inherit Ubuntu)
 require 'specinfra/command/linuxmint'
 require 'specinfra/command/linuxmint/base'
