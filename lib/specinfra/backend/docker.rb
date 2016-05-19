@@ -79,6 +79,7 @@ module Specinfra
 
         @container = ::Docker::Container.create(opts)
         @container.start
+        sleep CONTAINER_START_DELAY if defined?(CONTAINER_START_DELAY)
       end
 
       def cleanup_container
