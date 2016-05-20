@@ -31,11 +31,11 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def get_minimum_days_between_password_change(user)
-      "chage -l #{escape(user)} | grep '^Minimum.*:' | cut -f 2 -d ': '"
+      "chage -l #{escape(user)} | sed -n 's/^Minimum.*: //p'"
     end
 
     def get_maximum_days_between_password_change(user)
-      "chage -l #{escape(user)} | grep '^Maximum.*:' | cut -f 2 -d ': '"
+      "chage -l #{escape(user)} | sed -n 's/^Maximum.*: //p'"
     end
 
     def get_uid(user)
