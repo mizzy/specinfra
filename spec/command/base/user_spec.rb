@@ -11,7 +11,7 @@ describe get_command(:get_user_gid, 'foo') do
 end
 
 describe get_command(:get_user_home_directory, 'foo') do
-  it { should eq "getent passwd foo | awk -F: '{ print $6 }'" }
+  it { should eq "getent passwd foo | cut -f 6 -d ':'" }
 end
 
 describe get_command(:update_user_home_directory, 'user', 'dir') do
@@ -35,7 +35,7 @@ describe get_command(:update_user_encrypted_password, 'foo', 'xxxxxxxx') do
 end
 
 describe get_command(:get_user_encrypted_password, 'foo') do
-  it { should eq "getent shadow foo | awk -F: '{ print $2 }'" }
+  it { should eq "getent shadow foo | cut -f 2 -d ':'" }
 end
 
 describe get_command(:check_user_has_login_shell, 'foo', '/bin/sh') do
@@ -43,11 +43,11 @@ describe get_command(:check_user_has_login_shell, 'foo', '/bin/sh') do
 end
 
 describe get_command(:get_user_minimum_days_between_password_change, 'foo') do
-  it { should eq "chage -l foo | grep '^Minimum.*:' | awk -F ': ' '{print $2}'" }
+  it { should eq "chage -l foo | grep '^Minimum.*:' | cut -f 2 -d ': '" }
 end
 
 describe get_command(:get_user_maximum_days_between_password_change, 'foo') do
-  it { should eq "chage -l foo | grep '^Maximum.*:' | awk -F ': ' '{print $2}'" }
+  it { should eq "chage -l foo | grep '^Maximum.*:' | cut -f 2 -d ': '" }
 end
 
 describe get_command(:get_user_login_shell, 'foo') do

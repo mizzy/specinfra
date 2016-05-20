@@ -5,7 +5,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def check_belongs_to_group(user, group)
-      "id #{escape(user)} | sed 's/ context=.*//g' |awk -F= '{print $4}' | grep -- #{escape(group)}"
+      "id #{escape(user)} | sed 's/ context=.*//g' | cut -f 4 -d '=' | grep -- #{escape(group)}"
     end
 
     def check_belongs_to_primary_group(user, group)
@@ -31,11 +31,11 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def get_minimum_days_between_password_change(user)
-      "chage -l #{escape(user)} | grep '^Minimum.*:' | awk -F ': ' '{print $2}'"
+      "chage -l #{escape(user)} | grep '^Minimum.*:' | cut -f 2 -d ': '"
     end
 
     def get_maximum_days_between_password_change(user)
-      "chage -l #{escape(user)} | grep '^Maximum.*:' | awk -F ': ' '{print $2}'"
+      "chage -l #{escape(user)} | grep '^Maximum.*:' | cut -f 2 -d ': '"
     end
 
     def get_uid(user)
@@ -47,7 +47,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def get_home_directory(user)
-      "getent passwd #{escape(user)} | awk -F: '{ print $6 }'"
+      "getent passwd #{escape(user)} | cut -f 6 -d ':'"
     end
 
     def get_login_shell(user)
@@ -88,7 +88,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def get_encrypted_password(user)
-      "getent shadow #{escape(user)} | awk -F: '{ print $2 }'"
+      "getent shadow #{escape(user)} | cut -f 2 -d ':'"
     end
   end
 end
