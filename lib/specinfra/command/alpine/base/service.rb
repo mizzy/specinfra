@@ -7,5 +7,25 @@ class Specinfra::Command::Alpine::Base::Service < Specinfra::Command::Linux::Bas
     def check_is_running(service)
       "/etc/init.d/#{escape(service)} status"
     end
+
+    def enable(service)
+      "rc-update add #{escape(service)}"
+    end
+
+    def disable(service)
+      "rc-update del #{escape(service)}"
+    end
+
+    def start(service)
+      "rc-service #{escape(service)} start"
+    end
+
+    def stop(service)
+      "rc-service #{escape(service)} stop"
+    end
+
+    def restart(service)
+      "rc-service #{escape(service)} restart"
+    end
   end
 end
