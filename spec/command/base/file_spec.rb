@@ -78,6 +78,10 @@ describe get_command(:check_file_is_link, '/tmp') do
   it { should eq 'test -L /tmp' }
 end
 
+describe get_command(:check_file_is_resolvable, '/tmp') do
+  it { should eq 'readlink -e /tmp' }
+end
+
 describe get_command(:check_file_is_pipe, '/tmp') do
   it { should eq 'test -p /tmp' }
 end
