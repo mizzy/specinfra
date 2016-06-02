@@ -133,6 +133,10 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "readlink -e #{escape(link)}"
     end
 
+    def check_is_dereferenceable(link)
+      %Q|test -n "$(readlink -e #{escape(link)})"|
+    end
+
     def get_mtime(file)
       "stat -c %Y #{escape(file)}"
     end
