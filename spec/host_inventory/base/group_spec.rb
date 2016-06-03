@@ -90,7 +90,7 @@ describe Specinfra::HostInventory::Group do
         'utempter' => {'name'=>'utempter', 'gid'=>'35', 'members'=>[]},
         'utmp' => {'name'=>'utmp', 'gid'=>'22', 'members'=>[]},
         'video' => {'name'=>'video', 'gid'=>'39', 'members'=>[]},
-        'wheel' => {'name'=>'wheel', 'gid'=>'10', 'members'=>['hoge']},
+        'wheel' => {'name'=>'wheel', 'gid'=>'10', 'members'=>['hoge']}
       )
     end
   end
