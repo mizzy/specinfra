@@ -94,6 +94,14 @@ describe get_command(:get_file_link_target, '/tmp') do
   it { should eq 'readlink /tmp' }
 end
 
+describe get_command(:get_file_link_realpath, '/tmp') do
+  it { should eq 'readlink -e /tmp' }
+end
+
+describe get_command(:check_file_is_dereferenceable, '/tmp') do
+  it { should eq 'test -n "$(readlink -e /tmp)"' }
+end
+
 describe get_command(:check_file_exists, '/tmp') do
   it { should eq 'test -e /tmp' }
 end
