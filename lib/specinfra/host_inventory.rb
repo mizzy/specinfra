@@ -14,6 +14,7 @@ module Specinfra
       kernel
       block_device
       user
+      group
     }
 
     include Enumerable
