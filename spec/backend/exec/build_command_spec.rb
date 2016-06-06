@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Specinfra::Backend::Exec do
+  before :all do
+    set :backend, :exec
+  end
+
   describe '#build_command' do
     context 'with simple command' do
       it 'should escape spaces' do
@@ -108,6 +112,7 @@ describe 'os' do
   before do
     # clear os information cache
     property[:os_by_host] = {}
+    property[:os] = nil
   end
 
   context 'test ubuntu with lsb_release command' do
@@ -131,9 +136,6 @@ describe 'os' do
   end
 
   context 'test ubuntu with /etc/lsb-release' do
-    before do
-      property[:os] = nil
-    end
     subject { os }
     it do
       expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
@@ -159,9 +161,6 @@ EOF
   end
 
   context 'test debian (no lsb_release or lsb-release)' do
-    before do
-      property[:os] = nil
-    end
     subject { os }
     it do
       expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|

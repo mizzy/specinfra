@@ -38,6 +38,10 @@ shared_examples "IO checks" do
 end
 
 describe "buffer overflow problem" do
+    before :all do
+        set :backend, :exec
+    end
+
     context "with small output amount" do
         let (:max) { 10 }
         include_examples "IO checks"
