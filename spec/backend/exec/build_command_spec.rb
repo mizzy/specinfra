@@ -116,9 +116,8 @@ describe 'os' do
   end
 
   context 'test ubuntu with lsb_release command' do
-    subject { os }
-    it do
-      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
+    before do
+      allow(Specinfra.backend).to receive(:run_command) do |args|
         if ['ls /etc/debian_version', 'lsb_release -ir'].include? args
           double(
             :run_command_response,
@@ -131,14 +130,17 @@ describe 'os' do
           double :run_command_response, :success? => false, :stdout => nil
         end
       end
+    end
+    subject! { os }
+    it do
+      expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
       should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
     end
   end
 
   context 'test ubuntu with /etc/lsb-release' do
-    subject { os }
-    it do
-      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
+    before do
+      allow(Specinfra.backend).to receive(:run_command) do |args|
         if ['ls /etc/debian_version', 'cat /etc/lsb-release'].include? args
           double(
             :run_command_response,
@@ -156,14 +158,17 @@ EOF
           double :run_command_response, :success? => false, :stdout => nil
         end
       end
+    end
+    subject! { os }
+    it do
+      expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
       should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
     end
   end
 
   context 'test debian (no lsb_release or lsb-release)' do
-    subject { os }
-    it do
-      expect(Specinfra.backend).to receive(:run_command).at_least(1).times do |args|
+    before do
+      allow(Specinfra.backend).to receive(:run_command) do |args|
         if args == 'ls /etc/debian_version'
           double :run_command_response, :success? => true, :stdout => nil
         elsif args == 'uname -m'
@@ -172,6 +177,10 @@ EOF
           double :run_command_response, :success? => false, :stdout => nil
         end
       end
+    end
+    subject! { os }
+    it do
+      expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
       should eq({:family => 'debian', :release => nil, :arch => 'x86_64' })
     end
   end
