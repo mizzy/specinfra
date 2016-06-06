@@ -23,7 +23,7 @@ describe Specinfra.configuration.os do
   it { should eq 'foo' }
 end
 
-Specinfra.configuration.remove_instance_variable(:@os)
+Specinfra.configuration.instance_variable_set(:@os, nil)
 RSpec.configuration.os = nil
 describe Specinfra.configuration.os do
   it { should be_nil }

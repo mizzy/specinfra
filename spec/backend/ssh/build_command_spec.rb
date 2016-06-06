@@ -7,7 +7,7 @@ describe Specinfra::Backend::Ssh do
 
   after(:all) do
     if Specinfra.configuration.instance_variable_defined?(:@ssh_options)
-      Specinfra.configuration.remove_instance_variable(:@ssh_options)
+      Specinfra.configuration.instance_variable_set(:@ssh_options, nil)
     end
   end
 
