@@ -111,7 +111,6 @@ end
 describe 'os' do
   before do
     # clear os information cache
-    property[:os_by_host] = {}
     property[:os] = nil
     Specinfra.configuration.instance_variable_set(:@os, nil)
   end
