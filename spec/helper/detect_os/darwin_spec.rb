@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'specinfra/helper/detect_os/darwin'
 
 describe Specinfra::Helper::DetectOs::Darwin do
-  darwin = Specinfra::Helper::DetectOs::Darwin.new(:exec)
+  darwin = Specinfra::Helper::DetectOs::Darwin.new(Specinfra.backend)
   it 'Should return darwin 13.4.0 when Mac OS X 10.9.5 (Mavericks) is installed.' do
     allow(darwin).to receive(:run_command) {
       CommandResult.new(:stdout => 'Darwin 13.4.0', :exit_status => 0)
