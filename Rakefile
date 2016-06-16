@@ -7,6 +7,7 @@ end
 
 if defined?(RSpec)
   task :spec => 'spec:all'
+  task :default => 'spec:all'
 
   namespace :spec do
     task :all => [ :helper, :backend, :configuration, :command, :host_inventory ]

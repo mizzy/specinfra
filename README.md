@@ -10,12 +10,16 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+  ```bundle```
 
 Or install it yourself as:
 
-    $ gem install specinfra
+  ```gem install specinfra```
 
+## Running tests
+
+  ```bundle exec rake```
+  
 ## Usage
 
 TODO: Write usage instructions here
