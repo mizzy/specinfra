@@ -24,5 +24,9 @@ class Specinfra::Command::Freebsd::Base::Inventory < Specinfra::Command::Base::I
     def get_filesystem
       'df -k'
     end
+
+    def get_system_product_name
+      'kenv smbios.system.product'
+    end
   end
 end
