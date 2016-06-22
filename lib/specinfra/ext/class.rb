@@ -2,7 +2,7 @@ class Class
   def subclasses
     result = []
     ObjectSpace.each_object(Class) do |k|
-      next if k.name.nil?
+      next unless k == k.ancestors.first #Skips if this is a singleton class
       result << k if k < self
     end
     result
