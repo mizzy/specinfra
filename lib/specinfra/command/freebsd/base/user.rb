@@ -38,7 +38,6 @@ class Specinfra::Command::Freebsd::Base::User < Specinfra::Command::Base::User
       command << '-d' << escape(options[:home_directory]) if options[:home_directory]
       command << '-s' << escape(options[:shell])          if options[:shell]
       command << '-m' if options[:create_home]
-      command << '-r' if options[:system_user]
       command << '-u' << escape(options[:uid])            if options[:uid]
       if options[:password]
         command.concat(['&&', 'chpass', '-p', "\'#{options[:password]}\'", escape(user)])
