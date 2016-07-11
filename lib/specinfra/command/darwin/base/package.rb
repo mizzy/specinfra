@@ -48,7 +48,8 @@ class Specinfra::Command::Darwin::Base::Package < Specinfra::Command::Base::Pack
 
     def brew_cask_list
       # Since `brew cask list` is slow, directly check Caskroom directory
-      "ls -1 /opt/homebrew-cask/Caskroom/"
+      # Brew cask can install in multiple directories
+      "ls -1 /opt/homebrew-cask/Caskroom/ /usr/local/Caskroom"
     end
   end
 end
