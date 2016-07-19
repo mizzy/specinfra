@@ -16,6 +16,7 @@ module Specinfra
         :disable_sudo,
         :sudo_options,
         :docker_container_create_options,
+        :docker_container_exec_options,
         :docker_image,
         :docker_url,
         :lxc,
