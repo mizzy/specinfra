@@ -162,6 +162,7 @@ require 'specinfra/command/debian/base/service'
 # Debian V8 (inherit Debian)
 require 'specinfra/command/debian/v8'
 require 'specinfra/command/debian/v8/service'
+require 'specinfra/command/debian/v8/port'
 
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
