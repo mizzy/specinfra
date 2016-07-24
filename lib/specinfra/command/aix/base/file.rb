@@ -5,7 +5,7 @@ class Specinfra::Command::Aix::Base::File < Specinfra::Command::Base::File
     end
 
     def check_has_mode(file, mode)
-      raise NotImplementedError.new('check_has_mode is not implemented in Specinfra::Command::AIX::Base::File')
+      "find #{file} -prune -perm #{mode} | grep ^#{file}$"
     end
 
     def check_is_owned_by(file, owner)
