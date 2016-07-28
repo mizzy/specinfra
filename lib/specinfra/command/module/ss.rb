@@ -16,7 +16,7 @@ module Specinfra
         #     https://github.com/serverspec/serverspec/blob/master/lib/serverspec/type/port.rb
         def inaddr_any_to_asterisk(local_address)
           if local_address == '0.0.0.0'
-            '*'
+            '\*'
           else
             local_address
           end
