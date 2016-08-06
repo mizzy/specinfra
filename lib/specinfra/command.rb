@@ -49,7 +49,7 @@ require 'specinfra/command/base/user'
 require 'specinfra/command/base/yumrepo'
 require 'specinfra/command/base/zfs'
 
-# Linux (inhefit Base)
+# Linux (inherit Base)
 require 'specinfra/command/linux'
 require 'specinfra/command/linux/base'
 require 'specinfra/command/linux/base/bridge'
