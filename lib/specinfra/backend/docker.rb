@@ -79,6 +79,7 @@ module Specinfra
 
         @container = ::Docker::Container.create(opts)
         @container.start
+        # Check the container status (docker 1.12), if it's there and "Starting" then wait and try again
       end
 
       def cleanup_container
