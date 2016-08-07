@@ -79,7 +79,9 @@ module Specinfra
 
         @container = ::Docker::Container.create(opts)
         @container.start
-        # Check the container status (docker 1.12), if it's there and "Starting" then wait and try again
+        while @container.json['State'].key?('Health') && @container.json['State']['Health']['Status'] == "starting" do
+          sleep 0.5
+        end
       end
 
       def cleanup_container
