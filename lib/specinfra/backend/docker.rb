@@ -79,6 +79,9 @@ module Specinfra
 
         @container = ::Docker::Container.create(opts)
         @container.start
+        while @container.json['State'].key?('Health') && @container.json['State']['Health']['Status'] == "starting" do
+          sleep 0.5
+        end
       end
 
       def cleanup_container
