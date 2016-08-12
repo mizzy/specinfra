@@ -11,7 +11,7 @@ describe Specinfra::Helper::DetectOs::Eos do
       CommandResult.new(:stdout => 'Arista Networks EOS 4.15.3F', :exit_status => 0)
     }
     expect(eos.detect).to include(
-      :family  => 'eos',
+      :family  => 'arista_eos',
       :release => '4.15.3F'
     )
   end
@@ -24,7 +24,7 @@ describe Specinfra::Helper::DetectOs::Eos do
       CommandResult.new(:stdout => 'Arista Networks EOS foo', :exit_status => 0)
     }
     expect(eos.detect).to include(
-      :family  => 'eos',
+      :family  => 'arista_eos',
       :release => nil
     )
   end

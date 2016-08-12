@@ -6,7 +6,7 @@ class Specinfra::Helper::DetectOs::Eos < Specinfra::Helper::DetectOs
       if line =~ /EOS (\d[\d.]*[A-Z]*)/
         release = $1
       end
-      { :family => 'eos', :release => release }
+      { :family => 'arista_eos', :release => release }
     end
   end
 end
