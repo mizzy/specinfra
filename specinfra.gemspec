@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["gosukenator@gmail.com"]
   spec.description   = %q{Common layer for serverspec and itamae}
   spec.summary       = %q{Common layer for serverspec and itamae}
-  spec.homepage      = ""
+  spec.homepage      = 'https://github.com/mizzy/specinfra'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
