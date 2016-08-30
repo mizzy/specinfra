@@ -1,21 +1,21 @@
 class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
   def detect
-    if run_command('ls /etc/debian_version').success?
+    if (debian_version = run_command('cat /etc/debian_version')) && debian_version.success?
       distro  = nil
       release = nil
-      lsb_release = run_command("lsb_release -ir")
-      if lsb_release.success?
+      if (lsb_release = run_command("lsb_release -ir")) && lsb_release.success?
         lsb_release.stdout.each_line do |line|
           distro  = line.split(':').last.strip if line =~ /^Distributor ID:/
           release = line.split(':').last.strip if line =~ /^Release:/
         end
+      elsif (lsb_release = run_command("cat /etc/lsb-release")) && lsb_release.success?
+        lsb_release.stdout.each_line do |line|
+          distro  = line.split('=').last.strip if line =~ /^DISTRIB_ID=/
+          release = line.split('=').last.strip if line =~ /^DISTRIB_RELEASE=/
+        end
       else
-        lsb_release = run_command("cat /etc/lsb-release")
-        if lsb_release.success?
-          lsb_release.stdout.each_line do |line|
-            distro  = line.split('=').last.strip if line =~ /^DISTRIB_ID=/
-            release = line.split('=').last.strip if line =~ /^DISTRIB_RELEASE=/
-          end
+        if debian_version.stdout.chomp =~ /^[[:digit:]]+\.[[:digit:]]+$/
+          release = debian_version.stdout.chomp
         end
       end
       distro ||= 'debian'

@@ -118,7 +118,7 @@ describe 'os' do
   context 'test ubuntu with lsb_release command' do
     before do
       allow(Specinfra.backend).to receive(:run_command) do |args|
-        if ['ls /etc/debian_version', 'lsb_release -ir'].include? args
+        if ['cat /etc/debian_version', 'lsb_release -ir'].include? args
           double(
             :run_command_response,
             :success? => true,
@@ -141,7 +141,7 @@ describe 'os' do
   context 'test ubuntu with /etc/lsb-release' do
     before do
       allow(Specinfra.backend).to receive(:run_command) do |args|
-        if ['ls /etc/debian_version', 'cat /etc/lsb-release'].include? args
+        if ['cat /etc/debian_version', 'cat /etc/lsb-release'].include? args
           double(
             :run_command_response,
             :success? => true,
@@ -169,8 +169,8 @@ EOF
   context 'test debian (no lsb_release or lsb-release)' do
     before do
       allow(Specinfra.backend).to receive(:run_command) do |args|
-        if args == 'ls /etc/debian_version'
-          double :run_command_response, :success? => true, :stdout => nil
+        if args == 'cat /etc/debian_version'
+          double :run_command_response, :success? => true, :stdout => "8.5\n"
         elsif args == 'uname -m'
           double :run_command_response, :success? => true, :stdout => "x86_64\n"
         else
@@ -181,7 +181,7 @@ EOF
     subject! { os }
     it do
       expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
-      should eq({:family => 'debian', :release => nil, :arch => 'x86_64' })
+      should eq({:family => 'debian', :release => '8.5', :arch => 'x86_64' })
     end
   end
 end
