@@ -31,7 +31,7 @@ class Specinfra::Command::Freebsd::V9::Package < Specinfra::Command::Freebsd::Ba
 
     def install(package, version=nil, option='')
       shell_ifelse(
-        shell_check_pkgng,
+        shell_check_pkgng(),
         "pkg install -y #{option} #{package}",
         "pkg_add -r #{option} install #{package}"
       )
@@ -39,7 +39,7 @@ class Specinfra::Command::Freebsd::V9::Package < Specinfra::Command::Freebsd::Ba
 
     def get_version(package, opts=nil)
       shell_ifelse(
-        shell_check_pkgng,
+        shell_check_pkgng(),
         "pkg query %v #{escape(package)}",
         "pkg_info -Ix #{escape(package)} | cut -f 1 -w | sed -n 's/^#{escape(package)}-//p'"
       )
