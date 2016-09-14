@@ -243,6 +243,10 @@ require 'specinfra/command/freebsd/base/user'
 require 'specinfra/command/freebsd/v6'
 require 'specinfra/command/freebsd/v6/user'
 
+# FreeBSD V9 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v9'
+require 'specinfra/command/freebsd/v9/package'
+
 # FreeBSD V10 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v10'
 require 'specinfra/command/freebsd/v10/package'
