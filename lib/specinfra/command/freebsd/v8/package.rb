@@ -38,7 +38,7 @@ class Specinfra::Command::Freebsd::V8::Package < Specinfra::Command::Freebsd::Ba
       shell_ifelse(
         shell_check_pkgng(),
         "pkg install -y #{option} #{package}",
-        "pkg_add -r #{option} install #{package}"
+        "pkg_add -r #{option} #{package}"
       )
     end
 
