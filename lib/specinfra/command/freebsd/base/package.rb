@@ -2,18 +2,30 @@ class Specinfra::Command::Freebsd::Base::Package < Specinfra::Command::Base::Pac
   class << self
     def check_is_installed(package, version=nil)
       if version
-        "pkg_info -I #{escape(package)}-#{escape(version)}"
+        "pkg query %v #{escape(package)} | grep -- #{escape(version)}"
       else
-        "pkg_info -Ix #{escape(package)}"
+        "pkg info -e #{escape(package)}"
       end
     end
 
+    alias :check_is_installed_by_pkg :check_is_installed
+
+    def check_is_installed_by_rpm(package, version=nil)
+      cmd = "rpm -q #{escape(package)}"
+      if version
+        cmd = "#{cmd} | grep -w -- #{escape(package)}-#{escape(version)}"
+      end
+      cmd
+    end
+
+    alias :check_is_installed_by_yum :check_is_installed_by_rpm
+
     def install(package, version=nil, option='')
-      "pkg_add -r #{option} install #{package}"
+      "pkg install -y #{option} #{package}"
     end
 
     def get_version(package, opts=nil)
-      "pkg_info -Ix #{escape(package)} | cut -f 1 -w | sed -n 's/^#{escape(package)}-//p'"
+      "pkg query %v #{escape(package)}"
     end
   end
 end
