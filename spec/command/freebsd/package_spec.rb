@@ -32,7 +32,7 @@ describe 'command/freebsd/package works correctly' do
       it { expect(get_command(:check_package_is_installed, 'figlet', '1.2.3')).to match /^pkg_info +-I +figlet-1.2.3$/ }
     end
     describe 'get_command(:install_package, "figlet")' do
-      it { expect(get_command(:install_package, 'figlet')).to match /^pkg_add +-r +install +figlet$/ }
+      it { expect(get_command(:install_package, 'figlet')).to match /^pkg_add +-r +figlet$/ }
     end
   end
 
@@ -47,7 +47,7 @@ describe 'command/freebsd/package works correctly' do
       it { expect(get_command(:check_package_is_installed, 'figlet', '1.2.3')).to match /^pkg_info +-I +figlet-1.2.3$/ }
     end
     describe 'get_command(:install_package, "figlet")' do
-      it { expect(get_command(:install_package, 'figlet')).to match /^pkg_add +-r +install +figlet$/ }
+      it { expect(get_command(:install_package, 'figlet')).to match /^pkg_add +-r +figlet$/ }
     end
   end
 
@@ -72,7 +72,7 @@ describe 'command/freebsd/package works correctly' do
     end
     describe 'get_command(:install_package, "figlet")' do
       st = /pkg +install +-y +figlet/
-      sf = /pkg_add +-r +install +figlet/
+      sf = /pkg_add +-r +figlet/
       it { expect(get_command(:install_package, 'figlet')).
            to match /^if +#{cond} *; *then +#{st} *; *else +#{sf} *; *fi$/ }
     end
@@ -105,7 +105,7 @@ describe 'command/freebsd/package works correctly' do
     end
     describe 'get_command(:install_package, "figlet")' do
       st = /pkg +install +-y +figlet/
-      sf = /pkg_add +-r +install +figlet/
+      sf = /pkg_add +-r +figlet/
       it { expect(get_command(:install_package, 'figlet')).
            to match /^if +#{cond} *; *then +#{st} *; *else +#{sf} *; *fi$/ }
     end
