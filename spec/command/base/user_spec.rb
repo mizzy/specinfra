@@ -43,7 +43,7 @@ describe get_command(:check_user_has_login_shell, 'foo', '/bin/sh') do
 end
 
 describe get_command(:check_user_has_authorized_key, 'foo', 'ssh-rsa AAAAB3NzaC1yc2EAAA0zrqJ1DhN50nny08CvI8blPZTTXb0= test@test') do
-  it { should eq "grep -w -- ssh-rsa\\ AAAAB3NzaC1yc2EAAA0zrqJ1DhN50nny08CvI8blPZTTXb0\\=' ~foo/.ssh/authorized_keys" }
+  it { should eq "grep -w -- ssh-rsa\\ AAAAB3NzaC1yc2EAAA0zrqJ1DhN50nny08CvI8blPZTTXb0\\= ~foo/.ssh/authorized_keys" }
 end
 
 describe get_command(:get_user_minimum_days_between_password_change, 'foo') do
