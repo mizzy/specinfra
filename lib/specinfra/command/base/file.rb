@@ -178,6 +178,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def link_to(link, target, options = {})
       option = '-s'
       option << 'f' if options[:force]
+      option << 'n' if options[:no_dereference]
       "ln #{option} #{escape(target)} #{escape(link)}"
     end
 
