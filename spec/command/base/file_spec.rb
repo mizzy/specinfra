@@ -70,6 +70,14 @@ describe get_command(:link_file_to, '/link', '/target', :force => true) do
   it { should eq 'ln -sf /target /link' }
 end
 
+describe get_command(:link_file_to, '/link', '/target', :no_dereference => true) do
+  it { should eq 'ln -sn /target /link' }
+end
+
+describe get_command(:link_file_to, '/link', '/target', :force => true, :no_dereference => true) do
+  it { should eq 'ln -sfn /target /link' }
+end
+
 describe get_command(:remove_file, '/tmp') do
   it { should eq 'rm -rf /tmp' }
 end
