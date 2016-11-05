@@ -1,7 +1,7 @@
 class Specinfra::Command::Base::Package < Specinfra::Command::Base
   class << self
-    def check_is_installed_by_gem(name, version=nil)
-      gem_installed_command("gem", name, version)
+    def check_is_installed_by_gem(name, version=nil, gem_binary="gem")
+      gem_installed_command(gem_binary, name, version)
     end
 
     def check_is_installed_by_td_agent_gem(name, version=nil)
