@@ -15,6 +15,7 @@ module Specinfra
       block_device
       user
       group
+      facter
     }
 
     include Enumerable
