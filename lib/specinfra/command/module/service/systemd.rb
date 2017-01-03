@@ -7,8 +7,16 @@ module Specinfra
             "systemctl --quiet is-enabled #{escape(service)}"
           end
 
+          def check_is_disabled_under_systemd(service, level=nil)
+            "systemctl show #{escape(service)}|grep -q LoadState=not-found"
+          end
+
           def check_is_running_under_systemd(service)
             "systemctl is-active #{escape(service)}"
+          end
+
+          def check_is_inactive_under_systemd(service)
+            "systemctl show #{escape(service)}|grep -q ActiveState=inactive"
           end
 
           def enable_under_systemd(service)

@@ -7,8 +7,16 @@ module Specinfra
             "chkconfig --list #{escape(service)} | grep #{level}:on"
           end
 
+          def check_is_disabled_under_init(service, level=3)
+            "chkconfig --list #{escape(service)} | grep #{level}:off"
+          end
+
           def check_is_running_under_init(service)
             "service #{escape(service)} status"
+          end
+
+          def check_is_stopped_under_init(service)
+            "service #{escape(service)} status|grep stopped"
           end
 
           def enable_under_init(service)
