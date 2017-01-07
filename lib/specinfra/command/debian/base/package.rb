@@ -3,9 +3,9 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     def check_is_installed(package, version=nil)
       escaped_package = escape(package)
       if version
-        cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{escape(version)}$'"
+        cmd = "dpkg-query -f '\\${Status} \\${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{escape(version)}$'"
       else
-        cmd = "dpkg-query -f '${Status}' -W #{escaped_package} | grep -E '^(install|hold) ok installed$'"
+        cmd = "dpkg-query -f '\\${Status}' -W #{escaped_package} | grep -E '^(install|hold) ok installed$'"
       end
       cmd
     end
@@ -22,7 +22,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     end
 
     def get_version(package, opts=nil)
-      "dpkg-query -f '${Status} ${Version}' -W #{package} | sed -n 's/^install ok installed //p'"
+      "dpkg-query -f '\\${Status} \\${Version}' -W #{package} | sed -n 's/^install ok installed //p'"
     end
 
     def remove(package, option='')
