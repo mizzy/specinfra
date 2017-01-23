@@ -89,14 +89,23 @@ module Specinfra
       end
 
       mount = ret.stdout.scan(/\S+/)
-      actual_attr    = { :device => mount[0], :type => mount[4] }
-      mount[5].gsub(/\(|\)/, '').split(',').each do |option|
-        name, val = option.split('=')
-        if val.nil?
-          actual_attr[name.to_sym] = true
-        else
-          val = val.to_i if val.match(/^\d+$/)
-          actual_attr[name.to_sym] = val
+      actual_attr = { }
+      actual_attr[:device] = mount[0]
+      # Output of mount depends on os:
+      # a)  proc on /proc type proc (rw,noexec,nosuid,nodev)
+      # b)  procfs on /proc (procfs, local)
+      actual_attr[:type] = mount[4] if mount[3] == 'type' # case a.
+      if match = ret.stdout.match(/\((.*)\)/)
+        options = match[1].split(',')
+        actual_attr[:type] ||= options.shift              # case b.
+        options.each do |option|
+          name, val = option.split('=')
+          if val.nil?
+            actual_attr[name.strip.to_sym] = true
+          else
+            val = val.to_i if val.match(/^\d+$/)
+            actual_attr[name.strip.to_sym] = val
+          end
         end
       end
 
