@@ -13,6 +13,8 @@ module Specinfra
       virtualization
       kernel
       block_device
+      user
+      group
     }
 
     include Enumerable

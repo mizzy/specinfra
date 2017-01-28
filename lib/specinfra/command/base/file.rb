@@ -129,6 +129,14 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
       "readlink #{escape(link)}"
     end
 
+    def get_link_realpath(link)
+      "readlink -e #{escape(link)}"
+    end
+
+    def check_is_dereferenceable(link)
+      %Q|test -n "$(readlink -e #{escape(link)})"|
+    end
+
     def get_mtime(file)
       "stat -c %Y #{escape(file)}"
     end
@@ -170,6 +178,7 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def link_to(link, target, options = {})
       option = '-s'
       option << 'f' if options[:force]
+      option << 'n' if options[:no_dereference]
       "ln #{option} #{escape(target)} #{escape(link)}"
     end
 

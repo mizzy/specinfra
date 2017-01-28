@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-set :os, { :family => 'openbsd' } 
-
 describe Specinfra::HostInventory::Virtualization do
+  before :all do
+    set :os, { :family => 'openbsd' }
+  end
+
   virt = Specinfra::HostInventory::Virtualization.new(host_inventory) 
 
   let(:host_inventory) { nil }

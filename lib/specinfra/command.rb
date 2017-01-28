@@ -49,7 +49,7 @@ require 'specinfra/command/base/user'
 require 'specinfra/command/base/yumrepo'
 require 'specinfra/command/base/zfs'
 
-# Linux (inhefit Base)
+# Linux (inherit Base)
 require 'specinfra/command/linux'
 require 'specinfra/command/linux/base'
 require 'specinfra/command/linux/base/bridge'
@@ -103,6 +103,10 @@ require 'specinfra/command/fedora/base/service'
 # Fedora >= V15 (inherit Fedora)
 require 'specinfra/command/fedora/v15'
 require 'specinfra/command/fedora/v15/service'
+
+# Arista EOS (inherit Fedora)
+require 'specinfra/command/eos'
+require 'specinfra/command/eos/base'
 
 # Amazon Linux (inherit RedHat)
 require 'specinfra/command/amazon'
@@ -162,6 +166,7 @@ require 'specinfra/command/debian/base/service'
 # Debian V8 (inherit Debian)
 require 'specinfra/command/debian/v8'
 require 'specinfra/command/debian/v8/service'
+require 'specinfra/command/debian/v8/port'
 
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
@@ -225,6 +230,7 @@ require 'specinfra/command/sles/v12/service'
 require 'specinfra/command/freebsd'
 require 'specinfra/command/freebsd/base'
 require 'specinfra/command/freebsd/base/file'
+require 'specinfra/command/freebsd/base/group'
 require 'specinfra/command/freebsd/base/host'
 require 'specinfra/command/freebsd/base/interface'
 require 'specinfra/command/freebsd/base/inventory'
@@ -237,10 +243,19 @@ require 'specinfra/command/freebsd/base/user'
 # FreeBSD V6 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v6'
 require 'specinfra/command/freebsd/v6/user'
+require 'specinfra/command/freebsd/v6/package'
 
-# FreeBSD V10 (inherit FreeBSD)
-require 'specinfra/command/freebsd/v10'
-require 'specinfra/command/freebsd/v10/package'
+# FreeBSD V7 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v7'
+require 'specinfra/command/freebsd/v7/package'
+
+# FreeBSD V8 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v8'
+require 'specinfra/command/freebsd/v8/package'
+
+# FreeBSD V9 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v9'
+require 'specinfra/command/freebsd/v9/package'
 
 # OpenBSD (inherit Base)
 require 'specinfra/command/openbsd'
@@ -273,6 +288,7 @@ require 'specinfra/command/solaris/base/host'
 require 'specinfra/command/solaris/base/inventory'
 require 'specinfra/command/solaris/base/ipfilter'
 require 'specinfra/command/solaris/base/ipnat'
+require 'specinfra/command/solaris/base/kernel_module'
 require 'specinfra/command/solaris/base/package'
 require 'specinfra/command/solaris/base/port'
 require 'specinfra/command/solaris/base/service'

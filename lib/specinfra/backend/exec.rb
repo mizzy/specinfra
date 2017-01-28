@@ -122,10 +122,10 @@ module Specinfra
 
           pid = spawn(cmd, :out => out_w, :err => err_w)
 
+          pid, stats = Process.waitpid2(pid)
+
           out_w.close
           err_w.close
-
-          pid, stats = Process.waitpid2(pid)
 
           begin
             quit_w.syswrite 1

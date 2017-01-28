@@ -79,7 +79,9 @@ module Specinfra
 
         @container = ::Docker::Container.create(opts)
         @container.start
-        sleep CONTAINER_START_DELAY if defined?(CONTAINER_START_DELAY)
+        while @container.json['State'].key?('Health') && @container.json['State']['Health']['Status'] == "starting" do
+          sleep 0.5
+        end
       end
 
       def cleanup_container
@@ -92,6 +94,7 @@ module Specinfra
       end
 
       def docker_run!(cmd, opts={})
+        opts.merge!(get_config(:docker_container_exec_options) || {})
         stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd], opts)
 
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,

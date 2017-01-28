@@ -1,14 +1,28 @@
 require 'spec_helper'
 
-set :backend, :ssh
-
 describe Specinfra::Backend::Ssh do
+  before(:all) do
+    set :backend, :ssh
+  end
+
+  after(:all) do
+    if Specinfra.configuration.instance_variable_defined?(:@ssh_options)
+      Specinfra.configuration.instance_variable_set(:@ssh_options, nil)
+    end
+  end
+
   describe '#build_command' do
     context 'with root user' do 
       before do
         RSpec.configure do |c|
           set :ssh_options, :user => 'root'
           c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
+        end
+      end
+
+      after do
+        RSpec.configure do |c|
+          c.ssh = nil
         end
       end
 
@@ -26,6 +40,12 @@ describe Specinfra::Backend::Ssh do
         RSpec.configure do |c|
           set :ssh_options, :user => 'foo'
           c.ssh = double(:ssh, Specinfra.configuration.ssh_options)
+        end
+      end
+
+      after do
+        RSpec.configure do |c|
+          c.ssh = nil
         end
       end
 
@@ -49,6 +69,7 @@ describe Specinfra::Backend::Ssh do
 
       after do
         RSpec.configure do |c|
+          c.ssh = nil
           c.sudo_path = nil
         end
       end
@@ -73,6 +94,7 @@ describe Specinfra::Backend::Ssh do
 
       after do
         RSpec.configure do |c|
+          c.ssh = nil
           c.disable_sudo = false
         end
       end
@@ -97,6 +119,7 @@ describe Specinfra::Backend::Ssh do
 
       after do
         RSpec.configure do |c|
+          c.ssh = nil
           c.sudo_options = nil
         end
       end

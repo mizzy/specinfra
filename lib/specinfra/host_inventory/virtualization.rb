@@ -19,7 +19,13 @@ module Specinfra
         ret = backend.run_command(cmd)
         if ret.exit_status == 0
            res[:system] = parse_system_product_name(ret.stdout)   
-        end 
+           return res
+        end
+
+        ret = backend.run_command('systemd-detect-virt')
+        if ret.success?
+          res[:system] = parse_systemd_detect_virt_output(ret.stdout)
+        end
 
         res 
       end 
@@ -38,6 +44,17 @@ module Specinfra
             nil
         end
         product_name
+      end
+
+      def parse_systemd_detect_virt_output(ret)
+        detected = ret.strip
+
+        case detected
+        when 'vmware', 'kvm'
+          detected
+        when 'oracle'
+          'vbox'
+        end
       end
 
     end

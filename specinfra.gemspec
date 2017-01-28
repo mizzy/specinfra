@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["gosukenator@gmail.com"]
   spec.description   = %q{Common layer for serverspec and itamae}
   spec.summary       = %q{Common layer for serverspec and itamae}
-  spec.homepage      = ""
+  spec.homepage      = 'https://github.com/mizzy/specinfra'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "net-scp"
-  spec.add_runtime_dependency "net-ssh", ">= 2.7", "< 4.0"
+  spec.add_runtime_dependency "net-ssh", ">= 2.7", "< 5.0"
   spec.add_runtime_dependency "net-telnet"
   spec.add_runtime_dependency "sfl"
 
@@ -28,4 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.1.1"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
 end

@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-set :os, { :family => 'linux' } 
-
 describe Specinfra::HostInventory::Virtualization do
+  before :all do
+    set :os, { :family => 'linux' }
+  end
+
   virt = Specinfra::HostInventory::Virtualization.new(host_inventory) 
   let(:host_inventory) { nil }
   it 'Docker Image should return :system => "docker"' do

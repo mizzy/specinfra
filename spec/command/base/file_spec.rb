@@ -70,6 +70,14 @@ describe get_command(:link_file_to, '/link', '/target', :force => true) do
   it { should eq 'ln -sf /target /link' }
 end
 
+describe get_command(:link_file_to, '/link', '/target', :no_dereference => true) do
+  it { should eq 'ln -sn /target /link' }
+end
+
+describe get_command(:link_file_to, '/link', '/target', :force => true, :no_dereference => true) do
+  it { should eq 'ln -sfn /target /link' }
+end
+
 describe get_command(:remove_file, '/tmp') do
   it { should eq 'rm -rf /tmp' }
 end
@@ -92,6 +100,14 @@ end
 
 describe get_command(:get_file_link_target, '/tmp') do
   it { should eq 'readlink /tmp' }
+end
+
+describe get_command(:get_file_link_realpath, '/tmp') do
+  it { should eq 'readlink -e /tmp' }
+end
+
+describe get_command(:check_file_is_dereferenceable, '/tmp') do
+  it { should eq 'test -n "$(readlink -e /tmp)"' }
 end
 
 describe get_command(:check_file_exists, '/tmp') do

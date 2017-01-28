@@ -19,3 +19,5 @@ tmp
 .ruby-gemset
 .ruby-version
 .rvmrc
+upstream.sh
+

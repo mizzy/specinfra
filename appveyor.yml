@@ -1,6 +1,6 @@
 version: "{build}"
-
 os: Windows Server 2012
+
 platform:
   - x64
 
@@ -13,6 +13,10 @@ environment:
     - ruby_version: "200"
     - ruby_version: "21"
     - ruby_version: "22"
+
+matrix:
+  allow_failures:
+    - ruby_version: "193"
 
 clone_depth: 5
 
@@ -40,6 +44,7 @@ install:
   - gem --version
   - appveyor DownloadFile -Url %bundler_url% -FileName bundler.gem
   - gem install --local bundler.gem --no-ri --no-rdoc ## appveyor often stops `gem install bundler`..?
+  - ps: $PSVersionTable
 
 build_script:
   - ruby -rfileutils -e 'FileUtils.rm_r(File.join(Gem.dir, "cache", "bundler")) if Dir.exists?(File.join(Gem.dir, "cache", "bundler"))'

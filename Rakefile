@@ -7,9 +7,10 @@ end
 
 if defined?(RSpec)
   task :spec => 'spec:all'
+  task :default => 'spec:all'
 
   namespace :spec do
-    task :all => [ :helper, :backend, :configuration, :command, :host_inventory ]
+    task :all => [ :helper, :backend, :configuration, :processor, :command, :host_inventory ]
 
     RSpec::Core::RakeTask.new(:helper) do |t|
       t.pattern = "spec/helper/*_spec.rb"
@@ -30,6 +31,10 @@ if defined?(RSpec)
 
     RSpec::Core::RakeTask.new(:configuration) do |t|
       t.pattern = "spec/configuration_spec.rb"
+    end
+
+    RSpec::Core::RakeTask.new(:processor) do |t|
+      t.pattern = "spec/processor_spec.rb"
     end
 
     RSpec::Core::RakeTask.new(:command) do |t|
