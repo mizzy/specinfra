@@ -18,7 +18,7 @@ module Specinfra
           psh.sub!(":", "")
           psh = psh.prepend("/cygdrive/")
         end
-        result = execute_script %Q{#{psh} -encodedCommand #{encode_script(script)}}
+        result = execute_script %Q{#{psh} -NoProfile -encodedCommand #{encode_script(script)}}
 
         if @example
           @example.metadata[:command] = script
