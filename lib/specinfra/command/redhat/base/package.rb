@@ -3,7 +3,8 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
     def check_is_installed(package, version=nil)
       cmd = "rpm -q #{escape(package)}"
       if version
-        cmd = "#{cmd} | grep -w -- #{escape(package)}-#{escape(version)}"
+        full_package = "#{package}-#{version}"
+        cmd = "#{cmd} | grep -w -- #{Regexp.escape(escape(full_package))}"
       end
       cmd
     end
@@ -20,7 +21,7 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
       else
         full_package = package
       end
-      cmd = "yum -y #{option} install #{full_package}"
+      cmd = "yum -y #{option} install #{escape(full_package)}"
     end
 
     def remove(package, option='')
