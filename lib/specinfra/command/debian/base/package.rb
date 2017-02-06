@@ -3,7 +3,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     def check_is_installed(package, version=nil)
       escaped_package = escape(package)
       if version
-        cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{escape(version)}$'"
+        cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{Regexp.escape(escape(version))}$'"
       else
         cmd = "dpkg-query -f '${Status}' -W #{escaped_package} | grep -E '^(install|hold) ok installed$'"
       end
@@ -18,7 +18,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
       else
         full_package = package
       end
-      "DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' #{option} install #{full_package}"
+      "DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' #{option} install #{escape(full_package)}"
     end
 
     def get_version(package, opts=nil)
