@@ -185,6 +185,10 @@ require 'specinfra/command/ubuntu/v15/service'
 require 'specinfra/command/linuxmint'
 require 'specinfra/command/linuxmint/base'
 
+# elementary OS (inherit Ubuntu)
+require 'specinfra/command/elementary'
+require 'specinfra/command/elementary/base'
+
 # Cumulus Networks (inherit Debian)
 require 'specinfra/command/cumulus'
 require 'specinfra/command/cumulus/base'
