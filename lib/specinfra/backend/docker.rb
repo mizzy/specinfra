@@ -31,14 +31,6 @@ module Specinfra
         docker_run!(cmd, opts)
       end
 
-      def build_command(cmd)
-        cmd
-      end
-
-      def add_pre_command(cmd)
-        cmd
-      end
-
       def send_file(from, to)
         if @base_image
           @images << commit_container if @container
@@ -95,7 +87,7 @@ module Specinfra
 
       def docker_run!(cmd, opts={})
         opts.merge!(get_config(:docker_container_exec_options) || {})
-        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd], opts)
+        stdout, stderr, status = @container.exec(cmd, opts)
 
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
