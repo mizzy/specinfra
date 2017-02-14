@@ -27,7 +27,7 @@ module Specinfra
 
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
-        cmd = add_pre_command(cmd)
+        run_pre_command(opts)
         docker_run!(cmd, opts)
       end
 
@@ -105,6 +105,13 @@ module Specinfra
           ::Docker::Image.get(name)
         rescue ::Docker::Error::NotFoundError
           ::Docker::Image.create('fromImage' => name)
+        end
+      end
+
+      def run_pre_command(opts)
+        if get_config(:pre_command)
+          cmd = build_command(get_config(:pre_command))
+          docker_run!(cmd, opts)
         end
       end
     end
