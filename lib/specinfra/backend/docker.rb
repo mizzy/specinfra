@@ -27,16 +27,8 @@ module Specinfra
 
       def run_command(cmd, opts={})
         cmd = build_command(cmd)
-        cmd = add_pre_command(cmd)
+        run_pre_command(opts)
         docker_run!(cmd, opts)
-      end
-
-      def build_command(cmd)
-        cmd
-      end
-
-      def add_pre_command(cmd)
-        cmd
       end
 
       def send_file(from, to)
@@ -95,7 +87,7 @@ module Specinfra
 
       def docker_run!(cmd, opts={})
         opts.merge!(get_config(:docker_container_exec_options) || {})
-        stdout, stderr, status = @container.exec(['/bin/sh', '-c', cmd], opts)
+        stdout, stderr, status = @container.exec(cmd.shellsplit, opts)
 
         CommandResult.new :stdout => stdout.join, :stderr => stderr.join,
         :exit_status => status
@@ -113,6 +105,13 @@ module Specinfra
           ::Docker::Image.get(name)
         rescue ::Docker::Error::NotFoundError
           ::Docker::Image.create('fromImage' => name)
+        end
+      end
+
+      def run_pre_command(opts)
+        if get_config(:pre_command)
+          cmd = build_command(get_config(:pre_command))
+          docker_run!(cmd, opts)
         end
       end
     end
