@@ -3,7 +3,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     def check_is_installed(package, version=nil)
       escaped_package = escape(package)
       if version
-        cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{Regexp.escape(escape(version))}$'"
+        cmd = "dpkg-query -f '${Status} ${Version}' -W #{escaped_package} | grep -E '^(install|hold) ok installed #{Regexp.escape(version)}$'"
       else
         cmd = "dpkg-query -f '${Status}' -W #{escaped_package} | grep -E '^(install|hold) ok installed$'"
       end
@@ -30,4 +30,3 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     end
   end
 end
-
