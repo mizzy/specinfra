@@ -5,10 +5,10 @@ set :os, :family => 'linux'
 
 describe get_command(:check_selinux_has_mode, 'disabled') do
   it do
-    should eq %Q{test ! -f /etc/selinux/config || ( (} +
+    should eq %Q{test ! -f /etc/selinux/config || ( ( (} +
               %Q{getenforce | grep -i -- disabled) ||} +
               %Q{ (getenforce | grep -i -- permissive) )} +
-              %Q{ && grep -iE -- '^\\s*SELINUX=disabled\\>' /etc/selinux/config}
+              %Q{ && grep -iE -- '^\\s*SELINUX=disabled\\>' /etc/selinux/config)}
   end
 end
 
