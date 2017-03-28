@@ -37,6 +37,10 @@ if defined?(RSpec)
       t.pattern = "spec/processor_spec.rb"
     end
 
+    RSpec::Core::RakeTask.new(:detect_os) do |t|
+      t.pattern = "spec/helper/detect_os/*_spec.rb"
+    end
+
     RSpec::Core::RakeTask.new(:command) do |t|
       t.pattern = "spec/command/**/*.rb"
     end
