@@ -10,7 +10,7 @@ if defined?(RSpec)
   task :default => 'spec:all'
 
   namespace :spec do
-    task :all => [ :helper, :backend, :configuration, :processor, :command, :host_inventory ]
+    task :all => [ :helper, :backend, :configuration, :processor, :command, :host_inventory, :detect_os ]
 
     RSpec::Core::RakeTask.new(:helper) do |t|
       t.pattern = "spec/helper/*_spec.rb"
@@ -35,6 +35,11 @@ if defined?(RSpec)
 
     RSpec::Core::RakeTask.new(:processor) do |t|
       t.pattern = "spec/processor_spec.rb"
+    end
+
+    desc 'Run tests for os detection mechanizm.'
+    RSpec::Core::RakeTask.new(:detect_os) do |t|
+      t.pattern = "spec/helper/detect_os/*_spec.rb"
     end
 
     RSpec::Core::RakeTask.new(:command) do |t|
