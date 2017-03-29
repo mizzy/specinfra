@@ -13,7 +13,7 @@ if defined?(RSpec)
     task :all => [ :helper, :backend, :configuration, :processor, :command, :host_inventory ]
 
     RSpec::Core::RakeTask.new(:helper) do |t|
-      t.pattern = "spec/helper/*_spec.rb"
+      t.pattern = "spec/helper/**/*_spec.rb"
     end
 
     task :backend => 'backend:all'
