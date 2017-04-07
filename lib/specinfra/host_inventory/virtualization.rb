@@ -4,7 +4,7 @@ module Specinfra
       def get
         res = {}
         ## docker
-        if backend.run_command('grep -E "docker(/|-[0-9a-f]+)" /proc/1/cgroup').success?
+        if backend.run_command('grep -Eq "docker(/|-[0-9a-f]+)" /proc/1/cgroup').success?
           res[:system] = 'docker'
           return res
         end

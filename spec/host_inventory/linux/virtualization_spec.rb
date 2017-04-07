@@ -5,12 +5,12 @@ describe Specinfra::HostInventory::Virtualization do
     set :os, { :family => 'linux' }
   end
 
-  virt = Specinfra::HostInventory::Virtualization.new(host_inventory) 
+  virt = Specinfra::HostInventory::Virtualization.new(host_inventory)
   let(:host_inventory) { nil }
   it 'Docker Image should return :system => "docker"' do
-    allow(virt.backend).to receive(:run_command).with('ls /.dockerinit') do 
-      CommandResult.new(:stdout => '/.dockerinit', :exit_status => 0)
-    end  
+    allow(virt.backend).to receive(:run_command).with('grep -Eq "docker(/|-[0-9a-f]+)" /proc/1/cgroup' ) do
+      CommandResult.new(:stdout => '', :exit_status => 0)
+    end
     expect(virt.get).to include(:system => 'docker')
   end
 
@@ -18,10 +18,10 @@ describe Specinfra::HostInventory::Virtualization do
   it 'Debian Wheezy on OpenVZ should return :system => "openvz"' do
     allow(virt.backend).to receive(:run_command).with('ls /.dockerinit') do
       CommandResult.new(:stdout => '', :exit_status => 2)
-    end 
+    end
     allow(virt.backend).to receive(:run_command).with('test -d /proc/vz -a ! -d /proc/bc') do
       CommandResult.new(:stdout => '', :exit_status => 0)
-    end 
+    end
     expect(virt.get).to include(:system => 'openvz')
   end
 
