@@ -8,7 +8,7 @@ describe Specinfra::HostInventory::Virtualization do
   virt = Specinfra::HostInventory::Virtualization.new(host_inventory)
   let(:host_inventory) { nil }
   it 'Docker Image should return :system => "docker"' do
-    allow(virt.backend).to receive(:run_command).with('grep -Eq "docker(/|-[0-9a-f]+)" /proc/1/cgroup||test -e /.dockerinit') do
+    allow(virt.backend).to receive(:run_command).with('grep -Eqa \'docker(/|-[0-9a-f]+)\' /proc/1/cgroup||test -e /.dockerinit') do
       CommandResult.new(:stdout => '', :exit_status => 0)
     end
     expect(virt.get).to include(:system => 'docker')
@@ -16,7 +16,7 @@ describe Specinfra::HostInventory::Virtualization do
 
   let(:host_inventory) { nil }
   it 'Debian Wheezy on OpenVZ should return :system => "openvz"' do
-    allow(virt.backend).to receive(:run_command).with('ls /.dockerinit') do
+    allow(virt.backend).to receive(:run_command).with('grep -Eqa \'docker(/|-[0-9a-f]+)\' /proc/1/cgroup||test -e /.dockerinit') do
       CommandResult.new(:stdout => '', :exit_status => 2)
     end
     allow(virt.backend).to receive(:run_command).with('test -d /proc/vz -a ! -d /proc/bc') do
