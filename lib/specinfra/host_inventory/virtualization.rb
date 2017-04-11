@@ -3,13 +3,13 @@ module Specinfra
     class Virtualization < Base
       def get
         res = {}
-        ## docker 
-        if backend.run_command('ls /.dockerinit').success?
+        ## docker
+        if backend.run_command('grep -Eqa \'docker(/|-[0-9a-f]+)\' /proc/1/cgroup||test -e /.dockerinit').success?
           res[:system] = 'docker'
           return res
         end
 
-        ## OpenVZ on Linux 
+        ## OpenVZ on Linux
         if backend.run_command('test -d /proc/vz -a ! -d /proc/bc').success?
           res[:system] = 'openvz'
           return res
@@ -18,7 +18,7 @@ module Specinfra
         cmd = backend.command.get(:get_inventory_system_product_name)
         ret = backend.run_command(cmd)
         if ret.exit_status == 0
-           res[:system] = parse_system_product_name(ret.stdout)   
+           res[:system] = parse_system_product_name(ret.stdout)
            return res
         end
 
@@ -27,8 +27,8 @@ module Specinfra
           res[:system] = parse_systemd_detect_virt_output(ret.stdout)
         end
 
-        res 
-      end 
+        res
+      end
 
       def parse_system_product_name(ret)
         product_name = case ret
