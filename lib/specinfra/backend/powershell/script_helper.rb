@@ -8,7 +8,7 @@ module Specinfra
           path = get_config(:path)
           if path
             cmd.strip!
-            cmd = 
+            cmd =
 <<-EOF
 $env:path = "#{path};$env:path"
 #{cmd}
@@ -21,12 +21,10 @@ EOF
           path = get_config(:path)
           if get_config(:pre_command)
             cmd.strip!
-            cmd = 
+            cmd =
 <<-EOF
-if (#{get_config(:pre_command)})
-{
+#{get_config(:pre_command)}
 #{cmd}
-}
 EOF
             cmd = "$env:path = \"#{path};$env:path\"\n#{cmd}" if path
           end
