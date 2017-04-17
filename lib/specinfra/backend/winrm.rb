@@ -31,8 +31,6 @@ module Specinfra
           end
         end
 
-        exitcode = 1 if exitcode == 0 and !stderr.empty?
-
         if @example
           @example.metadata[:command] = script
           @example.metadata[:stdout]  = stdout + stderr
