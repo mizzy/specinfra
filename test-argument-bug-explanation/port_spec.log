@@ -1,0 +1,45 @@
+# rake
+/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/bin/ruby -I/Library/Ruby/Gems/2.0.0/gems/rspec-support-3.5.0/lib:/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.5.0/lib /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.5.0/exe/rspec --pattern spec/srv.example.com/\*_spec.rb
+
+Port "11111"
+  should be listening with udp6 (FAILED - 1)
+  should be listening on 192.168.2.2 with udp6 (FAILED - 2)
+  should be listening with udp6 (FAILED - 3)
+
+Failures:
+
+  1) Port "11111" should be listening with udp6
+     On host `srv.example.com'
+     Failure/Error: it { should be_listening.with('udp6') }
+       expected Port "11111" to be listening with udp6
+       sudo -p 'Password: ' /bin/sh -c netstat\ -tunl\ \|\ grep\ --\ \\\^udp6\\\ .\\\*:11111\\\
+
+     # ./spec/srv.example.com/port_spec.rb:4:in `block (2 levels) in <top (required)>'
+
+  2) Port "11111" should be listening on 192.168.2.2 with udp6
+     On host `srv.example.com'
+     Failure/Error: it { should be_listening.on('192.168.2.2').with('udp6') }
+       expected Port "11111" to be listening on 192.168.2.2 with udp6
+       sudo -p 'Password: ' /bin/sh -c netstat\ -tunl\ \|\ grep\ --\ \\\^udp6\\\ .\\\*\\\ 192.168.2.2:11111\\\
+
+     # ./spec/srv.example.com/port_spec.rb:5:in `block (2 levels) in <top (required)>'
+
+  3) Port "11111" should be listening with udp6
+     On host `srv.example.com'
+     Failure/Error: it { should be_listening.with('udp6') }
+       expected Port "11111" to be listening with udp6
+       sudo -p 'Password: ' /bin/sh -c netstat\ -tunl\ \|\ grep\ --\ \\\^udp6\\\ .\\\*\\\ 192.168.2.2:11111\\\
+
+     # ./spec/srv.example.com/port_spec.rb:6:in `block (2 levels) in <top (required)>'
+
+Finished in 22.48 seconds (files took 0.4499 seconds to load)
+3 examples, 3 failures
+
+Failed examples:
+
+rspec ./spec/srv.example.com/port_spec.rb:4 # Port "11111" should be listening with udp6
+rspec ./spec/srv.example.com/port_spec.rb:5 # Port "11111" should be listening on 192.168.2.2 with udp6
+rspec ./spec/srv.example.com/port_spec.rb:6 # Port "11111" should be listening with udp6
+
+/System/Library/Frameworks/Ruby.framework/Versions/2.0/usr/bin/ruby -I/Library/Ruby/Gems/2.0.0/gems/rspec-support-3.5.0/lib:/Library/Ruby/Gems/2.0.0/gems/rspec-core-3.5.0/lib /Library/Ruby/Gems/2.0.0/gems/rspec-core-3.5.0/exe/rspec --pattern spec/srv.example.com/\*_spec.rb failed
+#
