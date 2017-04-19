@@ -54,4 +54,5 @@ build_script:
 
 test_script:
   - net user appveyor %WINDOWS_PASSWORD% # set by webui
+  - ps: $ProgressPreference = "SilentlyContinue"
   - bundle exec rspec -fd --backtrace -r .\integration-test\winrm\spec_helper.rb .\integration-test\winrm
