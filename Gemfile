@@ -22,3 +22,5 @@ elsif ruby_version < Gem::Version.new('2.2.3')
   # listen 3.1 dropped support for Ruby 2.1 and lower
   gem 'listen', '< 3.1'
 end
+
+gem 'hocon'
