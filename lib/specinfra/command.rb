@@ -127,6 +127,7 @@ require 'specinfra/command/aix/base/user'
 # Alpine (inherit Linux)
 require 'specinfra/command/alpine'
 require 'specinfra/command/alpine/base'
+require 'specinfra/command/alpine/base/host'
 require 'specinfra/command/alpine/base/package'
 require 'specinfra/command/alpine/base/process'
 require 'specinfra/command/alpine/base/service'
