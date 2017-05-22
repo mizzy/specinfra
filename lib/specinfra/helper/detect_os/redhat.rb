@@ -3,17 +3,22 @@ class Specinfra::Helper::DetectOs::Redhat < Specinfra::Helper::DetectOs
     # Fedora also has an /etc/redhat-release so the Fedora check must
     # come before the RedHat check
     if run_command('ls /etc/fedora-release').success?
-      line = run_command('cat /etc/redhat-release').stdout
+      line = run_command('cat /etc/fedora-release').stdout
       if line =~ /release (\d[\d]*)/
         release = $1
       end
       { :family => 'fedora', :release => release }
+    elsif run_command('ls /etc/oracle-release').success?
+      line = run_command('cat /etc/oracle-release').stdout
+      if line =~ /release (\d[\d.]*)/
+        release = $1
+      end
+      { :family => 'oracle', :release => release }
     elsif run_command('ls /etc/redhat-release').success?
       line = run_command('cat /etc/redhat-release').stdout
       if line =~ /release (\d[\d.]*)/
         release = $1
       end
-
       { :family => 'redhat', :release => release }
     elsif run_command('ls /etc/system-release').success?
       line = run_command('cat /etc/system-release').stdout
@@ -24,8 +29,3 @@ class Specinfra::Helper::DetectOs::Redhat < Specinfra::Helper::DetectOs
     end
   end
 end
-
-
-
-
-
