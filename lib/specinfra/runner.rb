@@ -25,7 +25,7 @@ module Specinfra
     def self.run(meth, *args)
       cmd = Specinfra.command.get(meth, *args)
       ret = Specinfra.backend.run_command(cmd)
-      if meth.to_s =~ /^check/
+      if meth.to_s.slice(0, 5) == 'check'
         ret.success?
       else
         ret
