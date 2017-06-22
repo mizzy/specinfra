@@ -4,7 +4,7 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
       cmd = "rpm -q #{escape(package)}"
       if version
         full_package = "#{package}-#{version}"
-        cmd = "#{cmd} | grep -w -- #{Regexp.escape(escape(full_package))}"
+        cmd = "#{cmd} | grep -w -- #{Regexp.escape(full_package)}"
       end
       cmd
     end
@@ -29,12 +29,3 @@ class Specinfra::Command::Redhat::Base::Package < Specinfra::Command::Linux::Bas
     end
   end
 end
-
-
-
-
-
-
-
-
-
