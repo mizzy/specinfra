@@ -4,6 +4,14 @@ class Specinfra::Command::Freebsd::Base::Interface < Specinfra::Command::Base::I
       "ifconfig #{name}"
     end
 
+    def get_speed_of(name)
+      "ifconfig #{name} | awk '/media:/{if(match($0,/[0-9]+/)){ print substr($0, RSTART, RLENGTH);}}'"
+    end
+
+    def get_mtu_of(name)
+      "ifconfig #{name} | awk '/mtu /{print $NF}'"
+    end
+
     def check_has_ipv4_address(interface, ip_address)
       ip_address = ip_address.dup
       if ip_address =~ /\/\d+$/
