@@ -266,6 +266,10 @@ require 'specinfra/command/freebsd/v8/package'
 require 'specinfra/command/freebsd/v9'
 require 'specinfra/command/freebsd/v9/package'
 
+# FreeBSD V11 (inherit FreeBSD)
+require 'specinfra/command/freebsd/v11'
+require 'specinfra/command/freebsd/v11/interface'
+
 # OpenBSD (inherit Base)
 require 'specinfra/command/openbsd'
 require 'specinfra/command/openbsd/base'
