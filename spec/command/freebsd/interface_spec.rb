@@ -28,13 +28,21 @@ describe get_command(:check_interface_has_ipv4_address, 'vtnet0', '192.168.0.123
 end
 
 describe get_command(:get_interface_ipv4_address, 'vtnet0') do
-  it { should eq "ifconfig vtnet0 inet | grep inet | awk '{print $2}'" }
+  it { should eq "ifconfig -f inet:cidr vtnet0 inet | awk '/inet /{print $2}'" }
 end
 
 describe get_command(:get_interface_ipv6_address, 'vtnet0') do
-  it { should eq "ifconfig vtnet0 inet6 | grep inet6 | awk '{print $2$3$4}' | sed 's/prefixlen/\//'; exit" }
+  it { should eq "ifconfig -f inet6:cidr vtnet0 inet6 | awk '/inet6 /{print $2}' | tail -1" }
 end
 
 describe get_command(:get_interface_link_state, 'vtnet0') do
   it { should eq %Q{ifconfig -u vtnet0 2>&1 | awk -v s=up '/status:/ && $2 != "active" { s="down" }; END {print s}'} }
+end
+
+describe get_command(:get_interface_speed_of, 'vtnet0') do
+  it { should eq "ifconfig vtnet0 | awk '/media:/{if(match($0,/[0-9]+/)){ print substr($0, RSTART, RLENGTH);}}'" }
+end
+
+describe get_command(:get_interface_mtu_of, 'vtnet0') do
+  it { should eq "ifconfig vtnet0 | awk '/mtu /{print $NF}'" }
 end
