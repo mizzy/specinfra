@@ -4,6 +4,14 @@ class Specinfra::Command::Freebsd::Base::Interface < Specinfra::Command::Base::I
       "ifconfig #{name}"
     end
 
+    def get_speed_of(name)
+      "ifconfig #{name} | awk '/media:/{if(match($0,/[0-9]+/)){ print substr($0, RSTART, RLENGTH);}}'"
+    end
+
+    def get_mtu_of(name)
+      "ifconfig #{name} | awk '/mtu /{print $NF}'"
+    end
+
     def check_has_ipv4_address(interface, ip_address)
       ip_address = ip_address.dup
       if ip_address =~ /\/\d+$/
@@ -33,12 +41,11 @@ class Specinfra::Command::Freebsd::Base::Interface < Specinfra::Command::Base::I
     end
 
     def get_ipv4_address(interface)
-      "ifconfig #{interface} inet | grep inet | awk '{print $2}'"
+      "ifconfig -f inet:cidr #{interface} inet | awk '/inet /{print $2}'"
     end
 
     def get_ipv6_address(interface)
-      # Awk refuses to print '/' even with using escapes or hex so workaround with sed employed here.
-      "ifconfig #{interface} inet6 | grep inet6 | awk '{print $2$3$4}' | sed 's/prefixlen/\//'; exit"
+      "ifconfig -f inet6:cidr #{interface} inet6 | awk '/inet6 /{print $2}' | tail -1"
     end
 
     def get_link_state(interface)
