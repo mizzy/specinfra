@@ -1,5 +1,13 @@
 class Specinfra::Command::Debian::Base::Service < Specinfra::Command::Linux::Base::Service
   class << self
+    def create(os_info=nil)
+      if (os_info || os)[:release].to_i < 8
+        self
+      else
+        Specinfra::Command::Debian::V8::Service
+      end
+    end
+
     def check_is_enabled(service, level=3)
       # Until everything uses Upstart, this needs an OR.
       "ls /etc/rc#{level}.d/ | grep -- '^S..#{escape(service)}$' || grep '^\s*start on' /etc/init/#{escape(service)}.conf"
