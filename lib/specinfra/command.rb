@@ -164,6 +164,7 @@ require 'specinfra/command/debian'
 require 'specinfra/command/debian/base'
 require 'specinfra/command/debian/base/package'
 require 'specinfra/command/debian/base/ppa'
+require 'specinfra/command/debian/base/port'
 require 'specinfra/command/debian/base/service'
 
 # Debian V8 (inherit Debian)
