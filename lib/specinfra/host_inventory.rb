@@ -16,6 +16,7 @@ module Specinfra
       user
       group
       facter
+      ohai
     }
 
     include Enumerable
