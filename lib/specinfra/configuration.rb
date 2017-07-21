@@ -25,6 +25,7 @@ module Specinfra
         :ssh_without_env,
         :dockerfile_finalizer,
         :telnet_options,
+        :jail_name,
       ].freeze
 
       def defaults
