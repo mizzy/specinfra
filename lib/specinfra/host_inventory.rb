@@ -15,6 +15,8 @@ module Specinfra
       block_device
       user
       group
+      facter
+      ohai
     }
 
     include Enumerable
