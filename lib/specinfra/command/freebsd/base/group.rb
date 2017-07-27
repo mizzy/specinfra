@@ -6,8 +6,8 @@ class Specinfra::Command::Freebsd::Base::Group < Specinfra::Command::Base::Group
 
     def add(group, options)
       command = %w[pw group add]
-      command << '-g' << escape(options[:gid])  if options[:gid]
       command << escape(group)
+      command << '-g' << escape(options[:gid])  if options[:gid]
       command.join(' ')
     end
   end
