@@ -16,7 +16,7 @@ module Specinfra
 
       def send_directory(from, to)
         jroot = get_config(:jail_root)
-        FileUtils.cp_r("#{jroot}/#{from}", to)
+        FileUtils.cp_r(from, "#{jroot}/#{to}")
       end
 
       def build_command(cmd)
