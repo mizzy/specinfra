@@ -1,8 +1,13 @@
 class Specinfra::Command::Alpine::Base::Package < Specinfra::Command::Linux::Base::Package
   class << self
     def check_is_installed(package, version = nil)
-      pkg = [escape(package), version].compact.join('=')
-      "apk info -qe #{pkg}"
+      if version.nil? then
+        pkg = escape(package)
+        "apk info -qe #{pkg}"
+      else
+        pkg = "#{package}-#{version}"
+        "apk info -v | grep -w -- '^#{Regexp.escape(pkg)}'"
+      end
     end
 
     alias_method :check_is_installed_by_apk, :check_is_installed
