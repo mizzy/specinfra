@@ -113,6 +113,7 @@ describe 'os' do
     # clear os information cache
     property[:os] = nil
     Specinfra.configuration.instance_variable_set(:@os, nil)
+    Specinfra.backend.instance_variable_set(:@os_info, nil)
   end
 
   context 'test ubuntu with lsb_release command' do
@@ -185,4 +186,3 @@ EOF
     end
   end
 end
-
