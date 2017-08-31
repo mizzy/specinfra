@@ -13,7 +13,7 @@ class Specinfra::Command::Alpine::Base::Package < Specinfra::Command::Linux::Bas
     end
 
     def get_version(package, _opts = nil)
-      "apk version #{package} | tail -n1 | awk '{ print $1; }' | cut -d- -f2-"
+      "apk version #{package} | tail -n1 | awk '{ print $3; }'"
     end
   end
 end
