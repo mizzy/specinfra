@@ -59,7 +59,7 @@ class Specinfra::CommandFactory
   end
 
   def breakdown(meth)
-    # Somtimes `selinux_module' type matches `selinux' and error occurs.
+    # Sometimes `selinux_module' type matches `selinux' and error occurs.
     # Reverse sorting is needed to avoid this problem.
     types = resource_types.map {|t| t.to_snake_case }.sort.reverse.join('|')
     md = meth.to_s.match(/^([^_]+)_(#{types})_?(.+)?$/)
