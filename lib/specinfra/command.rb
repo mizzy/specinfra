@@ -97,6 +97,17 @@ require 'specinfra/command/redhat/v7/host'
 require 'specinfra/command/redhat/v7/service'
 require 'specinfra/command/redhat/v7/port'
 
+# CentOS (inherit RedHat)
+require 'specinfra/command/centos'
+require 'specinfra/command/centos/base'
+
+# CentOS V5 (inherit RedHat V5)
+require 'specinfra/command/centos/v5'
+
+# Centos V7 (inherit RedHat V7)
+require 'specinfra/command/centos/v7'
+require 'specinfra/command/centos/v7/port'
+
 # Fedora (inherit RedhHat)
 require 'specinfra/command/fedora'
 require 'specinfra/command/fedora/base'
