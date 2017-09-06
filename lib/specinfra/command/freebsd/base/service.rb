@@ -4,7 +4,7 @@ class Specinfra::Command::Freebsd::Base::Service < Specinfra::Command::Base::Ser
       "service -e | grep -- #{escape(service)}"
     end
     def check_is_running_under_init(service)
-      "service #{escape(service)} status | grep -E 'as \\(pid [0-9]+\\)'"
+      "service #{escape(service)} status | grep -E 'as (pid [0-9]+)'"
     end
   end
 end
