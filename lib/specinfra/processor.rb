@@ -175,7 +175,7 @@ module Specinfra
           :interface   => expected_attr[:interface] ? $3 : nil
         }
       else
-        matches = ret.stdout.scan(/^(\S+)(?: via (\S+))? dev (\S+).+\n|^(\S+).+\n|\s+nexthop via (\S+)\s+dev (\S+).+/)
+        matches = ret.stdout.scan(/^(\S+)(?: via (\S+))? dev (\S+).+\n|^(\S+).*\n|\s+nexthop via (\S+)\s+dev (\S+).+/)
         if matches.length > 1
           # ECMP route
           destination = nil
@@ -183,9 +183,9 @@ module Specinfra
             if groups[3]
               destination = groups[3]
               next
-            else
-              next unless expected_attr[:interface] == groups[5]
             end
+            next if expected_attr[:gateway] && expected_attr[:gateway] != groups[4]
+            next if expected_attr[:interface] && expected_attr[:interface] != groups[5]
 
             actual_attr = {
               :destination => destination,
