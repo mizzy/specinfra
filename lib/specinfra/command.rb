@@ -172,6 +172,10 @@ require 'specinfra/command/debian/v8'
 require 'specinfra/command/debian/v8/service'
 require 'specinfra/command/debian/v8/port'
 
+# Devuan (inherit Debian)
+require 'specinfra/command/devuan'
+require 'specinfra/command/devuan/base'
+
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
 
