@@ -1,19 +1,19 @@
 class Specinfra::Command::Base::Process < Specinfra::Command::Base
   class << self
     def get(process, opts)
-      "ps -C #{escape(process)} -o #{opts[:format]} | head -1"
+      "pidof -s #{escape(process)}"
     end
 
     def count(process)
-      "ps aux | grep -w -- #{escape(process)} | grep -v grep | wc -l"
+      "pidof #{escape(process)} | wc -w"
     end
 
     def check_is_running(process)
-      "ps aux | grep -w -- #{escape(process)} | grep -qv grep"
+      "pidof #{escape(process)}"
     end
 
     def check_count(process,count)
-      "test $(ps aux | grep -w -- #{escape(process)} | grep -v grep | wc -l) -eq #{escape(count)}"
+      "test $(pidof #{escape(process)} | wc -w) -eq #{escape(count)}"
     end
   end
 end
