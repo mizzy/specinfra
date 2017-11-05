@@ -32,6 +32,7 @@ module Specinfra
             @os_info[:arch] ||= self.run_command('uname -m').stdout.strip
             return @os_info
           end
+          raise NotImplementedError, 'OS detection failed.'
         end
       end
 
