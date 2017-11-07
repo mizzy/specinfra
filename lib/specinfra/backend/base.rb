@@ -33,6 +33,8 @@ module Specinfra
             return @os_info
           end
         end
+
+        raise NotImplementedError, 'OS detection failed.'
       end
 
       def command
