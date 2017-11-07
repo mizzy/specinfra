@@ -9,10 +9,11 @@ if ruby_version < Gem::Version.new('2.0.0')
   gem 'net-ssh', '~> 2.7'
 end
 if ruby_version < Gem::Version.new('1.9.3')
+  # pry 0.11 dropped Ruby 1.8 support
+  gem 'pry', '0.10.4'
+
   # listen 2.0 dropped Ruby 1.8 support
   gem 'listen', '< 2.0'
-  gem 'guard-rspec', '< 4.0'
-  gem 'guard', '< 2.0'
   # hitimes 1.2.3 dropped Ruby 1.8 support
   gem 'hitimes', '< 1.2.3'
 elsif ruby_version < Gem::Version.new('2.0.0')
