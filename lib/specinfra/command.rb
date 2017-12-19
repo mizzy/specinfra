@@ -114,6 +114,10 @@ require 'specinfra/command/eos/base'
 require 'specinfra/command/amazon'
 require 'specinfra/command/amazon/base'
 
+# Amazon Linux V2 (inherit RedHat)
+require 'specinfra/command/amazon/v2'
+require 'specinfra/command/amazon/v2/service'
+
 # AIX (inherit Base)
 require 'specinfra/command/aix'
 require 'specinfra/command/aix/base'
