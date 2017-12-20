@@ -65,4 +65,3 @@ describe Specinfra::Helper::DetectOs::Debian do
     )
   end
 end
-
