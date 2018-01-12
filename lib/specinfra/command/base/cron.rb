@@ -11,7 +11,7 @@ class Specinfra::Command::Base::Cron < Specinfra::Command::Base
     end
 
     def get_table
-      'crontab -l'
+      'cat /etc/cron.d/* /etc/crontab /var/spool/cron/* /var/spool/cron/crontabs/* 2> /dev/null'
     end
   end
 end
