@@ -13,6 +13,8 @@ environment:
     - ruby_version: "200"
     - ruby_version: "21"
     - ruby_version: "22"
+    - ruby_version: "23"
+    - ruby_version: "24"
 
 matrix:
   allow_failures:
@@ -28,7 +30,11 @@ cache:
   - C:\Ruby21\lib\ruby\gems\2.1.0  -> appveyor.yml
   - C:\Ruby21\bin                  -> appveyor.yml
   - C:\Ruby22\lib\ruby\gems\2.2.0  -> appveyor.yml
-  - C:\Ruby22\bin
+  - C:\Ruby22\bin                  -> appveyor.yml
+  - C:\Ruby23\lib\ruby\gems\2.3.0  -> appveyor.yml
+  - C:\Ruby23\bin                  -> appveyor.yml
+  - C:\Ruby24\lib\ruby\gems\2.4.0  -> appveyor.yml
+  - C:\Ruby24\bin
 
 install:
   - git submodule update --init --recursive
