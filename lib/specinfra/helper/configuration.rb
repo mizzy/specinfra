@@ -33,6 +33,7 @@ module Specinfra
           else
             value = RSpec.configuration.send(c) if defined?(RSpec)
           end
+          next if c == :lxc && defined?(Serverspec::Type::Lxc) && value.is_a?(Serverspec::Type::Lxc)
           Specinfra::Configuration.instance_variable_set("@#{c}", value)
         end
       end
