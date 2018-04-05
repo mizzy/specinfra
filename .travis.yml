@@ -11,7 +11,8 @@ rvm:
   - 2.5
 
 before_install:
-  - gem update bundler
+  - travis_retry gem update --system
+  - travis_retry gem install bundler
 
 script:
   - bundle exec rake spec
@@ -21,3 +22,5 @@ cache: bundler
 notifications:
   slack:
     secure: OhClKo2Gn26gevN773CRR2NAHzmkrzGrVTHsAKm4dgNFqnaBVZGNv2kzjAFsy0CEjZJw3433NtaJdrWpLozdHFA5g7fhOTqB2y7Oh+8PsoS4qWsosKcjtCYt7BmNbEFkGaHKAdQjO/vGFml7tAOk/DtVRnfX6QgVUBjky2ao7XM=
+
+
