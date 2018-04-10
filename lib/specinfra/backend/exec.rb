@@ -42,7 +42,8 @@ module Specinfra
           shell << " -l"
         end
         
-        command_option = get_config(:command_option).shellescape || '-c'
+        command_option = get_config(:command_option) || '-c'
+        command_option = command_option.shellescape
 
         cmd = "#{shell} #{command_option} #{cmd.to_s.shellescape}"
 
