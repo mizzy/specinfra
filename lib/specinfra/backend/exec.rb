@@ -41,8 +41,10 @@ module Specinfra
         if get_config(:login_shell)
           shell << " -l"
         end
+        
+        command_option = get_config(:command_option).shellescape || '-c'
 
-        cmd = "#{shell} -c #{cmd.to_s.shellescape}"
+        cmd = "#{shell} #{command_option} #{cmd.to_s.shellescape}"
 
         path = get_config(:path)
         if path
