@@ -42,7 +42,7 @@ module Specinfra
         end
 
         if get_config(:login_shell) and not shell_options.include?('-l')
-          shell_options << " -l"
+          shell_options << "-l"
         end
         
         shell << ' ' << shell_options.join(' ') if shell_options.any?
