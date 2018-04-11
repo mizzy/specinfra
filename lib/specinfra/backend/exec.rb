@@ -33,14 +33,19 @@ module Specinfra
         shell = get_config(:shell) || '/bin/sh'
         cmd = cmd.shelljoin if cmd.is_a?(Array)
         shell = shell.shellescape
+        
+        shell_options = get_config(:shell_options) || []
+        shell_options = shell_options.split ' ' if not shell_options.is_a?(Array)
 
-        if get_config(:interactive_shell)
-          shell << " -i"
+        if get_config(:interactive_shell) and not shell_options.include?('-i')
+          shell_options << "-i"
         end
 
-        if get_config(:login_shell)
-          shell << " -l"
+        if get_config(:login_shell) and not shell_options.include?('-l')
+          shell_options << " -l"
         end
+        
+        shell << ' ' << shell_options.join(' ') if shell_options.any?
         
         command_option = get_config(:command_option) || '-c'
         command_option = command_option.shellescape
