@@ -30,12 +30,13 @@ module Specinfra
       end
 
       def build_command(cmd)
+        shell_escaping = get_config(:shell_escaping) || true
         shell = get_config(:shell) || '/bin/sh'
         cmd = cmd.shelljoin if cmd.is_a?(Array)
-        shell = shell.shellescape
-        
+        shell = shell.shellescape if shell_escaping
+
         shell_options = get_config(:shell_options) || []
-        shell_options = shell_options.split ' ' if not shell_options.is_a?(Array)
+        shell_options = shell_options.shellsplit unless shell_options.is_a?(Array)
 
         if get_config(:interactive_shell) and not shell_options.include?('-i')
           shell_options << "-i"
@@ -44,13 +45,14 @@ module Specinfra
         if get_config(:login_shell) and not shell_options.include?('-l')
           shell_options << "-l"
         end
-        
-        shell << ' ' << shell_options.join(' ') unless shell_options.empty?
-        
-        command_option = get_config(:command_option) || '-c'
-        command_option = command_option.shellescape
 
-        cmd = "#{shell} #{command_option} #{cmd.to_s.shellescape}"
+        shell << ' ' << shell_options.shelljoin unless shell_options.empty?
+
+        command_option = get_config(:command_option) || '-c'
+        command_option = command_option.shellescape if shell_escaping
+
+        cmd = cmd.to_s.shellescape if shell_escaping
+        cmd = "#{shell} #{command_option} #{cmd.to_s}"
 
         path = get_config(:path)
         if path
