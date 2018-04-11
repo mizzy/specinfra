@@ -6,6 +6,8 @@ module Specinfra
         :env,
         :path,
         :shell,
+        :shell_options,
+        :command_option,
         :interactive_shell,
         :login_shell,
         :pre_command,
