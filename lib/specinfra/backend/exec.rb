@@ -30,7 +30,8 @@ module Specinfra
       end
 
       def build_command(cmd)
-        shell_escaping = get_config(:shell_escaping) || true
+        shell_escaping = get_config(:shell_escaping)
+        shell_escaping = true if shell_escaping.nil?
         shell = get_config(:shell) || '/bin/sh'
         cmd = cmd.shelljoin if cmd.is_a?(Array)
         shell = shell.shellescape if shell_escaping
