@@ -45,7 +45,7 @@ module Specinfra
           shell_options << "-l"
         end
         
-        shell << ' ' << shell_options.join(' ') if shell_options.any?
+        shell << ' ' << shell_options.join(' ') unless shell_options.empty?
         
         command_option = get_config(:command_option) || '-c'
         command_option = command_option.shellescape
