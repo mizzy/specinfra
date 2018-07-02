@@ -19,6 +19,8 @@ class Specinfra::Helper::DetectOs::Redhat < Specinfra::Helper::DetectOs
       line = run_command('cat /etc/system-release').stdout
       if line =~ /release (\d[\d.]*)/
         release = $1
+      elsif line =~ /Amazon Linux (\d+)/
+        release = $1
       end
       { :family => 'amazon', :release => release }
     end
