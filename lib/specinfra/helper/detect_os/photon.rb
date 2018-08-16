@@ -4,7 +4,7 @@ class Specinfra::Helper::DetectOs::Photon < Specinfra::Helper::DetectOs
       line = run_command('cat /etc/os-release').stdout
       if line =~ /ID=photon/
         family = 'photon'
-        if line =~ /VERSION_ID=\"(\d+\.\d+|\d+)\"/
+        if line =~ /VERSION_ID=(\d+\.\d+|\d+)/
           release = $1
         end
         { :family => family, :release => release }
