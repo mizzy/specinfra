@@ -74,6 +74,28 @@ module Specinfra
         while @container.json['State'].key?('Health') && @container.json['State']['Health']['Status'] == "starting" do
           sleep 0.5
         end
+
+        if get_config(:docker_container_ready_regex) then
+
+          counter=0
+          timeout = get_config(:docker_container_start_timeout) or 30
+          while counter < timeout do
+            match = @container.logs({ :stdout => true }).split("\n").grep(get_config(:docker_container_ready_regex))
+            puts "Waiting for matching regex: #{get_config(:docker_container_ready_regex)}" if get_config(:docker_debug)
+            unless match.empty? then
+              puts "Container #{@container.id} is ready." if get_config(:docker_debug)
+              break
+            end
+            puts "Sleeping for 5 seconds while container starts up...#{counter}/#{timeout}" if get_config(:docker_debug)
+            sleep 5
+            counter += 5
+          end
+          if counter >= timeout then
+            @container.kill unless get_config(:docker_debug)
+            @container.delete(:force => true) unless get_config(:docker_debug)
+            fail "Container #{@container} did not start in time."
+          end
+        end
       end
 
       def cleanup_container
