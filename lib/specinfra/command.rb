@@ -95,7 +95,6 @@ require 'specinfra/command/redhat/v5/iptables'
 require 'specinfra/command/redhat/v7'
 require 'specinfra/command/redhat/v7/host'
 require 'specinfra/command/redhat/v7/service'
-require 'specinfra/command/redhat/v7/port'
 
 # Fedora (inherit RedhHat)
 require 'specinfra/command/fedora'
