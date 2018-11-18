@@ -9,11 +9,11 @@ module Specinfra
       # So return false if stdout contains "stopped/waiting" or "stop/waiting".
       return false if ret.stdout =~ /stop(ped)?\/waiting/
 
-      # If the service is not registered, check by ps command
-      if ret.exit_status == 1
-        cmd = Specinfra.command.get(:check_process_is_running, service)
-        ret = Specinfra.backend.run_command(cmd)
-      end
+      # # If the service is not registered, check by ps command
+      # if ret.exit_status == 1
+      #   cmd = Specinfra.command.get(:check_process_is_running, service)
+      #   ret = Specinfra.backend.run_command(cmd)
+      # end
 
       ret.success?
     end
