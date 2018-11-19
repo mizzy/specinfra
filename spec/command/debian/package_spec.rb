@@ -30,3 +30,7 @@ describe get_command(:install_package, 'linux-headers-$(uname -r)') do
     should eq "DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold'  install linux-headers-\\$\\(uname\\ -r\\)"
   end
 end
+
+describe get_command(:get_package_version, 'telnet') do
+  it { should eq "dpkg-query -f '${Status} ${Version}' -W telnet | sed -n 's/^install ok installed \|hold ok installed //p'" }
+end

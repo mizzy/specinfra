@@ -22,7 +22,7 @@ class Specinfra::Command::Debian::Base::Package < Specinfra::Command::Linux::Bas
     end
 
     def get_version(package, opts=nil)
-      "dpkg-query -f '${Status} ${Version}' -W #{package} | sed -n 's/^install ok installed //p'"
+      "dpkg-query -f '${Status} ${Version}' -W #{package} | sed -n 's/^install ok installed \|hold ok installed //p'"
     end
 
     def remove(package, option='')
