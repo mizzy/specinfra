@@ -67,6 +67,10 @@ module Specinfra
         env = get_config(:env).to_a.map { |v| v.join('=') }
         opts['Env'] = opts['Env'].to_a.concat(env)
 
+        if !get_config(:volume).nil?
+          opts['Binds'] = [get_config(:volume)]
+        end
+
         opts.merge!(get_config(:docker_container_create_options) || {})
 
         @container = ::Docker::Container.create(opts)
