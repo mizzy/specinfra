@@ -153,12 +153,12 @@ class Specinfra::Command::Base::File < Specinfra::Command::Base
     def change_owner(file, owner, group=nil, options = {})
       option = '-R' if options[:recursive]
       owner = "#{owner}:#{group}" if group
-      "chown #{option} #{owner} #{escape(file)}".squeeze(' ')
+      "chown #{option} #{escape(owner)} #{escape(file)}".squeeze(' ')
     end
 
     def change_group(file, group, options = {})
       option = '-R' if options[:recursive]
-      "chgrp #{option} #{group} #{escape(file)}".squeeze(' ')
+      "chgrp #{option} #{escape(group)} #{escape(file)}".squeeze(' ')
     end
 
     def create_as_directory(file)
