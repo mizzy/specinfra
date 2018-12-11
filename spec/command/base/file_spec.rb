@@ -26,12 +26,20 @@ describe get_command(:change_file_owner, '/tmp', 'root', 'root') do
   it { should eq 'chown root:root /tmp' }
 end
 
+describe get_command(:change_file_owner, '/tmp', 'root', 'Domain Users') do
+  it { should eq 'chown root:Domain\\ Users /tmp' }
+end
+
 describe get_command(:change_file_owner, '/tmp', 'root', 'root', :recursive => true) do
   it { should eq 'chown -R root:root /tmp' }
 end
 
 describe get_command(:change_file_group, '/tmp', 'root') do
   it { should eq 'chgrp root /tmp' }
+end
+
+describe get_command(:change_file_group, '/tmp', 'Domain Users') do
+  it { should eq 'chgrp Domain\ Users /tmp' }
 end
 
 describe get_command(:change_file_group, '/tmp', 'root', :recursive => true) do
