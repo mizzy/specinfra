@@ -264,18 +264,22 @@ require 'specinfra/command/freebsd/base/zfs'
 require 'specinfra/command/freebsd/v6'
 require 'specinfra/command/freebsd/v6/user'
 require 'specinfra/command/freebsd/v6/package'
+require 'specinfra/command/freebsd/v6/service'
 
 # FreeBSD V7 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v7'
 require 'specinfra/command/freebsd/v7/package'
+require 'specinfra/command/freebsd/v7/service'
 
 # FreeBSD V8 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v8'
 require 'specinfra/command/freebsd/v8/package'
+require 'specinfra/command/freebsd/v8/service'
 
 # FreeBSD V9 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v9'
 require 'specinfra/command/freebsd/v9/package'
+require 'specinfra/command/freebsd/v9/service'
 
 # FreeBSD V11 (inherit FreeBSD)
 require 'specinfra/command/freebsd/v11'
