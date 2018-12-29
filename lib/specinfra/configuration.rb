@@ -51,7 +51,9 @@ module Specinfra
             instance_variable_set("@#{key}", val)
             RSpec.configuration.send(:"#{key}=", val) if defined?(RSpec)
           end
-          ret = instance_variable_get("@#{key}")
+          if instance_variable_defined?("@#{key}")
+            ret = instance_variable_get("@#{key}")
+          end
         rescue NameError
           ret = nil
         ensure
