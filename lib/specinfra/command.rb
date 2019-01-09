@@ -240,6 +240,7 @@ require 'specinfra/command/opensuse/base/service'
 # SLES (inherit SuSE)
 require 'specinfra/command/sles'
 require 'specinfra/command/sles/base'
+require 'specinfra/command/sles/base/service'
 require 'specinfra/command/sles/v12'
 require 'specinfra/command/sles/v12/service'
 
