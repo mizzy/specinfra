@@ -12,7 +12,7 @@ rvm:
 
 before_install:
   - travis_retry gem update --system 2.7.8
-  - travis_retry gem install bundler
+  - travis_retry gem install bundler -v 1.17.3
 
 script:
   - bundle exec rake spec
