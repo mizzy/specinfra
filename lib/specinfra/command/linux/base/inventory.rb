@@ -37,5 +37,8 @@ class Specinfra::Command::Linux::Base::Inventory < Specinfra::Command::Base::Inv
       "dmidecode -s system-product-name"
     end 
 
+    def get_mount
+      'cat /proc/mounts'
+    end
   end
 end

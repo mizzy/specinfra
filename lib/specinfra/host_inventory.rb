@@ -17,6 +17,7 @@ module Specinfra
       group
       facter
       ohai
+      mount
     }
 
     include Enumerable
