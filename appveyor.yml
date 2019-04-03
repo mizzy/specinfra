@@ -36,9 +36,9 @@ cache:
   - C:\Ruby23\lib\ruby\gems\2.3.0  -> appveyor.yml
   - C:\Ruby23\bin                  -> appveyor.yml
   - C:\Ruby24\lib\ruby\gems\2.4.0  -> appveyor.yml
-  - C:\Ruby24\bin
+  - C:\Ruby24\bin                  -> appveyor.yml
   - C:\Ruby25\lib\ruby\gems\2.5.0  -> appveyor.yml
-  - C:\Ruby25\bin
+  - C:\Ruby25\bin                  -> appveyor.yml
   - C:\Ruby26\lib\ruby\gems\2.6.0  -> appveyor.yml
   - C:\Ruby26\bin
 
