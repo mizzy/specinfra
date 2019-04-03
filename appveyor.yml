@@ -49,7 +49,7 @@ install:
   - ruby --version
   - gem --version
   - appveyor DownloadFile -Url %bundler_url% -FileName bundler.gem
-  - gem install --local bundler.gem --no-ri --no-rdoc --force ## appveyor often stops `gem install bundler`..?
+  - gem install --local bundler.gem --no-document --force ## appveyor often stops `gem install bundler`..?
   - ps: $PSVersionTable
 
 build_script:
