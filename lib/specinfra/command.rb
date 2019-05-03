@@ -241,6 +241,8 @@ require 'specinfra/command/opensuse/base/service'
 require 'specinfra/command/sles'
 require 'specinfra/command/sles/base'
 require 'specinfra/command/sles/base/service'
+require 'specinfra/command/sles/v11'
+require 'specinfra/command/sles/v11/user'
 require 'specinfra/command/sles/v12'
 require 'specinfra/command/sles/v12/service'
 
@@ -331,6 +333,10 @@ require 'specinfra/command/solaris/v10/group'
 require 'specinfra/command/solaris/v10/host'
 require 'specinfra/command/solaris/v10/package'
 require 'specinfra/command/solaris/v10/user'
+
+# Solaris 11 (inherit Solaris)
+require 'specinfra/command/solaris/v11'
+require 'specinfra/command/solaris/v11/user'
 
 # SmartOS (inherit Solaris)
 require 'specinfra/command/smartos'
