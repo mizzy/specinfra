@@ -14,6 +14,7 @@ module Specinfra
 
       def initialize(config = {})
         @config = config
+        @example = nil
       end
 
       def get_config(key)
