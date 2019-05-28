@@ -80,7 +80,6 @@ require 'specinfra/command/esxi/base/package'
 # RedHat (inherit Linux)
 require 'specinfra/command/redhat'
 require 'specinfra/command/redhat/base'
-require 'specinfra/command/redhat/base/file'
 require 'specinfra/command/redhat/base/host'
 require 'specinfra/command/redhat/base/iptables'
 require 'specinfra/command/redhat/base/package'
@@ -142,7 +141,6 @@ require 'specinfra/command/alpine/base/service'
 # Arch (inherit Linux)
 require 'specinfra/command/arch'
 require 'specinfra/command/arch/base'
-require 'specinfra/command/arch/base/file'
 require 'specinfra/command/arch/base/service'
 require 'specinfra/command/arch/base/package'
 
