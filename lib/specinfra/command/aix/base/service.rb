@@ -5,7 +5,7 @@ class Specinfra::Command::Aix::Base::Service < Specinfra::Command::Base::Service
     end
 
     def check_is_running(service)
-      "ps -ef | grep -v grep | grep #{escape(service)}"
+      "ps -ef | grep -v grep | grep -w -- #{escape(service)}"
     end
   end
 end
