@@ -11,5 +11,13 @@ class Specinfra::Command::Aix::Base::User < Specinfra::Command::Base::User
     def check_has_home_directory(user, path_to_home)
       "lsuser -a home #{escape(user)} | awk -F'=' '{print $2}' | grep -w -- #{escape(path_to_home)}"
     end
+    
+    def get_minimum_days_between_password_change(user)
+      "lsuser -a minage #{escape(user)}  | awk -F'=' '{print $2}'"
+    end
+
+    def get_maximum_days_between_password_change(user)
+      "lsuser -a maxage #{escape(user)}  | awk -F'=' '{print $2}'"
+    end
   end
 end
