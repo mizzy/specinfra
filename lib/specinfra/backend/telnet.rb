@@ -21,12 +21,20 @@ module Specinfra
 
       def build_command(cmd)
         cmd = super(cmd)
+        if sudo?
+          cmd = "#{sudo} -p '#{sudo_prompt}' LANG=C #{cmd}"
+        end
         cmd
       end
 
       private
       def prompt
         'Login: '
+      end
+      
+      private
+      def sudo_prompt
+        'Password: '
       end
 
       def with_env
@@ -67,10 +75,29 @@ module Specinfra
         end
         telnet = get_config(:telnet)
         re = [] 
+        p '[TRACE<S>]' + command if get_config(:trace) 
         unless telnet.nil?
-          re = telnet.cmd( "#{command}; echo $?" ).split("\n")[0..-2]
+          unless sudo?
+            re = telnet.cmd( "#{command}; echo $?" ).split("\n")[0..-2]
+          else 
+            re = telnet.cmd( "String" => "#{command}; echo $?", "Match" => /[$%#>:] \z/n ).split("\n")
+            if re.last == "#{sudo_prompt}"
+              p '[TRACE<R>]' + re.join("\n") if get_config(:trace)
+              p '[TRACE<S>]' + "#{get_config(:sudo_password)}" if get_config(:trace) 
+              re = telnet.cmd( "#{get_config(:sudo_password)}" ).split("\n")[0..-2]
+            else
+              re = re[0..-2]
+            end
+          end
+          p '[TRACE<R>]' + re.join("\n") if get_config(:trace)
+          if re.count < 2
+            re = telnet.waitfor( /[$%#>:] \z/n ).split("\n")[0..-2]
+            p '[TRACE<R>]' + re.join("\n") if get_config(:trace)
+          end
           exit_status = re.last.to_i
-          stdout_data = re[1..-2].join("\n")
+          stdout_data = re[1..-2].join("\n") + "\n"
+        else
+          abort "FAILED: Telnet login failed."
         end
         { :stdout => stdout_data, :stderr => stderr_data, :exit_status => exit_status, :exit_signal => exit_signal }
       end
@@ -78,8 +105,8 @@ module Specinfra
       def create_telnet
         tel = Net::Telnet.new( "Host" => get_config(:host) )
         tel.login( 
-          "Name" => get_config(:telnet_options)[:user], 
-          "Password" => get_config(:telnet_options)[:pass]
+          "Name" => get_config(:user),
+          "Password" => get_config(:pass)
         )
         tel
       rescue
@@ -103,7 +130,9 @@ module Specinfra
       end
 
       def sudo?
-        false
+        user = get_config(:user)
+        disable_sudo = get_config(:disable_sudo)
+        user != 'root' && !disable_sudo
       end
 
     end
