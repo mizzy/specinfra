@@ -9,13 +9,19 @@ class Specinfra::Command::Aix::Base::File < Specinfra::Command::Base::File
     end
 
     def check_is_owned_by(file, owner)
-      regexp = "^#{owner}$"
-      "ls -al #{escape(file)} | awk '{print $3}' | grep -- #{escape(regexp)}"
+      "istat #{escape(file)} | grep Owner | awk '{print $2}' | grep -- #{escape(owner)}"
     end
 
     def check_is_grouped(file, group)
-      regexp = "^#{group}$"
-      "ls -al #{escape(file)} | awk '{print $4}' | grep -- #{escape(regexp)}"
+      "istat #{escape(file)} | grep Owner | awk '{print $4}' | grep -- #{escape(group)}"
+    end
+
+    def check_is_mounted(path)
+      "mount | grep -w -- '#{escape(path)}'"
+    end
+
+    def check_is_linked_to(link, target)
+      "ls -ld #{escape(link)} | cut -d '>' -f 2 | grep -w -- #{escape(target)}"
     end
   end
 end
