@@ -91,10 +91,14 @@ module Specinfra
       mount = ret.stdout.scan(/\S+/)
       actual_attr = { }
       actual_attr[:device] = mount[0]
-      # Output of mount depends on os:
-      # a)  proc on /proc type proc (rw,noexec,nosuid,nodev)
-      # b)  procfs on /proc (procfs, local)
-      actual_attr[:type] = mount[4] if mount[3] == 'type' # case a.
+      if os[:family] == 'aix'
+        actual_attr[:type] = mount[2]
+      else
+        # Output of mount depends on os:
+        # a)  proc on /proc type proc (rw,noexec,nosuid,nodev)
+        # b)  procfs on /proc (procfs, local)
+        actual_attr[:type] = mount[4] if mount[3] == 'type' # case a.
+      end
       if match = ret.stdout.match(/\((.*)\)/)
         options = match[1].split(',')
         actual_attr[:type] ||= options.shift              # case b.
@@ -174,6 +178,15 @@ module Specinfra
           :gateway     => $2,
           :interface   => expected_attr[:interface] ? $3 : nil
         }
+      elsif os[:family] == 'aix'
+        matches = ret.stdout.match(/(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+/)
+        if matches.length == 7
+          actual_attr = {
+            :destination => matches[1],
+            :gateway     => matches[2],
+            :interface   => matches[6]
+          }
+        end
       else
         matches = ret.stdout.scan(/^(\S+)(?: via (\S+))? dev (\S+).+\n|^(\S+).*\n|\s+nexthop via (\S+)\s+dev (\S+).+/)
         if matches.length > 1
