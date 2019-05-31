@@ -128,6 +128,7 @@ require 'specinfra/command/aix/base/host'
 require 'specinfra/command/aix/base/inventory'
 require 'specinfra/command/aix/base/package'
 require 'specinfra/command/aix/base/port'
+require 'specinfra/command/aix/base/routing_table'
 require 'specinfra/command/aix/base/service'
 require 'specinfra/command/aix/base/user'
 
