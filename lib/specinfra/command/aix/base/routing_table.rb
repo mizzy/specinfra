@@ -2,9 +2,9 @@ class Specinfra::Command::Aix::Base::RoutingTable < Specinfra::Command::Base::Ro
   class << self
     def check_has_entry(destination)
       if os[:arch] == 'vios'
-        "netstat -routtable | grep #{destination}"
+        "netstat -num -routtable | grep #{destination}"
       else
-        "netstat -r | grep #{destination}"
+        "netstat -nr | grep #{destination}"
       end
     end
 
