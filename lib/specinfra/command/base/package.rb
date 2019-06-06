@@ -44,7 +44,7 @@ class Specinfra::Command::Base::Package < Specinfra::Command::Base
 
     def check_is_installed_by_pip2(name, version=nil)
       regexp = "^#{name}"
-      cmd = "pip list | grep -iw -- #{escape(regexp)}"
+      cmd = "pip2 list | grep -iw -- #{escape(regexp)}"
       cmd = "#{cmd} | grep -w -- #{escape(version)}" if version
       cmd
     end
