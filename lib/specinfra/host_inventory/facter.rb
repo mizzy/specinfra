@@ -10,7 +10,7 @@ module Specinfra
           nil
         end
 
-        ret.exit_status.zero? ? YAML.load(ret.stdout) : nil
+        ret.exit_status == 0 ? YAML.load(ret.stdout) : nil
       end
     end
   end
