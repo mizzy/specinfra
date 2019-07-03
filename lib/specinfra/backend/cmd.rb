@@ -49,7 +49,7 @@ module Specinfra
       private
 
       def powershell
-        architecture = @example.metadata[:architecture] || get_config(:architecture)
+         architecture = (@example.nil? ? nil : @example.metadata[:architecture]) || get_config(:architecture)
 
         case architecture
         when :i386 then x86_powershell
