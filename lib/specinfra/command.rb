@@ -96,6 +96,12 @@ require 'specinfra/command/redhat/v7/host'
 require 'specinfra/command/redhat/v7/service'
 require 'specinfra/command/redhat/v7/port'
 
+# RedHat V8 (inherit RedHat)
+require 'specinfra/command/redhat/v8'
+require 'specinfra/command/redhat/v8/host'
+require 'specinfra/command/redhat/v8/service'
+require 'specinfra/command/redhat/v8/port'
+
 # Fedora (inherit RedhHat)
 require 'specinfra/command/fedora'
 require 'specinfra/command/fedora/base'
