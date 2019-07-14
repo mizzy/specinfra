@@ -144,6 +144,12 @@ require 'specinfra/command/arch/base'
 require 'specinfra/command/arch/base/service'
 require 'specinfra/command/arch/base/package'
 
+# Clear Linux OS (inherit Linux)
+require 'specinfra/command/clearlinuxos'
+require 'specinfra/command/clearlinuxos/base'
+require 'specinfra/command/clearlinuxos/base/package'
+require 'specinfra/command/clearlinuxos/base/service'
+
 # CoreOS (inherit Linux)
 require 'specinfra/command/coreos'
 require 'specinfra/command/coreos/base'
