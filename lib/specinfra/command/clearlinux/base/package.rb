@@ -1,4 +1,4 @@
-class Specinfra::Command::Clearlinuxos::Base::Package < Specinfra::Command::Linux::Base::Package
+class Specinfra::Command::Clearlinux::Base::Package < Specinfra::Command::Linux::Base::Package
   class << self
     def check_is_installed(package, version=nil)
       "swupd bundle-list --quiet | grep -w #{escape(package)}"
