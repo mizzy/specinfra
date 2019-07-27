@@ -19,6 +19,7 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
     def add(group, options)
       command = ['groupadd']
       command << '-g' << escape(options[:gid])  if options[:gid]
+      command << '-r' if options[:system_group]
       command << escape(group)
       command.join(' ')
     end
