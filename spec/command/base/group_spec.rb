@@ -14,3 +14,6 @@ describe get_command(:add_group, 'foo', :gid => 1234) do
   it { should eq 'groupadd -g 1234 foo' }
 end
 
+describe get_command(:add_group, 'foo', :system_group => true) do
+  it { should eq 'groupadd -r foo' }
+end
