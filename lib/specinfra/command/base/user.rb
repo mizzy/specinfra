@@ -12,6 +12,14 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       "id -gn #{escape(user)}| grep ^#{escape(group)}$"
     end
 
+    def check_belongs_to_system_account(user)
+      exists = "getent passwd #{escape(user)} > /dev/null 2>&1"
+      uid = "getent passwd #{escape(user)} | cut -f 3 -d ':'"
+      sys_uid_min = "awk 'BEGIN{sys_uid_min=101} {if($1~/^SYS_UID_MIN/){sys_uid_min=$2}} END{print sys_uid_min}' /etc/login.defs"
+      sys_uid_max = "awk 'BEGIN{sys_uid_max=0;uid_min=1000} {if($1~/^SYS_UID_MAX/){sys_uid_max=$2}if($1~/^UID_MIN/){uid_min=$2}} END{if(sys_uid_max!=0){print sys_uid_max}else{print uid_min-1}}' /etc/login.defs"
+      %Q|#{exists} && test "$(#{uid})" -ge "$(#{sys_uid_min})" && test "$(#{uid})" -le "$(#{sys_uid_max})"|
+    end
+
     def check_has_uid(user, uid)
       regexp = "^uid=#{uid}("
       "id #{escape(user)} | grep -- #{escape(regexp)}"
