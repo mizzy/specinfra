@@ -57,3 +57,7 @@ end
 describe get_command(:update_user_login_shell, 'foo', '/bin/bash') do
   it { should eq 'usermod -s /bin/bash foo' }
 end
+
+describe get_command(:check_user_is_system_user, 'foo') do
+  it { should eq "getent passwd foo > /dev/null 2>&1 && test \"$(getent passwd foo | cut -f 3 -d ':')\" -ge \"$(awk 'BEGIN{sys_uid_min=101} {if($1~/^SYS_UID_MIN/){sys_uid_min=$2}} END{print sys_uid_min}' /etc/login.defs)\" && test \"$(getent passwd foo | cut -f 3 -d ':')\" -le \"$(awk 'BEGIN{sys_uid_max=0;uid_min=1000} {if($1~/^SYS_UID_MAX/){sys_uid_max=$2}if($1~/^UID_MIN/){uid_min=$2}} END{if(sys_uid_max!=0){print sys_uid_max}else{print uid_min-1}}' /etc/login.defs)\"" }
+end
