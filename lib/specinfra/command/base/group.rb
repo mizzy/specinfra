@@ -8,7 +8,7 @@ class Specinfra::Command::Base::Group < Specinfra::Command::Base
       "getent group #{escape(group)} | cut -f 3 -d ':' | grep -w -- #{escape(gid)}"
     end
 
-    def check_belongs_to_system_account(group)
+    def check_is_system_group(group)
       exists = "getent group #{escape(group)} > /dev/null 2>&1"
       gid = "getent group #{escape(group)} | cut -f 3 -d ':'"
       sys_gid_min = "awk 'BEGIN{sys_gid_min=101} {if($1~/^SYS_GID_MIN/){sys_gid_min=$2}} END{print sys_gid_min}' /etc/login.defs"

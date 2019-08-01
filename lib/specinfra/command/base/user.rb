@@ -12,7 +12,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
       "id -gn #{escape(user)}| grep ^#{escape(group)}$"
     end
 
-    def check_belongs_to_system_account(user)
+    def check_is_system_user(user)
       exists = "getent passwd #{escape(user)} > /dev/null 2>&1"
       uid = "getent passwd #{escape(user)} | cut -f 3 -d ':'"
       sys_uid_min = "awk 'BEGIN{sys_uid_min=101} {if($1~/^SYS_UID_MIN/){sys_uid_min=$2}} END{print sys_uid_min}' /etc/login.defs"
