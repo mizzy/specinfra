@@ -1,3 +1,3 @@
 module Specinfra
-  VERSION = "2.82.0"
+  VERSION = "2.82.1"
 end
