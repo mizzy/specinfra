@@ -18,7 +18,12 @@ describe Specinfra::Backend::Exec do
       end
 
       it 'should escape quotes' do
-        expect(Specinfra.backend.build_command(%Q{find /etc/apt/ -name \*.list | xargs grep -o -E "^deb +[\\"']?http://ppa.launchpad.net/gluster/glusterfs-3.7"})).to eq('/bin/sh -c find\ /etc/apt/\ -name\ \*.list\ \|\ xargs\ grep\ -o\ -E\ \"\^deb\ \+\[\\\\\"\\\'\]\?http://ppa.launchpad.net/gluster/glusterfs-3.7\"')
+        if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.7')
+          expect(Specinfra.backend.build_command(%Q{find /etc/apt/ -name \*.list | xargs grep -o -E "^deb +[\\"']?http://ppa.launchpad.net/gluster/glusterfs-3.7"})).to eq('/bin/sh -c find\ /etc/apt/\ -name\ \*.list\ \|\ xargs\ grep\ -o\ -E\ \"\^deb\ \+\[\\\\\"\\\'\]\?http://ppa.launchpad.net/gluster/glusterfs-3.7\"')
+        else
+          # Since Ruby 2.7, `+` is not escaped.
+          expect(Specinfra.backend.build_command(%Q{find /etc/apt/ -name \*.list | xargs grep -o -E "^deb +[\\"']?http://ppa.launchpad.net/gluster/glusterfs-3.7"})).to eq('/bin/sh -c find\ /etc/apt/\ -name\ \*.list\ \|\ xargs\ grep\ -o\ -E\ \"\^deb\ +\[\\\\\"\\\'\]\?http://ppa.launchpad.net/gluster/glusterfs-3.7\"')
+        end
       end
     end
 
