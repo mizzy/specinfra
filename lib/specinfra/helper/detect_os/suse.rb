@@ -4,7 +4,9 @@ class Specinfra::Helper::DetectOs::Suse < Specinfra::Helper::DetectOs
       line = run_command('cat /etc/os-release').stdout
       if line =~ /ID=opensuse/
         family = 'opensuse'
-      elsif line =~ /NAME=\"SLES"/
+      elsif line =~ /ID="sles"/
+        family = 'sles'
+      elsif line =~ /ID="sles_sap"/
         family = 'sles'
       end
       if line =~ /VERSION_ID=\"(\d+\.\d+|\d+)\"/
