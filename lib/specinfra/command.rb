@@ -84,7 +84,7 @@ require 'specinfra/command/redhat/base/host'
 require 'specinfra/command/redhat/base/iptables'
 require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/port'
-require 'specinfra/command/redhat/selinux_module'
+require 'specinfra/command/redhat/base/selinux_module'
 require 'specinfra/command/redhat/base/service'
 require 'specinfra/command/redhat/base/yumrepo'
 
