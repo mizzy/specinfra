@@ -6,7 +6,7 @@ module Specinfra
         def initialize &block
           @import_functions = []
           @script = ""
-          instance_eval &block if block_given?
+          instance_eval(&block) if block_given?
         end
 
         def using *functions
