@@ -84,6 +84,7 @@ require 'specinfra/command/redhat/base/host'
 require 'specinfra/command/redhat/base/iptables'
 require 'specinfra/command/redhat/base/package'
 require 'specinfra/command/redhat/base/port'
+require 'specinfra/command/redhat/base/selinux_module'
 require 'specinfra/command/redhat/base/service'
 require 'specinfra/command/redhat/base/yumrepo'
 
@@ -96,6 +97,11 @@ require 'specinfra/command/redhat/v7'
 require 'specinfra/command/redhat/v7/host'
 require 'specinfra/command/redhat/v7/service'
 require 'specinfra/command/redhat/v7/port'
+
+# RedHat V8 (inherit RedHat)
+require 'specinfra/command/redhat/v8'
+require 'specinfra/command/redhat/v8/yumrepo'
+require 'specinfra/command/redhat/v8/selinux_module'
 
 # Fedora (inherit RedhHat)
 require 'specinfra/command/fedora'
