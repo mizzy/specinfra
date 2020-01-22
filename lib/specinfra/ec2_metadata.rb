@@ -14,6 +14,9 @@ module Specinfra
     end
 
     def [](key)
+      if key.is_a?(Symbol)
+        key = key.to_s
+      end
       if @metadata[key].nil?
         begin
           require "specinfra/ec2_metadata/#{key}"
