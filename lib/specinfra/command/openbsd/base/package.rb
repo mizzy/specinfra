@@ -11,5 +11,9 @@ class Specinfra::Command::Openbsd::Base::Package < Specinfra::Command::Base::Pac
     def install(package, version=nil, option='')
       "pkg_add #{option} #{package}"
     end
+
+    def get_version(package, _opts=nil)
+      "pkg_info -I #{package} | sed -e 's/#{package}-//' | cut -d' ' -f1"
+    end
   end
 end
