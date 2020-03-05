@@ -14,9 +14,11 @@ require 'specinfra/command/module/service/runit'
 require 'specinfra/command/module/service/monit'
 require 'specinfra/command/module/service/god'
 require 'specinfra/command/module/service/delegator'
+require 'specinfra/command/module/service/openrc'
 require 'specinfra/command/module/systemd'
 require 'specinfra/command/module/zfs'
 require 'specinfra/command/module/ss'
+require 'specinfra/command/module/openrc'
 
 # Base
 require 'specinfra/command/base'
