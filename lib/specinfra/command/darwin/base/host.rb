@@ -16,7 +16,7 @@ class Specinfra::Command::Darwin::Base::Host < Specinfra::Command::Base::Host
       if port.nil?
         "ping -t #{escape(timeout)} -c 2 -n #{escape(host)}"
       else
-        "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)}"
+        "nc -vvvvz#{escape(proto[0].chr)} #{escape(host)} #{escape(port)} -w #{escape(timeout)} -G #{escape(timeout)}"
       end
     end
 

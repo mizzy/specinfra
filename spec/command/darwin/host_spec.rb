@@ -19,8 +19,8 @@ describe get_command(:check_host_is_reachable, 'pink.unicorn.com', nil, 'tcp', 1
   it { should eq "ping -t 10 -c 2 -n pink.unicorn.com"} 
 end
 
-describe get_command(:check_host_is_reachable, 'pink.unicorn.com', 53, 'udp', 66) do 
-  it { should eq "nc -vvvvzu pink.unicorn.com 53 -w 66" } 
+describe get_command(:check_host_is_reachable, 'pink.unicorn.com', 53, 'udp', 66) do
+  it { should eq "nc -vvvvzu pink.unicorn.com 53 -w 66 -G 66" }
 end
 
 describe get_command(:get_host_ipaddress, 'pink.unicorn.com') do 
