@@ -3,11 +3,11 @@ require 'spec_helper'
 set :os, { :family => nil }
 
 describe get_command(:get_user_uid, 'foo') do
-  it { should eq "getent passwd foo | cut -f 3 -d ':'" }
+  it { should eq 'id -u foo' }
 end
 
 describe get_command(:get_user_gid, 'foo') do
-  it { should eq "getent passwd foo | cut -f 4 -d ':'" }
+  it { should eq 'id -g foo' }
 end
 
 describe get_command(:get_user_home_directory, 'foo') do
