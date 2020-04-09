@@ -1,17 +1,15 @@
 class Specinfra::Command::Base::User < Specinfra::Command::Base
   class << self
     def check_exists(user)
-      "getent passwd #{escape(user)}"
+      "id #{escape(user)}"
     end
 
     def check_belongs_to_group(user, group)
-      "groups #{escape(user)} | grep -- #{escape(group)}"
+      "id #{escape(user)} | sed 's/ context=.*//g' | cut -f 4 -d '=' | grep -- #{escape(group)}"
     end
 
     def check_belongs_to_primary_group(user, group)
-      pgid = "getent passwd #{escape(user)} | cut -f 4 -d ':'"
-      ggid = "getent group #{escape(group)} | cut -f 3 -d ':'"
-      %Q|test "#{escape(pgid)}" -eq "#{escape(ggid)}"|
+      "id -gn #{escape(user)}| grep ^#{escape(group)}$"
     end
 
     def check_is_system_user(user)
@@ -23,8 +21,8 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def check_has_uid(user, uid)
-      auid = "getent passwd #{escape(user)} | cut -f 3 -d ':'"
-      %Q| test "#{escape(uid)}" -eq "#{escape(auid)}"|
+      regexp = "^uid=#{uid}("
+      "id #{escape(user)} | grep -- #{escape(regexp)}"
     end
 
     def check_has_home_directory(user, path_to_home)
@@ -49,11 +47,11 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def get_uid(user)
-      "getent passwd #{escape(user)} | cut -f 3 -d ':'"
+      "id -u #{escape(user)}"
     end
 
     def get_gid(user)
-      "getent passwd #{escape(user)} | cut -f 4 -d ':'"
+      "id -g #{escape(user)}"
     end
 
     def get_home_directory(user)
