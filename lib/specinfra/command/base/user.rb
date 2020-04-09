@@ -5,7 +5,7 @@ class Specinfra::Command::Base::User < Specinfra::Command::Base
     end
 
     def check_belongs_to_group(user, group)
-      "getent group #{escape(group)} | grep -- #{escape(user)}"
+      "groups #{escape(user)} | grep -- #{escape(group)}"
     end
 
     def check_belongs_to_primary_group(user, group)
