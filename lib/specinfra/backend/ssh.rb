@@ -73,10 +73,16 @@ module Specinfra
       end
 
       def create_ssh
+        options = get_config(:ssh_options)
+
+        if !Net::SSH::VALID_OPTIONS.include?(:strict_host_key_checking)
+          options.delete(:strict_host_key_checking)
+        end
+
         Net::SSH.start(
           get_config(:host),
-          get_config(:ssh_options)[:user],
-          get_config(:ssh_options)
+          options[:user],
+          options
         )
       end
 
