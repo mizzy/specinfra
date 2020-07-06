@@ -32,7 +32,7 @@ module Specinfra
 
       def parse_system_product_name(ret)
         product_name = case ret
-          when /.*VMware Virtual Platform/
+          when /.*(VMware Virtual Platform|VMware7,1)/
             'vmware'
           when /.*VirtualBox/
             'vbox'
