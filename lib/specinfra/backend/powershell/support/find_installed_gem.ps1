@@ -5,7 +5,8 @@ function FindInstalledGem
   $nameVer = $(Invoke-Expression "gem list --local" | Select-String "$gemName").Line
   if ($nameVer.StartsWith($gemName)) {
     if ($gemVersion) {
-      if ($nameVer.EndsWith("$gemVersion)")) {
+      $versions = ($nameVer -split { $_ -eq "(" -or $_ -eq ")"})[1].split(" ")
+      if ($versions.Contains($gemVersion)) {
         $true
       } else {
         $false
