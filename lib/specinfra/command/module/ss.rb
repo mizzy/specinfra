@@ -22,7 +22,15 @@ module Specinfra
           if local_address == '0.0.0.0'
             [ '\*' , '0\.0\.0\.0' ]
           else
-            [ local_address ]
+            [ fix_format_if_ipv6(local_address) ]
+          end
+        end
+
+        def fix_format_if_ipv6(local_address)
+          if local_address =~ /.*:.*/
+            "\\[#{local_address}\\]"
+          else
+            local_address
           end
         end
 
