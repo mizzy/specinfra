@@ -1,10 +1,11 @@
 class Specinfra::Command::Debian::Base::Port < Specinfra::Command::Linux::Base::Port
   class << self
     def create(os_info=nil)
-      if (os_info || os)[:release].to_i < 8
-        self
-      else
+      release = (os_info || os)[:release]
+      if ["testing", "unstable"].include?(release) || release.to_i >= 8
         Specinfra::Command::Debian::V8::Port
+      else
+        self
       end
     end
   end
