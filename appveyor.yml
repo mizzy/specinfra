@@ -54,7 +54,7 @@ install:
   - echo %PATH%
   - ruby --version
   - gem --version
-  - echo ':ssl_verify_mode: 0'  > C:\Users\%User_Profile%\.gemrc
+  - "echo :ssl_verify_mode: 0 > C:\Users\%User_Profile%\.gemrc"
   - appveyor DownloadFile -Url %bundler_url% -FileName bundler.gem
   - gem install --local bundler.gem --no-document --force ## appveyor often stops `gem install bundler`..?
   - ps: $PSVersionTable
