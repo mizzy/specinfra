@@ -68,6 +68,24 @@ describe 'command/freebsd/service works correctly' do
         it { expect(get_command(:check_service_is_enabled, 'httpd')).to eq 'service httpd enabled' }
       end
     end
+
+    context 'freebsd-12' do
+      before do
+        set :os, :family => 'freebsd', :release => '12'
+      end
+      describe 'get_command(:check_service_is_enabled, "httpd")' do
+        it { expect(get_command(:check_service_is_enabled, 'httpd')).to eq 'service httpd enabled' }
+      end
+    end
+
+    context 'freebsd-13' do
+      before do
+        set :os, :family => 'freebsd', :release => '13'
+      end
+      describe 'get_command(:check_service_is_enabled, "httpd")' do
+        it { expect(get_command(:check_service_is_enabled, 'httpd')).to eq 'service httpd enabled' }
+      end
+    end
   end
 
   describe 'check_service_is_running' do
