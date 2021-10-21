@@ -10,7 +10,7 @@ module Specinfra
       return false if ret.stdout =~ /stop(ped)?\/waiting/
 
       # If the service is not registered, check by ps command
-      if ret.exit_status == 1
+      if ret.exit_status == 1 && !Specinfra.configuration.no_service_process_fallback
         cmd = Specinfra.command.get(:check_process_is_running, service)
         ret = Specinfra.backend.run_command(cmd)
       end

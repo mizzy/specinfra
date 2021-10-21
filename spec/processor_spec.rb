@@ -60,4 +60,53 @@ describe Specinfra::Processor do
       end
     end
   end
+
+  describe 'check_service_is_running' do
+    let(:service_command) { Specinfra.command.get(:check_service_is_running, 'service_name') }
+    let(:process_command) { Specinfra.command.get(:check_process_is_running, 'service_name') }
+
+    context 'default settings' do
+      it 'does not fall back to process checking if service checking succeeds' do
+        allow(Specinfra.backend).to receive(:run_command).with(service_command) { CommandResult.new :exit_status => 0 }
+
+        expect(Specinfra::Processor.check_service_is_running('service_name')).to eq(true)
+      end
+
+      context 'when service checking fails' do
+        it 'falls back to checking by process and returns true if that succeeds' do
+          allow(Specinfra.backend).to receive(:run_command).with(service_command) { CommandResult.new :exit_status => 1 }
+
+          expect(Specinfra.backend).to receive(:run_command).with(process_command) { CommandResult.new :exit_status => 0 }
+
+          expect(Specinfra::Processor.check_service_is_running('service_name')).to eq(true)
+        end
+
+        it 'falls back to checking by process and returns false if that fails' do
+          allow(Specinfra.backend).to receive(:run_command).with(service_command) { CommandResult.new :exit_status => 1 }
+
+          expect(Specinfra.backend).to receive(:run_command).with(process_command) { CommandResult.new :exit_status => 1 }
+
+          expect(Specinfra::Processor.check_service_is_running('service_name')).to eq(false)
+        end
+      end
+    end
+
+    context 'no_service_process_fallback set to true' do
+      it 'does not fall back to checking processes if service checking succeeds' do
+        Specinfra.configuration.no_service_process_fallback(true)
+
+        allow(Specinfra.backend).to receive(:run_command).with(service_command) { CommandResult.new :exit_status => 0 }
+
+        expect(Specinfra::Processor.check_service_is_running('service_name')).to eq(true)
+      end
+
+      it 'does not fall back to checking processes if service checking fails' do
+        Specinfra.configuration.no_service_process_fallback(true)
+
+        allow(Specinfra.backend).to receive(:run_command).with(service_command) { CommandResult.new :exit_status => 1 }
+
+        expect(Specinfra::Processor.check_service_is_running('service_name')).to eq(false)
+      end
+    end
+  end
 end
