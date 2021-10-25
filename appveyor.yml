@@ -1,5 +1,5 @@
 version: "{build}"
-os: Windows Server 2012
+image: Visual Studio 2019
 
 platform:
   - x64
@@ -9,7 +9,6 @@ environment:
   bundler_url: https://rubygems.org/downloads/bundler-1.9.9.gem
 
   matrix:
-    - ruby_version: "193"
     - ruby_version: "200"
     - ruby_version: "21"
     - ruby_version: "22"
@@ -17,16 +16,12 @@ environment:
     - ruby_version: "24"
     - ruby_version: "25"
     - ruby_version: "26"
-
-matrix:
-  allow_failures:
-    - ruby_version: "193"
+    - ruby_version: "27"
+    - ruby_version: "30"
 
 clone_depth: 5
 
 cache:
-  - C:\Ruby193\lib\ruby\gems\1.9.1 -> appveyor.yml
-  - C:\Ruby193\bin                 -> appveyor.yml
   - C:\Ruby200\lib\ruby\gems\2.0.0 -> appveyor.yml
   - C:\Ruby200\bin                 -> appveyor.yml
   - C:\Ruby21\lib\ruby\gems\2.1.0  -> appveyor.yml
@@ -39,8 +34,10 @@ cache:
   - C:\Ruby24\bin                  -> appveyor.yml
   - C:\Ruby25\lib\ruby\gems\2.5.0  -> appveyor.yml
   - C:\Ruby25\bin                  -> appveyor.yml
-  - C:\Ruby26\lib\ruby\gems\2.6.0  -> appveyor.yml
-  - C:\Ruby26\bin
+  - C:\Ruby27\lib\ruby\gems\2.7.0  -> appveyor.yml
+  - C:\Ruby27\bin                  -> appveyor.yml
+  - C:\Ruby30\lib\ruby\gems\3.0.0  -> appveyor.yml
+  - C:\Ruby30\bin                  -> appveyor.yml
 
 install:
   - git submodule update --init --recursive
