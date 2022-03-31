@@ -8,6 +8,10 @@ class Specinfra::Command::Darwin::Base::Inventory < Specinfra::Command::Base::In
       'false'
     end
 
+    def get_kernel
+      'false'
+    end
+
     def get_hostname
       'hostname -s'
     end
