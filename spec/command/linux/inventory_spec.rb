@@ -16,5 +16,5 @@ end
 
 describe get_command(:get_inventory_block_device) do
   block_device_dirs = '/sys/block/*/{size,removable,device/{model,rev,state,timeout,vendor},queue/rotational}'
-  it { should eq "for f in $(ls #{block_device_dirs}); do echo -e \"${f}\t$(cat ${f})\"; done" }
+  it { should eq %Q[bash -c 'for f in $(ls #{block_device_dirs}); do echo -e "${f}\t$(cat ${f})"; done'] }
 end
