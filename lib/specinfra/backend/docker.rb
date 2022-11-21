@@ -17,11 +17,30 @@ module Specinfra
           @base_image = get_or_pull_image(image)
 
           create_and_start_container
-          ObjectSpace.define_finalizer(self, proc { cleanup_container })
+          ObjectSpace.define_finalizer(self, self.class.__send__(:finalizer_for, @container))
         elsif container = get_config(:docker_container)
           @container = ::Docker::Container.get(container)
         else
           fail 'Please specify docker_image or docker_container.'
+        end
+      end
+
+      class << self
+        protected
+
+        # Get a finalizer for given container.
+        #
+        # @param [::Docker::Container, nil] container
+        #
+        # @return [Proc]
+        def finalizer_for(container)
+          proc do
+            # noinspection RubyNilAnalysis
+            unless container.nil?
+              container.stop
+              container.delete
+            end
+          end
         end
       end
 
@@ -77,8 +96,7 @@ module Specinfra
       end
 
       def cleanup_container
-        @container.stop
-        @container.delete
+        self.class.__send__(:finalizer_for, @container).call
       end
 
       def current_image
