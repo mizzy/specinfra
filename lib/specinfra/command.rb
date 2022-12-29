@@ -127,6 +127,13 @@ require 'specinfra/command/amazon/v2'
 require 'specinfra/command/amazon/v2/service'
 require 'specinfra/command/amazon/v2/port'
 
+# Amazon Linux V2022 (inherit RedHat)
+require 'specinfra/command/amazon/v2022'
+require 'specinfra/command/amazon/v2022/package'
+require 'specinfra/command/amazon/v2022/port'
+require 'specinfra/command/amazon/v2022/service'
+require 'specinfra/command/amazon/v2022/yumrepo'
+
 # AIX (inherit Base)
 require 'specinfra/command/aix'
 require 'specinfra/command/aix/base'
