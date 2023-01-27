@@ -70,7 +70,7 @@ module Specinfra
       end
 
       def find_powershell(dirs)
-        ( dirs.map { |dir| "#{ENV['WINDIR']}\\#{dir}\\WindowsPowerShell\\v1.0\\powershell.exe" } ).find { |exe| File.exists?(exe) } || 'powershell'
+        ( dirs.map { |dir| "#{ENV['WINDIR']}\\#{dir}\\WindowsPowerShell\\v1.0\\powershell.exe" } ).find { |exe| File.exist?(exe) } || 'powershell'
       end
 
     end
