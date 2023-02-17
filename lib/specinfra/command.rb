@@ -235,6 +235,11 @@ require 'specinfra/command/gentoo/base'
 require 'specinfra/command/gentoo/base/package'
 require 'specinfra/command/gentoo/base/service'
 
+# Guix (inherit Linux)
+require 'specinfra/command/guix'
+require 'specinfra/command/guix/base'
+require 'specinfra/command/guix/base/service'
+
 # Plamo (inherit Linux)
 require 'specinfra/command/plamo'
 require 'specinfra/command/plamo/base'
