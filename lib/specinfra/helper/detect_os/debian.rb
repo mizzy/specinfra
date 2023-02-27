@@ -20,6 +20,7 @@ class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
       end
       distro ||= 'debian'
       release ||= nil
+      release = "testing" if distro =~ /debian/i && release == "n/a" && debian_version.stdout.strip =~ /\w+\/sid$/
       { :family => distro.gsub(/[^[:alnum:]]/, '').downcase, :release => release }
     end
   end
