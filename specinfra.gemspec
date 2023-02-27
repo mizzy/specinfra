@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "net-ssh", ">= 2.7"
   # TODO: remove the lock when you want to remove ruby < 2.3 support
   spec.add_runtime_dependency "net-telnet", "0.1.1"
-  spec.add_runtime_dependency "sfl"
 
   spec.add_development_dependency "rake", "~> 10.1.1"
   spec.add_development_dependency "rspec"

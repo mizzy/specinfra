@@ -1,7 +1,6 @@
 require 'singleton'
 require 'fileutils'
 require 'shellwords'
-require 'sfl'
 
 module Specinfra
   module Backend
