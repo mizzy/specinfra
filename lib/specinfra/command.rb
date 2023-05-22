@@ -223,6 +223,10 @@ require 'specinfra/command/linuxmint/base'
 require 'specinfra/command/elementary'
 require 'specinfra/command/elementary/base'
 
+# Neon (inherit Ubuntu)
+require 'specinfra/command/neon'
+require 'specinfra/command/neon/base'
+
 # Cumulus Networks (inherit Debian)
 require 'specinfra/command/cumulus'
 require 'specinfra/command/cumulus/base'
