@@ -233,6 +233,10 @@ require 'specinfra/command/cumulus/base'
 require 'specinfra/command/cumulus/base/ppa'
 require 'specinfra/command/cumulus/base/service'
 
+# VyOS (inherit Debian)
+require 'specinfra/command/vyos'
+require 'specinfra/command/vyos/base'
+
 # Gentoo (inherit Linux)
 require 'specinfra/command/gentoo'
 require 'specinfra/command/gentoo/base'
