@@ -134,6 +134,9 @@ require 'specinfra/command/amazon/v2022/port'
 require 'specinfra/command/amazon/v2022/service'
 require 'specinfra/command/amazon/v2022/yumrepo'
 
+# Amazon Linux V2023 (inherit Amazon Linux V2022)
+require 'specinfra/command/amazon/v2023'
+
 # AIX (inherit Base)
 require 'specinfra/command/aix'
 require 'specinfra/command/aix/base'
