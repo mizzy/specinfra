@@ -1,7 +1,7 @@
 require 'singleton'
 require 'fileutils'
 require 'shellwords'
-require 'sfl'
+require 'sfl' if Specinfra.ruby_is_older_than?(1, 9, 0)
 
 module Specinfra
   module Backend
