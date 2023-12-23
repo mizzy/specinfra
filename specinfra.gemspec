@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "net-telnet" # intentionally version-unspecified for Ruby older than 2.3.0
   spec.add_runtime_dependency "sfl" # required for Ruby older than 1.9.0
 
-  spec.add_development_dependency "rake", "~> 10.1.1"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
 end
