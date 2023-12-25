@@ -21,10 +21,10 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "net-scp"
   spec.add_runtime_dependency "net-ssh", ">= 2.7"
-  spec.add_runtime_dependency "net-telnet", *(Specinfra.ruby_is_older_than?(2, 3, 0) ? ["0.1.1"] : [])
-  spec.add_runtime_dependency "sfl" if Specinfra.ruby_is_older_than?(1, 9, 0)
+  spec.add_runtime_dependency "net-telnet" # intentionally version-unspecified for Ruby older than 2.3.0
+  spec.add_runtime_dependency "sfl" # required for Ruby older than 1.9.0
 
-  spec.add_development_dependency "rake", "~> 10.1.1"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-its"
 end

@@ -20,6 +20,11 @@ Or install it yourself as:
   gem install specinfra
   ```
 
+For Ruby versions older than 2.3.0, pin net-telnet to version 0.1.1 in your `Gemfile` or `*.gemspec`.
+See also [pin net-telnet dependency to keep ruby support for < 2.3 #665][issue665].
+
+[issue665]: https://github.com/mizzy/specinfra/pull/665
+
 ## Running tests
 
   ```
