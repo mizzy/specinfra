@@ -20,6 +20,8 @@ module Specinfra
         :docker_image,
         :docker_url,
         :lxc,
+        :lxd_remote,
+        :lxd_instance,
         :request_pty,
         :ssh_options,
         :ssh_without_env,
