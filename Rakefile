@@ -18,7 +18,7 @@ if defined?(RSpec)
 
     task :backend => 'backend:all'
     namespace :backend do
-      backends = %w[exec ssh]
+      backends = Dir.glob("spec/backend/*").map { |path| File.basename(path) }
 
       task :all => backends
 
