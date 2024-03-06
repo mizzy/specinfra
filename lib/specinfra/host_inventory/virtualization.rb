@@ -17,8 +17,8 @@ module Specinfra
 
         cmd = backend.command.get(:get_inventory_system_product_name)
         ret = backend.run_command(cmd)
-        if ret.exit_status == 0 and ret.stdout.length > 0
-           res[:system] = parse_system_product_name(ret.stdout)
+        if ret.success? and (parsed = parse_system_product_name(ret.stdout))
+           res[:system] = parsed
            return res
         end
 

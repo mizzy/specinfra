@@ -25,6 +25,22 @@ describe Specinfra::HostInventory::Virtualization do
     expect(virt.get).to include(:system => 'openvz')
   end
 
+  it 'Debian on QEMU KVM should return :system => "kvm"' do
+    allow(virt.backend).to receive(:run_command).with('grep -Eqa \'docker(/|-[0-9a-f]+)\' /proc/1/cgroup||test -e /.dockerinit') do
+      CommandResult.new(:stdout => '', :exit_status => 1)
+    end
+    allow(virt.backend).to receive(:run_command).with('test -d /proc/vz -a ! -d /proc/bc') do
+      CommandResult.new(:stdout => '', :exit_status => 1)
+    end
+    allow(virt.backend).to receive(:run_command).with('dmidecode -s system-product-name') do
+      CommandResult.new(:stdout => "Standard PC (Q35 + ICH9, 2009)\n", :exit_status => 0)
+    end
+    allow(virt.backend).to receive(:run_command).with('systemd-detect-virt') do
+      CommandResult.new(:stdout => "kvm\n", :exit_status => 0)
+    end
+    expect(virt.get).to include(:system => 'kvm')
+  end
+
   let(:host_inventory) { nil }
   it 'Debian Jessie on KVM should return :system => "kvm"' do
     ret = virt.parse_system_product_name("KVM\n")
