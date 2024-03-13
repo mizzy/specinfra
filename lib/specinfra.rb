@@ -35,6 +35,7 @@ if defined?(RSpec)
     c.add_setting :scp,           :default => nil
     c.add_setting :sudo_password, :default => nil
     c.add_setting :winrm,         :default => nil
+    c.add_setting :docker_container, :default => nil
     c.add_setting :architecture,  :default => :x86_64
     Specinfra.configuration.defaults.each { |k, v| c.add_setting k, :default => v }
     c.before :each do
