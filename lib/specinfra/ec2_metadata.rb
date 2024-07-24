@@ -5,10 +5,13 @@ module Specinfra
       @host_inventory = host_inventory
 
       @base_uri = 'http://169.254.169.254/latest/meta-data/'
+      @token_uri = 'http://169.254.169.254/latest/api/token'
+      @token = ''
       @metadata = {}
     end
 
     def get
+      @token = get_token
       @metadata = get_metadata
       self
     end
@@ -64,7 +67,7 @@ module Specinfra
     def get_metadata(path='')
       metadata = {}
 
-      keys = @host_inventory.backend.run_command("curl -s #{@base_uri}#{path}").stdout.split("\n")
+      keys = @host_inventory.backend.run_command("curl -H \"X-aws-ec2-metadata-token: #{@token}\" -s #{@base_uri}#{path}").stdout.split("\n")
 
       keys.each do |key|
         if key =~ %r{/$}
@@ -84,7 +87,16 @@ module Specinfra
     end
 
     def get_endpoint(path)
-      ret = @host_inventory.backend.run_command("curl -s #{@base_uri}#{path}")
+      ret = @host_inventory.backend.run_command("curl -H \"X-aws-ec2-metadata-token: #{@token}\" -s #{@base_uri}#{path}")
+      if ret.success?
+        ret.stdout
+      else
+        nil
+      end
+    end
+
+    def get_token
+      ret = @host_inventory.backend.run_command("curl -X PUT -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\" -s #{@token_uri}")
       if ret.success?
         ret.stdout
       else
