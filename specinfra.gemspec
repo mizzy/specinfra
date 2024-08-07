@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   # TODO: at some point pin to a minumum version of ruby to reduce support burden in a major version bump
   # spec.required_ruby_version  = '>= 2.3.0'
 
+  spec.add_runtime_dependency "base64"
   spec.add_runtime_dependency "net-scp"
   spec.add_runtime_dependency "net-ssh", ">= 2.7"
   spec.add_runtime_dependency "net-telnet" # intentionally version-unspecified for Ruby older than 2.3.0
