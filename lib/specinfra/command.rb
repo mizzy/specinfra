@@ -19,6 +19,7 @@ require 'specinfra/command/module/systemd'
 require 'specinfra/command/module/zfs'
 require 'specinfra/command/module/ss'
 require 'specinfra/command/module/openrc'
+require 'specinfra/command/module/runit'
 
 # Base
 require 'specinfra/command/base'
@@ -407,3 +408,9 @@ require 'specinfra/command/poky/base/interface'
 require 'specinfra/command/poky/base/inventory'
 require 'specinfra/command/poky/base/package'
 require 'specinfra/command/poky/base/service'
+
+# VoidLinux (inherit Linux)
+require 'specinfra/command/voidlinux'
+require 'specinfra/command/voidlinux/base'
+require 'specinfra/command/voidlinux/base/package'
+require 'specinfra/command/voidlinux/base/service'
