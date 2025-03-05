@@ -141,7 +141,7 @@ module Specinfra
       end
 
       def with_env
-        keys = %w[BUNDLER_EDITOR BUNDLE_BIN_PATH BUNDLE_GEMFILE
+        keys = %w[BUNDLER_EDITOR BUNDLE_BIN_PATH BUNDLE_GEMFILE BUNDLER_SETUP
             RUBYOPT GEM_HOME GEM_PATH GEM_CACHE]
 
         keys.each { |key| ENV["_SPECINFRA_#{key}"] = ENV[key] ; ENV.delete(key) }

@@ -6,7 +6,7 @@ describe Specinfra.backend.run_command('echo $LANG').stdout.strip do
   it { should eq 'C' }
 end
 
-describe do
+describe "override ENV with config(:env)" do
   before do
     set :backend, :exec
 
@@ -18,3 +18,11 @@ describe do
   it { expect(ENV['LANG']).to eq 'C' }
 end
 
+describe "clear env for BUNDLER" do
+  before do
+    set :backend, :exec
+
+    ENV['BUNDLER_SETUP'] = 'any-value'
+  end
+  it { expect(Specinfra.backend.run_command('printenv BUNDLER_SETUP').stdout).to eq '' }
+end
