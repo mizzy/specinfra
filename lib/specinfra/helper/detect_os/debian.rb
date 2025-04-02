@@ -13,14 +13,20 @@ class Specinfra::Helper::DetectOs::Debian < Specinfra::Helper::DetectOs
           distro  = line.split('=').last.strip if line =~ /^DISTRIB_ID=/
           release = line.split('=').last.strip if line =~ /^DISTRIB_RELEASE=/
         end
-      else
-        if debian_version.stdout.chomp =~ /^[[:digit:]]+\.[[:digit:]]+$/
-          release = debian_version.stdout.chomp
-        end
       end
       distro ||= 'debian'
-      release ||= nil
-      release = "testing" if distro =~ /debian/i && release == "n/a" && debian_version.stdout.strip =~ /\w+\/sid$/
+      # lsb-release not available or reported no version number:
+      if release.nil? || release == 'n/a'
+        release = case debian_version.stdout.chomp
+                  when /^[[:digit:]]+\.[[:digit:]]+$/
+                    debian_version.stdout.chomp
+                  when %r{^\w+/sid$}
+                    # a number larger than any normal Debian version ever:
+                    2**32 - 1.0
+                  else
+                    nil
+                  end
+      end
       { :family => distro.gsub(/[^[:alnum:]]/, '').downcase, :release => release }
     end
   end

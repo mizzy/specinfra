@@ -76,7 +76,7 @@ describe Specinfra::Helper::DetectOs::Debian do
     }
     expect(debian.detect).to include(
       :family  => 'debian',
-      :release => 'testing'
+      :release => 4294967295.0
     )
   end
 end
