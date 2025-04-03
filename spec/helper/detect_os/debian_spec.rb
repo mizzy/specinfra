@@ -64,4 +64,19 @@ describe Specinfra::Helper::DetectOs::Debian do
       :release => '16.04'
     )
   end
+  it 'Should return debian testing when lsb_release says release = n/a' do
+    allow(debian).to receive(:run_command).with('cat /etc/debian_version') {
+      CommandResult.new(:stdout => "bookworm/sid", :exit_status => 0)
+    }
+    allow(debian).to receive(:run_command).with('lsb_release -ir') {
+      CommandResult.new(:stdout => "Distributor ID:	Debian\nRelease:	n/a\n", :exit_status => 0)
+    }
+    allow(debian).to receive(:run_command).with('cat /etc/lsb-release') {
+      CommandResult.new(:stdout => "", :exit_status => 1)
+    }
+    expect(debian.detect).to include(
+      :family  => 'debian',
+      :release => 4294967295.0
+    )
+  end
 end
