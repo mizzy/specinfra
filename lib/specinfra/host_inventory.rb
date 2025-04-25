@@ -7,6 +7,7 @@ module Specinfra
       domain
       fqdn
       platform
+      platform_codename
       platform_version
       filesystem
       cpu
