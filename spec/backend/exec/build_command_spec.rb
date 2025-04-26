@@ -124,11 +124,11 @@ describe 'os' do
   context 'test ubuntu with lsb_release command' do
     before do
       allow(Specinfra.backend).to receive(:run_command) do |args|
-        if ['cat /etc/debian_version', 'lsb_release -ir'].include? args
+        if ['cat /etc/debian_version', 'lsb_release -irc'].include? args
           double(
             :run_command_response,
             :success? => true,
-            :stdout => "Distributor ID:\tUbuntu\nRelease:\t12.04\n"
+            :stdout => "Distributor ID:\tUbuntu\nRelease:\t12.04\nCodename:\tprecise\n"
           )
         elsif args == 'uname -m'
           double :run_command_response, :success? => true, :stdout => "x86_64\n"
@@ -140,7 +140,7 @@ describe 'os' do
     subject! { os }
     it do
       expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
-      should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
+      should eq({:family => 'ubuntu', :release => '12.04', :codename => 'precise', :arch => 'x86_64' })
     end
   end
 
@@ -168,7 +168,7 @@ EOF
     subject! { os }
     it do
       expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
-      should eq({:family => 'ubuntu', :release => '12.04', :arch => 'x86_64' })
+      should eq({:family => 'ubuntu', :release => '12.04', :codename => 'precise', :arch => 'x86_64' })
     end
   end
 
@@ -187,7 +187,7 @@ EOF
     subject! { os }
     it do
       expect(Specinfra.backend).to have_received(:run_command).at_least(1).times
-      should eq({:family => 'debian', :release => '8.5', :arch => 'x86_64' })
+      should eq({:family => 'debian', :release => '8.5', :codename => nil, :arch => 'x86_64' })
     end
   end
 end
