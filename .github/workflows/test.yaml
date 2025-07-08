@@ -2,7 +2,8 @@ name: Run test
 
 on:
   pull_request:
-    
+  push:
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -11,42 +12,16 @@ jobs:
       fail-fast: false
       matrix:
         ruby-version:
-        - 1.9.3
-        - 2.0.0
-        - 2.1.9
-        - 2.3.8
-        - 2.4.10
-        - 2.5.9
-        - 2.6.10
-        - 2.7.8
-        - 3.0.6
-        - 3.1.4
-        - 3.2.2
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby-version }}
-
-      - name: Install dependencies
-        run: bundle install
-
-      - name: Run tests
-        run: bundle exec rake
-
-  # Bundler with Ruby 2.2.10 doesn't work for the latest Ubuntu.
-  # See also: https://github.com/ruby/setup-ruby/issues/496#issuecomment-1625000309
-  test-ruby-2-2-10:
-    runs-on: ubuntu-20.04
-
-    strategy:
-      fail-fast: false
-      matrix:
-        ruby-version:
-          - 2.2.10
+        - 2.3
+        - 2.4
+        - 2.5
+        - 2.6
+        - 2.7
+        - 3.0
+        - 3.1
+        - 3.2
+        - 3.3
+        - 3.4
 
     steps:
       - uses: actions/checkout@v4
