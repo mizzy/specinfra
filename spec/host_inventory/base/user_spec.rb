@@ -35,7 +35,7 @@ describe Specinfra::HostInventory::User do
     ret = Specinfra::HostInventory::User.new(host_inventory).parse(str)
     example do
       expect(ret).to include(
-        'root' => {'name' => 'root', 'uid' => '0', 'gid' => '0', 'gecos' => 'root', 'directory' => '/root', 'shell' => '/bin/root'},
+        'root' => {'name' => 'root', 'uid' => '0', 'gid' => '0', 'gecos' => 'root', 'directory' => '/root', 'shell' => '/bin/bash'},
         'adm' => {'name'=>'adm', 'uid'=>'3', 'gid'=>'4', 'gecos'=>'adm', 'directory'=>'/var/adm', 'shell'=>'/sbin/nologin'},
         'apache' => {'name'=>'apache', 'uid'=>'48', 'gid'=>'48', 'gecos'=>'Apache', 'directory'=>'/opt/rh/httpd24/root/usr/share/httpd', 'shell'=>'/sbin/nologin'},
         'avahi-autoipd' => {'name'=>'avahi-autoipd', 'uid'=>'170', 'gid'=>'170', 'gecos'=>'Avahi IPv4LL Stack', 'directory'=>'/var/lib/avahi-autoipd', 'shell'=>'/sbin/nologin'},
@@ -54,7 +54,6 @@ describe Specinfra::HostInventory::User do
         'polkitd' => {'name'=>'polkitd', 'uid'=>'997', 'gid'=>'995', 'gecos'=>'User for polkitd', 'directory'=>'/', 'shell'=>'/sbin/nologin'},
         'postfix' => {'name'=>'postfix', 'uid'=>'89', 'gid'=>'89', 'gecos'=>'', 'directory'=>'/var/spool/postfix', 'shell'=>'/sbin/nologin'},
         'postgres' => {'name'=>'postgres', 'uid'=>'26', 'gid'=>'26', 'gecos'=>'PostgreSQL Server', 'directory'=>'/var/lib/pgsql', 'shell'=>'/bin/bash'},
-        'root' => {'name'=>'root', 'uid'=>'0', 'gid'=>'0', 'gecos'=>'root', 'directory'=>'/root', 'shell'=>'/bin/bash'},
         'saslauth' => {'name'=>'saslauth', 'uid'=>'499', 'gid'=>'76', 'gecos'=>'Saslauthd user', 'directory'=>'/run/saslauthd', 'shell'=>'/sbin/nologin'},
         'shutdown' => {'name'=>'shutdown', 'uid'=>'6', 'gid'=>'0', 'gecos'=>'shutdown', 'directory'=>'/sbin', 'shell'=>'/sbin/shutdown'},
         'sshd' => {'name'=>'sshd', 'uid'=>'74', 'gid'=>'74', 'gecos'=>'Privilege-separated SSH', 'directory'=>'/var/empty/sshd', 'shell'=>'/sbin/nologin'},
