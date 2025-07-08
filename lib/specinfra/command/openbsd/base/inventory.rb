@@ -24,10 +24,10 @@ class Specinfra::Command::Openbsd::Base::Inventory < Specinfra::Command::Base::I
     def get_filesystem
       'df -kP'
     end
- 
+
     def get_system_product_name
-      'sysctl -n hw.product' 
-    end 
+      'sysctl -n hw.product'
+    end
 
   end
 end
