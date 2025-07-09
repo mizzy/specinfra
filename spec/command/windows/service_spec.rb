@@ -5,7 +5,10 @@ RSpec.describe Specinfra::Command::Windows::Base::Service do
     property[:os] = nil
     set :os, :family => 'windows'
   end
-  
+  after :all do
+    property[:os] = nil
+    set :os, :family => nil
+  end
   let(:service_name) { "Power" }
     let(:property_map) {{"StartName"=>"Local System","State"=>"Running","StartMode"=>"Auto"}}
     describe "#check_service_is_running" do
