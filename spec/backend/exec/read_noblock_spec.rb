@@ -31,7 +31,7 @@ shared_examples "IO checks" do
     end
 
     it "stdout and stderr" do
-        cmd = command("(#{generator} &); #{generator} >&2; sleep 2" )
+        cmd = command("(#{generator} &); #{generator} >&2; sleep 0.2" )
         expect(cmd.stdout).to eq expected
         expect(cmd.stderr).to eq expected
     end

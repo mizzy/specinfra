@@ -7,7 +7,7 @@ context "when executed process launches child process like a daemon, and the dae
     set :backend, :exec
   end
 
-  subject(:result) { Specinfra::Runner.run_command("ruby -e 'pid = fork { sleep 10; puts :bye }; Process.detach(pid); puts pid'") }
+  subject(:result) { Specinfra::Runner.run_command("ruby -e 'pid = fork { sleep 1; puts :bye }; Process.detach(pid); puts pid'") }
 
   it "doesn't block" do
     a = Time.now
