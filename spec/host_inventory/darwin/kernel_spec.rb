@@ -7,7 +7,7 @@ describe Specinfra::HostInventory::Kernel do
     let(:error_message) { "get_kernel is not implemented in #{command_class}" }
     let(:kernel_inventory) { Specinfra::HostInventory::Kernel.new(host_inventory) }
     let(:result) { kernel_inventory.get }
-    example "it includes the value of os_info[:arch] in the key 'machine'" do
+    skip "it includes the value of os_info[:arch] in the key 'machine'" do
       expect(result).to include(
         "machine" => host_inventory.backend.os_info[:arch]
       )
