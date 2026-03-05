@@ -206,6 +206,10 @@ require 'specinfra/command/debian/v8/port'
 require 'specinfra/command/devuan'
 require 'specinfra/command/devuan/base'
 
+# Kali Linux (inherit Debian)
+require 'specinfra/command/kali'
+require 'specinfra/command/kali/base'
+
 # Raspbian (inherit Debian)
 require 'specinfra/command/raspbian'
 
