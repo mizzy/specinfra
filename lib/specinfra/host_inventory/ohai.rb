@@ -9,7 +9,7 @@ module Specinfra
         end
 
         begin
-          ret = backend.run_command('ohai --log_level error')
+          ret = backend.run_command('ohai --log_level error 2>/dev/null')
         rescue StandardError
           nil
         end
