@@ -17,7 +17,6 @@ module Specinfra
           @base_image = get_or_pull_image(image)
 
           create_and_start_container
-          ObjectSpace.define_finalizer(self, self.class.__send__(:finalizer_for, @container))
         elsif container = get_config(:docker_container)
           @container = ::Docker::Container.get(container)
         else
@@ -93,6 +92,8 @@ module Specinfra
         while @container.json['State'].key?('Health') && @container.json['State']['Health']['Status'] == "starting" do
           sleep 0.5
         end
+
+        define_finalizer
       end
 
       def cleanup_container
@@ -101,6 +102,11 @@ module Specinfra
 
       def current_image
         @images.last || @base_image
+      end
+
+      def define_finalizer
+        ObjectSpace.undefine_finalizer(self)
+        ObjectSpace.define_finalizer(self, self.class.__send__(:finalizer_for, @container))
       end
 
       def docker_run!(cmd, opts={})
